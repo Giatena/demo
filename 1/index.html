@@ -43,7 +43,7 @@
 		}
 
 		console.log(window);
-		
+
 		window.addEventListener('load', () => {
 			// 在页面加载后，设置正确的网络状态
 			navigator.onLine ? showStatus(true) : showStatus(false);
@@ -51,12 +51,12 @@
 			// 当网络状态发生变化时，浏览器通过以上监听函数可捕获到网络的状态（Chrome59/Firefox54/IE Edge均测试通过）
 			window.addEventListener('online', () => {
 				showStatus(true);
-				console.log("window.addEventListener: online");
+				console.log("123online");
 			});
 
 			window.addEventListener('offline', () => {
 				showStatus(false);
-				console.log("window.addEventListener: offline");
+				console.log("12：offline");
 			});
 		});
 
