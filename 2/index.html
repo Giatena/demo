@@ -22,6 +22,7 @@ Themes:
 		// XMLHttpRequest.open 的 ture 参数：异步请求
 		req.open('GET', 'https://giatena.github.io:443', true);
 		req.send();
+		console.log('readyState = '+ req.onreadystatechange.readyState);
 		if(req.onreadystatechange.readyState = 2){
 				console.log('readyState = '+ req.onreadystatechange.readyState);
 		}
