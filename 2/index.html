@@ -16,15 +16,32 @@ Themes:
 <link rel="stylesheet" href="../themes/offline-language-chinese-simplified.css" />
 
 <script>
-var run = function(){
-  var req = new XMLHttpRequest();
-  req.timeout = 5000;
-  req.open('GET', 'https://www.baidu.com', true);
-  req.send();
-}
+	// 创建xmlHttp对象
+	var xmlHttp = null;
 
-setInterval(run, 3000);
+	function createXMLRequest( ){
+
+		var msxmlhttp = new Array(
+			'Msxml2.XMLHTTP.6.0',
+        	'Msxml2.XMLHTTP.3.0',
+        	'Msxml2.XMLHTTP',
+        	'Microsoft.XMLHTTP');
+
+		for(var i = 0; i < msxmlhttp .length; i++) {
+			try {
+				if(xmlHttp  = new ActiveXObject(msxmlhttp[i] )) break;
+			} catch (e) {
+				xmlHttp  = null;
+			}
+		}
+		
+	if(!xmlHttp && typeof XMLHttpRequest != "undefined")
+		xmlHttp = new XMLHttpRequest();
+	}
+
 </script>
+
 </head>
+
 <body>
 </body>

@@ -6,6 +6,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     <script type="text/javascript">
+
 	$(document).ready(function() {
 		// 检查旧离线会话的 Web 缓存
 		if(localStorage.formValues) {
@@ -41,7 +42,8 @@
 			}
 		}
 
-
+		console.log(window);
+		
 		window.addEventListener('load', () => {
 			// 在页面加载后，设置正确的网络状态
 			navigator.onLine ? showStatus(true) : showStatus(false);
