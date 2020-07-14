@@ -21,6 +21,7 @@ Themes:
 		req.timeout = 5000;
 		req.open('GET', 'https://giatena.github.io:443', true);
 		req.send();
+		console.log("已发送https请求");
 	}
 
 	setInterval(run, 3000);
