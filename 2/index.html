@@ -12,7 +12,11 @@ Themes:
 <link rel="stylesheet" href="./themes/offline-theme-hubspot.css" />
 -->
 
+<!--
 <link rel="stylesheet" href="themes/offline-theme-chrome.css" />
+-->
+
+<link rel="stylesheet" href="themes/offline-theme-chrome-indicator.css" />
 <link rel="stylesheet" href="themes/offline-language-chinese-simplified.css" />
 
 <script>
@@ -23,13 +27,14 @@ Themes:
 		req.open('GET', 'https://giatena.github.io:443', true);
 		req.send();
 
+		// 在 onreadystatechange 对象的 readyState 属性改变时触发“onreadystatechange 事件监听器”
 	    req.onreadystatechange = function () {
 	            console.log('readyState=' + this.readyState + ', status' + this.status)
 	    };
 		
 	}
 
-	// 10秒间隔
+	// 10秒间隔，运行一次 run 这个变量对应的方法
 	setInterval(run, 10000);
 
 </script>
