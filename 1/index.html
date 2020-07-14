@@ -4,9 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>HTML5 Web Storage</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
     <script type="text/javascript">
 	$(document).ready(function() {
-		// Check for web storage values from a previous offline session
+		// 检查旧离线会话的 Web 缓存
 		if(localStorage.formValues) {
 			console.log("localStorage.formValues: "+ localStorage.formValues);
 			postForm($("#web-storage-form").attr('action'), localStorage.formValues);
@@ -25,7 +26,7 @@
 	});
 		
 	function postForm(url, formValues) {
-		// Post to server or post to web storage
+		// 提交到服务器或保存到 Web 缓存（web storage）
 		if(navigator.onLine) {
 			console.log("Online");
 			$.post(url, formValues, function(data) {
@@ -39,8 +40,20 @@
 				localStorage.formValues = formValues;
 			}
 		}
+
+		// 当网络状态发生变化时，浏览器通过以上监听函数可捕获到网络的状态（Chrome59/Firefox54/IE Edge均测试通过）
+		window.addEventListener('online',  function(){
+			alert("window.addEventListener: onLine");
+		});
+
+		window.addEventListener('offline', function(){
+			alert("window.addEventListener: offLine");
+		});
+
 	}
+
 	</script>
+
     <style type="text/css">
 	label, 
 	input {
@@ -50,6 +63,7 @@
 		margin-bottom: 10px;
 	}
 	</style>
+
 </head>
 
 <body>
@@ -71,7 +85,8 @@
 	<label for="fault-type">故障级别：</label>
 	<input type="text" name="fault-type" id="fault-type">
     
-    <input type="submit" value="存入IDB并异步提交">
+	<input type="submit" value="存入IDB并异步提交">
+
 </form>
 
 </body>
