@@ -19,12 +19,18 @@ Themes:
 	var run = function(){
 		var req = new XMLHttpRequest();
 		req.timeout = 5000;
+		// XMLHttpRequest.open 的 ture 参数：异步请求
 		req.open('GET', 'https://giatena.github.io:443', true);
 		req.send();
-		console.log("已发送https请求");
+		if(req.onreadystatechange.readyState = 2){
+				console.log('readyState = '+ req.onreadystatechange.readyState);
+		}
+		
 	}
 
-	setInterval(run, 30000);
+	// 10秒间隔
+	setInterval(run, 10000);
+
 </script>
 
 </head>
