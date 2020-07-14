@@ -55,16 +55,23 @@
 <body>
 
 <form action="post.php" method="post" id="web-storage-form">
-	<label for="first-name">First name:</label>
-	<input type="text" name="first-name" id="first-name">
+
+	<label for="cw-order">质保工单：</label>
+	<input type="text" name="cw-order" id="cw-order">
+
+	<label for="train-number">列车编号：</label>
+	<input type="text" name="train-number" id="train-number">
     
-	<label for="last-name">Last name:</label>
-	<input type="text" name="last-name" id="last-name">
+	<label for="compartment-number">车厢编号：</label>
+	<input type="text" name="compartment-number" id="compartment-number">
     
-	<label for="email-address">Email Address:</label>
-	<input type="text" name="email-address" id="email-address">
+	<label for="fault-category">故障类别：</label>
+	<input type="text" name="fault-category" id="fault-category">
+
+	<label for="fault-type">故障级别：</label>
+	<input type="text" name="fault-type" id="fault-type">
     
-    <input type="submit" value="Submit">
+    <input type="submit" value="存入IDB并异步提交">
 </form>
 
 </body>
