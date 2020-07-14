@@ -1,5 +1,5 @@
 <head>
-<script src="offline.min.js"></script>
+<script src="$(basePath)/demo/2/offline.min.js"></script>
 
 <!--
 Themes:
@@ -12,16 +12,16 @@ Themes:
 <link rel="stylesheet" href="./themes/offline-theme-hubspot.css" />
 -->
 
-<link rel="stylesheet" href="themes/offline-theme-chrome.css" />
-<link rel="stylesheet" href="themes/offline-language-chinese-simplified.css" />
+<link rel="stylesheet" href="$(basePath)/demo/2/themes/offline-theme-chrome.css" />
+<link rel="stylesheet" href="$(basePath)/demo/2/themes/offline-language-chinese-simplified.css" />
 
 <script>
 	var run = function(){
-	var url = window.location.hostname;
-	var req = new XMLHttpRequest();
-	req.timeout = 5000;
-	req.open('GET', 'http://'+url+'+8088', true);
-	req.send();
+		var url = window.location.hostname;
+		var req = new XMLHttpRequest();
+		req.timeout = 5000;
+		req.open('GET', 'http://'+url+'+8088', true);
+		req.send();
 	}
 
 	setInterval(run, 3000);
