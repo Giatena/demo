@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>HTML5 Web Storage</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function() {
+		// Check for web storage values from a previous offline session
+		if(localStorage.formValues) {
+			console.log("localStorage.formValues: "+ localStorage.formValues);
+			postForm($("#web-storage-form").attr('action'), localStorage.formValues);
+			localStorage.removeItem("formValues");
+		}
+		
+		$("#web-storage-form").submit(function(event) {
+			// Prevent the form from posting
+			event.preventDefault(); 
+			
+			// Gather values
+			var formValues = $(this).serialize();
+			var url = $(this).attr('action');
+			postForm(url, formValues);
+		});
+	});
+		
+	function postForm(url, formValues) {
+		// Post to server or post to web storage
+		if(navigator.onLine) {
+			console.log("Online");
+			$.post(url, formValues, function(data) {
+				console.log("Success: "+ data);
+			});
+		}
+		else {
+			console.log("Offline");
+			if(typeof(Storage) !== "undefined") {
+				console.log("Storage supported");
+				localStorage.formValues = formValues;
+			}
+		}
+	}
+	</script>
+    <style type="text/css">
+	label, 
+	input {
+		display: block;
+	}
+	input {
+		margin-bottom: 10px;
+	}
+	</style>
+</head>
+
+<body>
+
+<form action="post.php" method="post" id="web-storage-form">
+	<label for="first-name">First name:</label>
+	<input type="text" name="first-name" id="first-name">
+    
+	<label for="last-name">Last name:</label>
+	<input type="text" name="last-name" id="last-name">
+    
+	<label for="email-address">Email Address:</label>
+	<input type="text" name="email-address" id="email-address">
+    
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
