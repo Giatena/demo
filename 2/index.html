@@ -16,29 +16,15 @@ Themes:
 <link rel="stylesheet" href="../themes/offline-language-chinese-simplified.css" />
 
 <script>
-	// 创建xmlHttp对象
-	var xmlHttp = null;
-
-	function createXMLRequest( ){
-
-		var msxmlhttp = new Array(
-			'Msxml2.XMLHTTP.6.0',
-        	'Msxml2.XMLHTTP.3.0',
-        	'Msxml2.XMLHTTP',
-        	'Microsoft.XMLHTTP');
-
-		for(var i = 0; i < msxmlhttp .length; i++) {
-			try {
-				if(xmlHttp  = new ActiveXObject(msxmlhttp[i] )) break;
-			} catch (e) {
-				xmlHttp  = null;
-			}
-		}
-		
-	if(!xmlHttp && typeof XMLHttpRequest != "undefined")
-		xmlHttp = new XMLHttpRequest();
+	var run = function(){
+	var url = window.location.hostname;
+	var req = new XMLHttpRequest();
+	req.timeout = 5000;
+	req.open('GET', 'http://'+url+'+8088', true);
+	req.send();
 	}
 
+	setInterval(run, 3000);
 </script>
 
 </head>
