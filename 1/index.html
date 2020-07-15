@@ -28,21 +28,13 @@
 		// jQuery：点击 id=web-storage-form 的 submit 按钮，执行 function
 		$("#web-storage-form").submit(function(event) {
 
-			// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
-			// 获取 id="web-storage-form" 的 form 表单
-			var formElement = document.getElementById("web-storage-form");
-			// 用 form 初始化 FormData 对象
-			var newFormData = new FormData(formElement);
-			console.log("form 对象：" + formElement;
-			console.log("FormData 对象：" + newFormData);
-
-			// // Prevent the form from posting
-			// event.preventDefault(); 
+			// Prevent the form from posting
+			event.preventDefault(); 
 			
-			// // Gather values
-			// var formValues = $(this).serialize();
-			// var url = $(this).attr('action');
-			// postForm(url, formValues);
+			// Gather values
+			var formValues = $(this).serialize();
+			var url = $(this).attr('action');
+			postForm(url, formValues);
 		});
 	});
 	
@@ -61,6 +53,16 @@
 				localStorage.formValues = formValues;
 			}
 		}
+
+	function writeIDB() {
+		// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
+		// 获取 id="web-storage-form" 的 form 表单
+		var formElement = document.getElementById("web-storage-form");
+		// 用 form 初始化 FormData 对象
+		var newFormData = new FormData(formElement);
+		console.log("form 对象：" + formElement;
+		console.log("FormData 对象：" + newFormData);
+	}
 
 	</script>
 
@@ -115,9 +117,11 @@
 	<input type="text" name="fault-type" id="fault-type">
 	<br>
     
-	<input type="submit" value="存入IDB并异步提交">
+	<input type="submit" value="提交">
 	<br>
 	<input type="reset" value="重置">
+	<br>
+	<input type="button" value="缓存" id="idb" onclick="writeIDB();">
 
 </form>
 
