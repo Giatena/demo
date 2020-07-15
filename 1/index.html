@@ -7,6 +7,9 @@
 
     <script type="text/javascript">
 
+	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+	if(indexedDB){alert("支持");} else {alert("不支持");}
+
 	$(document).ready(function() {
 		// 检查旧离线会话的 Web 缓存
 		if(localStorage.formValues) {
@@ -27,13 +30,6 @@
 			var url = $(this).attr('action');
 			postForm(url, formValues);
 		});
-
-		var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
-		if(indexedDB){
-    		alert("支持");}
-		else {
-    		alert("不支持");
-		}
 
 	});
 	
