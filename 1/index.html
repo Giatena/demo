@@ -59,10 +59,12 @@
 
     <style type="text/css">
 	label, 
+	/*
 	input {
-		/* 将每个元素置于一个新行 */
+		// 将每个元素置于一个新行 
 		display: block;
 	}
+	*/
 	input {
 		/*在条目之间创建空间，让页面看起来不会太乱*/
 		margin-bottom: 10px;
@@ -73,16 +75,20 @@
 
 <body>
 
+<!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="web-storage-form">
 
 	<label for="cw-order">质保工单：</label>
 	<input type="text" name="cw-order" id="cw-order">
+	<br>
 
 	<label for="train-number">列车编号：</label>
 	<input type="text" name="train-number" id="train-number">
+	<br>
     
 	<label for="compartment-number">车厢编号：</label>
 	<input type="text" name="compartment-number" id="compartment-number">
+	<br>
     
 	<label for="fault-category">故障类别：</label>
     <label>辅逆</label>
@@ -91,6 +97,7 @@
     <input type="radio" value="2" name="fault-category" id="fault-category">
     <label>列控</label>
     <input type="radio" value="3" name="fault-category" id="fault-category">
+    <br>
 
 	<!--
 	<label for="fault-category">故障类别：</label>
@@ -99,8 +106,10 @@
 
 	<label for="fault-type">故障级别：</label>
 	<input type="text" name="fault-type" id="fault-type">
+	<br>
     
 	<input type="submit" value="存入IDB并异步提交">
+	<br>
 	<input type="reset" value="重置">
 
 </form>
