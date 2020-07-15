@@ -57,21 +57,14 @@
 
 	function writeIDB() {
 		// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
+
 		// 获取 id="web-storage-form" 的 form 表单
 		var formElement = document.getElementById("web-storage-form");
 		// 用 form 初始化 FormData 对象
 		var newFormData = new FormData(formElement);
-		// console.log("form 对象：" + formElement;
-		// console.log("FormData 对象：" + newFormData);
-
-        var finalRes = $('#form').serializeArray().reduce(function(result, item){
-        	result[item.name] = item.value;
-        	return result;
-		}
-
-		console.log(finalRes)
+		console.log(formElement)
 	}
-	
+
 	</script>
 
     <style type="text/css">
@@ -129,7 +122,7 @@
 	<br>
 	<input type="reset" value="重置">
 	<br>
-	<input type="button" value="缓存" id="idb" onclick="writeIDB();">
+	<input type="button" value="缓存" id="idb" onclick="writeIDB()">
 
 </form>
 
