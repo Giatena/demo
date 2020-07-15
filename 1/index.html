@@ -9,10 +9,10 @@
 
 	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
 	if(indexedDB){
-		alert("支持");
+		console.log("浏览器支持 IndexedDB");
 	}
 	else {
-		alert("不支持");
+		console.log("浏览器不支持 IndexedDB");
 	}
 
 	$(document).ready(function() {
