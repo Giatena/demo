@@ -6,15 +6,17 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     <script type="text/javascript">
-
+    // IndexedDB 支持检测
 	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
 	if(indexedDB){
 		console.log("浏览器支持 IndexedDB");
 	}
 	else {
-		console.log("浏览器不支持 IndexedDB");
+		// 弹窗警告
+		alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
 	}
 
+	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
 	$(document).ready(function() {
 		// 检查旧离线会话的 Web 缓存
 		if(localStorage.formValues) {
@@ -35,17 +37,34 @@
 			var url = $(this).attr('action');
 			postForm(url, formValues);
 		});
-
 	});
 	
+	function postForm(url, formValues) {
+		// 表单数据提交服务器或缓存到 localStorage
+		if(navigator.onLine) {
+			console.log("Online");
+	    	$.post(url, formValues, function(data) {
+				console.log("Success: "+ data);
+			});
+		}
+		else {
+			console.log("Offline");
+			if(typeof(Storage) !== "undefined") {
+				console.log("Storage supported");
+				localStorage.formValues = formValues;
+			}
+		}
+
 	</script>
 
     <style type="text/css">
 	label, 
 	input {
+		/* 将每个元素置于一个新行 */
 		display: block;
 	}
 	input {
+		/* 在条目之间创建空间，让页面看起来不会太乱 */
 		margin-bottom: 10px;
 	}
 	</style>
