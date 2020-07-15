@@ -25,43 +25,7 @@
 			postForm(url, formValues);
 		});
 	});
-		
-	function postForm(url, formValues) {
-		// 提交到服务器或保存到 Web 缓存（web storage）
-		if(navigator.onLine) {
-			console.log("Online");
-			$.post(url, formValues, function(data) {
-				console.log("Success: "+ data);
-			});
-		}
-		else {
-			console.log("Offline");
-			if(typeof(Storage) !== "undefined") {
-				console.log("Storage supported");
-				localStorage.formValues = formValues;
-			}
-		}
-
-		console.log(window);
-
-		window.addEventListener('load', () => {
-			// 在页面加载后，设置正确的网络状态
-			navigator.onLine ? showStatus(true) : showStatus(false);
-
-			// 当网络状态发生变化时，浏览器通过以上监听函数可捕获到网络的状态（Chrome59/Firefox54/IE Edge均测试通过）
-			window.addEventListener('online', () => {
-				showStatus(true);
-				console.log("123online");
-			});
-
-			window.addEventListener('offline', () => {
-				showStatus(false);
-				console.log("12：offline");
-			});
-		});
-
-	}
-
+	
 	</script>
 
     <style type="text/css">
