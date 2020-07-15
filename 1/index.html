@@ -27,7 +27,13 @@
 		
 		$("#web-storage-form").submit(function(event) {
 
-			console.log("运行到“提交”按钮的方法里");
+			// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
+			// 获取 id="web-storage-form" 的 form 表单
+			var formElement = document.getElementById("web-storage-form");
+			// 用 form 初始化 FormData 对象
+			var newFormData = new FormData(formElement);
+			console.log("form 对象：" + formElement;
+			console.log("FormData 对象：" + newFormData);
 
 			// Prevent the form from posting
 			event.preventDefault(); 
@@ -61,7 +67,7 @@
 	label, 
 	/*
 	input {
-		// 将每个元素置于一个新行 
+		// 将每个元素置于一个新行。不启用本参数时，可利用 <br> 换行
 		display: block;
 	}
 	*/
