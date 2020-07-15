@@ -64,7 +64,7 @@
 		display: block;
 	}
 	input {
-		/* 在条目之间创建空间，让页面看起来不会太乱 */
+		/*在条目之间创建空间，让页面看起来不会太乱*/
 		margin-bottom: 10px;
 	}
 	</style>
@@ -85,7 +85,17 @@
 	<input type="text" name="compartment-number" id="compartment-number">
     
 	<label for="fault-category">故障类别：</label>
+    <label>辅逆</label>
+    <input type="radio" value="1"  name="fault-category">
+    <label>牵引</label>
+    <input type="radio" value="2"  name="fault-category">
+    <label>列控</label>
+    <input type="radio" value="3"  name="fault-category">
+
+	<!--
+	<label for="fault-category">故障类别：</label>
 	<input type="text" name="fault-category" id="fault-category">
+	-->
 
 	<label for="fault-type">故障级别：</label>
 	<input type="text" name="fault-type" id="fault-type">
