@@ -62,7 +62,16 @@
 		var formElement = document.getElementById("web-storage-form");
 		// 用 form 初始化 FormData 对象
 		var newFormData = new FormData(formElement);
-		console.log(formElement)
+		console.log(formElement);
+
+		// var objArr = JSON.serialize($('web-storage-form').serializeArray());
+		// var obj = objArr.pop();
+		// var strJson = JSON.serialize(obj);
+		// console.log(strJson);
+		console.log($('web-storage-form').serializeArray());
+		// console.log(formJSON);
+
+		// $('#web-storage-form').serializeArray()
 	}
 
 	</script>
