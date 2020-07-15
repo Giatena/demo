@@ -53,6 +53,7 @@
 				localStorage.formValues = formValues;
 			}
 		}
+	}
 
 	function writeIDB() {
 		// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
@@ -67,9 +68,10 @@
         	result[item.name] = item.value;
         	return result;
 		}
-		
-		console.log(finalRes)
 
+		console.log(finalRes)
+	}
+	
 	</script>
 
     <style type="text/css">
