@@ -27,6 +27,14 @@
 			var url = $(this).attr('action');
 			postForm(url, formValues);
 		});
+
+		var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+		if(indexedDB){
+    		alert("支持");}
+		else {
+    		alert("不支持");
+		}
+
 	});
 	
 	</script>
