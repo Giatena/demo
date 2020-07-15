@@ -60,9 +60,15 @@
 		var formElement = document.getElementById("web-storage-form");
 		// 用 form 初始化 FormData 对象
 		var newFormData = new FormData(formElement);
-		console.log("form 对象：" + formElement;
-		console.log("FormData 对象：" + newFormData);
-	}
+		// console.log("form 对象：" + formElement;
+		// console.log("FormData 对象：" + newFormData);
+
+        var finalRes = $('#form').serializeArray().reduce(function(result, item){
+        	result[item.name] = item.value;
+        	return result;
+		}
+		
+		console.log(finalRes)
 
 	</script>
 
