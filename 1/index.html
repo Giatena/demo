@@ -47,13 +47,15 @@
 		var date = new Date();
 		var Year = date.getFullYear();
 		var Month = date.getMonth() + 1			// 由于月份是从0开始计算，所以要加1
-		if(Month < 10) {Month = '0'+ Month;}	//当数值为个数时，在前面加0
 		var Dates = date.getDate();
 		var Hour = date.getHours();
-		if(Hour < 10) {Hour = '0'+ Hour;}
 		var Minute = date.getMinutes();
-		if(Minute < 10) {Minute = '0' + Minute;}
 		var Second = date.getSeconds();
+
+		if(Month < 10) {Month = '0'+ Month;}	//当数值为个数时，在前面加0
+		if(Dates < 10) {Dates = '0'+ Dates;}
+		if(Hour < 10) {Hour = '0'+ Hour;}
+		if(Minute < 10) {Minute = '0' + Minute;}
 		if(Second < 10) {Second = '0' + Second;}
 
 		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
