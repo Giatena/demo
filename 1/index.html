@@ -65,21 +65,14 @@
 		console.log(formElement);
 
 		// serialize() --> form 对象 序列化为字符串（url参数形式），输出各表单元素的name和value值
-		var serializeUrl = $("#web-storage-form").serialize()
-		console.log("序列化为url格式为：" + serializeUrl);
+		var strUrl = $("#web-storage-form").serialize()		// 首选：需提交的数据量最少
+		console.log("序列化为url格式为：" + strUrl);
 
 		// serialize() --> 返回 json 对象，而非字符串
-		var serializeJson = $("#web-storage-form").serializeArray()
+		var formJson = $("#web-storage-form").serializeArray()
 		// JSON.stringify(json对象) --> 将json对象转化为json字符串
-		console.log("序列化为json格式为：" + JSON.stringify(serializeJson));
+		console.log("序列化为json格式为：" + JSON.stringify(formJson));
 
-		// var objArr = JSON.serialize($('web-storage-form').serializeArray());
-		// var obj = objArr.pop();
-		// var strJson = JSON.serialize(obj);
-		// console.log(strJson);
-		// console.log(formJSON);
-
-		// $('#web-storage-form').serializeArray()
 	}
 
 	</script>
@@ -105,36 +98,39 @@
 <!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="web-storage-form">
 
-	<label for="cw-order">质保工单：</label>
-	<input type="text" name="cw-order" id="cw-order">
+	<label for="ticket">质保工单：</label>
+	<input type="text" name="ticket" id="ticket">
 	<br>
-
-	<label for="train-number">列车编号：</label>
-	<input type="text" name="train-number" id="train-number">
-	<br>
-    
-	<label for="compartment-number">车厢编号：</label>
-	<input type="text" name="compartment-number" id="compartment-number">
+	
+	<label for="train">列车编号：</label>
+	<input type="text" name="train" id="train">
 	<br>
     
-	<label for="fault-category">故障类别：</label>
+	<label for="compartment">车厢编号：</label>
+	<input type="text" name="compartment" id="compartment">
+	<br>
+    
+	<label for="category">故障类别：</label>
     <label>辅逆</label>
-    <input type="radio" value="1" name="fault-category" id="fault-category">
+    <input type="radio" value="1" name="category" id="category">
     <label>牵引</label>
-    <input type="radio" value="2" name="fault-category" id="fault-category">
+    <input type="radio" value="2" name="category" id="category">
     <label>列控</label>
-    <input type="radio" value="3" name="fault-category" id="fault-category">
+    <input type="radio" value="3" name="category" id="category">
     <br>
 
-	<!--
-	<label for="fault-category">故障类别：</label>
-	<input type="text" name="fault-category" id="fault-category">
-	-->
-
-	<label for="fault-type">故障级别：</label>
-	<input type="text" name="fault-type" id="fault-type">
+	<label for="type">故障级别：</label>
+	<input type="text" name="type" id="type">
 	<br>
-    
+
+	<label for="description">故障现象：</label>
+	<input type="text" name="description" id="description">
+	<br>
+
+	<label for="action">处理经过：</label>
+	<input type="text" name="action" id="action">
+	<br>
+
 	<input type="submit" value="提交">
 	<br>
 	<input type="reset" value="重置">
