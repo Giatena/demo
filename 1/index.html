@@ -64,12 +64,19 @@
 		var newFormData = new FormData(formElement);
 		console.log(formElement);
 
+		// serialize() --> form 对象 序列化为字符串（url参数形式），输出各表单元素的name和value值
+		var serializeUrl = $("#web-storage-form").serialize()
+		console.log("序列化为url格式为：" + serializeUrl);
+
+		// serialize() --> 返回 json 对象，而非字符串
+		var serializeJson = $("#web-storage-form").serializeArray()
+		// JSON.stringify(json对象) --> 将json对象转化为json字符串
+		console.log("序列化为json格式为：" + JSON.stringify(serializeJson));
+
 		// var objArr = JSON.serialize($('web-storage-form').serializeArray());
 		// var obj = objArr.pop();
 		// var strJson = JSON.serialize(obj);
 		// console.log(strJson);
-		var serializeUrl = $("#web-storage-form").serializeArray()
-		console.log("序列化为url格式为：" + serializeUrl);
 		// console.log(formJSON);
 
 		// $('#web-storage-form').serializeArray()
