@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>HTML5 Web Storage</title>
+    <title>电子工单（实验性）</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -38,6 +38,30 @@
 		});
 	});
 	
+	// 完全加载完毕时调用
+	window.onload = function(){
+		showTime();
+	}
+
+	function showTime() {
+		var date = new Date();
+		var Year = date.getFullYear();
+		var Month = date.getMonth() + 1			// 由于月份是从0开始计算，所以要加1
+		if(Month < 10) {Month = '0'+ Month;}	//当数值为个数时，在前面加0
+		var Dates = date.getDate();
+		var Hour = date.getHours();
+		if(Hour < 10) {Hour = '0'+ Hour;}
+		var Minute = date.getMinutes();
+		if(Minute < 10) {Minute = '0' + Minute;}
+		var Second = date.getSeconds();
+		if(Second < 10) {Second = '0' + Second;}
+
+		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
+		document.getElementById('dateTime').innerHTML = Year + "." + Month + "." + Dates + " " + Hour + ":" + Minute + ":" + Second;
+
+		setTimeout('showTime()',1000);			//每隔1秒获取一次时间
+	}
+
 	function postForm(url, formValues) {
 		// 表单数据提交服务器或缓存到 localStorage
 		if(navigator.onLine) {
@@ -72,7 +96,6 @@
 		var formJson = $("#web-storage-form").serializeArray()
 		// JSON.stringify(json对象) --> 将json对象转化为json字符串
 		console.log("序列化为json格式为：" + JSON.stringify(formJson));
-
 	}
 
 	</script>
@@ -98,6 +121,7 @@
 <!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="web-storage-form">
 
+	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
 	<label for="ticket">质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<br>
@@ -111,27 +135,27 @@
 	<br>
     
 	<label for="category">故障类别：</label>
-	<label>辅逆</label>
 	<input type="radio" value="1" name="category" id="category">
-	<label>牵引</label>
+	<label>辅逆</label>
 	<input type="radio" value="2" name="category" id="category">
-	<label>列控</label>
+	<label>牵引</label>
 	<input type="radio" value="3" name="category" id="category">
+	<label>列控</label>
 	<br>
 
 	<label for="type">故障级别：</label>
-	<label>救援</label>
 	<input type="radio" value="1" name="type" id="type">
-	<label>清客</label>
+	<label>救援</label>
 	<input type="radio" value="2" name="type" id="type">
-	<label>掉线</label>
+	<label>清客</label>
 	<input type="radio" value="3" name="type" id="type">
-	<label>换表</label>
+	<label>掉线</label>
 	<input type="radio" value="4" name="type" id="type">
-	<label>无影响</label>
+	<label>换表</label>
 	<input type="radio" value="5" name="type" id="type">
-	<label>均修</label>
+	<label>无影响</label>
 	<input type="radio" value="6" name="type" id="type">
+	<label>均修</label>
 	<br>
 
 	<!-- web访问，默认宽度；手机访问，自动适配；rows="2" 默认1行，再增加2行 -->
@@ -148,6 +172,9 @@
 	<input type="reset" value="重置">
 	<br>
 	<input type="button" value="缓存" id="idb" onclick="writeIDB()">
+	<br>
+
+	<!-- <div id="dateTime"></div> -->
 
 </form>
 
