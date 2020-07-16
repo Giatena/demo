@@ -99,9 +99,9 @@
 <form action="post.php" method="post" id="web-storage-form">
 
 	<label for="ticket">质保工单：</label>
-	<input type="text" name="ticket" id="ticket">
+	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<br>
-	
+
 	<label for="train">列车编号：</label>
 	<input type="text" name="train" id="train">
 	<br>
@@ -111,24 +111,36 @@
 	<br>
     
 	<label for="category">故障类别：</label>
-    <label>辅逆</label>
-    <input type="radio" value="1" name="category" id="category">
-    <label>牵引</label>
-    <input type="radio" value="2" name="category" id="category">
-    <label>列控</label>
-    <input type="radio" value="3" name="category" id="category">
-    <br>
-
-	<label for="type">故障级别：</label>
-	<input type="text" name="type" id="type">
+	<label>辅逆</label>
+	<input type="radio" value="1" name="category" id="category">
+	<label>牵引</label>
+	<input type="radio" value="2" name="category" id="category">
+	<label>列控</label>
+	<input type="radio" value="3" name="category" id="category">
 	<br>
 
+	<label for="type">故障级别：</label>
+	<label>救援</label>
+	<input type="radio" value="1" name="type" id="type">
+	<label>清客</label>
+	<input type="radio" value="2" name="type" id="type">
+	<label>掉线</label>
+	<input type="radio" value="3" name="type" id="type">
+	<label>换表</label>
+	<input type="radio" value="4" name="type" id="type">
+	<label>无影响</label>
+	<input type="radio" value="5" name="type" id="type">
+	<label>均修</label>
+	<input type="radio" value="6" name="type" id="type">
+	<br>
+
+	<!-- web访问，默认宽度；手机访问，自动适配；rows="2" 默认1行，再增加2行 -->
 	<label for="description">故障现象：</label>
-	<input type="text" name="description" id="description">
+	<textarea name="description" id="description" cols="80" rows="2"></textarea>
 	<br>
 
 	<label for="action">处理经过：</label>
-	<input type="text" name="action" id="action">
+	<textarea name="action" id="action" cols="80" rows="5"></textarea>
 	<br>
 
 	<input type="submit" value="提交">
