@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>电子工单（实验性）</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    // IndexedDB 支持检测
+	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+	if(indexedDB){
+		console.log("浏览器支持IndexedDB");
+	}
+	else {
+		// 弹窗警告
+		alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
+	}
+
+	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
+	$(document).ready(function() {
+		// 检查旧离线会话的 Web 缓存
+		if(localStorage.formValues) {
+			console.log("localStorage.formValues: "+ localStorage.formValues);
+			postForm($("#web-storage-form").attr('action'), localStorage.formValues);
+			localStorage.removeItem("formValues");
+		}
+		
+		// jQuery：点击 id=web-storage-form 的 submit 按钮，执行 function
+		$("#web-storage-form").submit(function(event) {
+
+			// Prevent the form from posting
+			event.preventDefault(); 
+			
+			// Gather values
+			var formValues = $(this).serialize();
+			var url = $(this).attr('action');
+			postForm(url, formValues);
+		});
+	});
+	
+	// 完全加载完毕时调用
+	window.onload = function(){
+		showTime();
+	}
+
+	function showTime() {
+		var date = new Date();
+		var Year = date.getFullYear();
+		var Month = date.getMonth() + 1			// 由于月份是从0开始计算，所以要加1
+		var Dates = date.getDate();
+		var Hour = date.getHours();
+		var Minute = date.getMinutes();
+		var Second = date.getSeconds();
+
+		if(Month < 10) {Month = '0'+ Month;}	//当数值为个数时，在前面加0
+		if(Dates < 10) {Dates = '0'+ Dates;}
+		if(Hour < 10) {Hour = '0'+ Hour;}
+		if(Minute < 10) {Minute = '0' + Minute;}
+		if(Second < 10) {Second = '0' + Second;}
+
+		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
+		document.getElementById('dateTime').innerHTML = Year + "." + Month + "." + Dates + " " + Hour + ":" + Minute + ":" + Second;
+
+		setTimeout('showTime()',1000);			//每隔1秒获取一次时间
+	}
+
+	function postForm(url, formValues) {
+		// 表单数据提交服务器或缓存到 localStorage
+		if(navigator.onLine) {
+			console.log("Online");
+	    	$.post(url, formValues, function(data) {
+				console.log("Success: "+ data);
+			});
+		}
+		else {
+			console.log("Offline");
+			if(typeof(Storage) !== "undefined") {
+				console.log("Storage supported");
+				localStorage.formValues = formValues;
+			}
+		}
+	}
+
+	function writeIDB() {
+		// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
+
+		// 获取 id="web-storage-form" 的 form 表单
+		var formElement = document.getElementById("web-storage-form");
+		// 用 form 初始化 FormData 对象
+		var newFormData = new FormData(formElement);
+		console.log(formElement);
+
+		// serialize() --> form 对象 序列化为字符串（url参数形式），输出各表单元素的name和value值
+		var strUrl = $("#web-storage-form").serialize()		// 首选：需提交的数据量最少
+		console.log("序列化为url格式为：" + strUrl);
+
+		// serialize() --> 返回 json 对象，而非字符串
+		var formJson = $("#web-storage-form").serializeArray()
+		// JSON.stringify(json对象) --> 将json对象转化为json字符串
+		console.log("序列化为json格式为：" + JSON.stringify(formJson));
+	}
+
+	</script>
+
+    <style type="text/css">
+	label, 
+	/*
+	input {
+		// 将每个元素置于一个新行。不启用本参数时，可利用 <br> 换行
+		display: block;
+	}
+	*/
+	input {
+		/*在条目之间创建空间，让页面看起来不会太乱*/
+		margin-bottom: 10px;
+	}
+	</style>
+
+</head>
+
+<body>
+
+<!-- 表单传送到服务器的"post.php" -->
+<form action="post.php" method="post" id="web-storage-form">
+
+	<div id="dateTime"></div>
+	<br>
+
+	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
+	<label for="ticket">质保工单：</label>
+	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
+	<br>
+
+	<label for="train">列车编号：</label>
+	<input type="text" name="train" id="train">
+	<br>
+    
+	<label for="compartment">车厢编号：</label>
+	<input type="text" name="compartment" id="compartment">
+	<br>
+    
+	<label for="category">故障类别：</label>
+	<input type="radio" value="1" name="category" id="category">
+	<label>辅逆</label>
+	<input type="radio" value="2" name="category" id="category">
+	<label>牵引</label>
+	<input type="radio" value="3" name="category" id="category">
+	<label>列控</label>
+	<br>
+
+	<label for="type">故障级别：</label>
+	<input type="radio" value="1" name="type" id="type">
+	<label>救援</label>
+	<input type="radio" value="2" name="type" id="type">
+	<label>清客</label>
+	<input type="radio" value="3" name="type" id="type">
+	<label>掉线</label>
+	<input type="radio" value="4" name="type" id="type">
+	<label>换表</label>
+	<input type="radio" value="5" name="type" id="type">
+	<label>无影响</label>
+	<input type="radio" value="6" name="type" id="type">
+	<label>均修</label>
+	<br>
+
+	<!-- web访问，默认宽度；手机访问，自动适配；rows="2" 默认1行，再增加2行 -->
+	<label for="description">故障现象：</label>
+	<textarea name="description" id="description" cols="80" rows="2"></textarea>
+	<br>
+
+	<label for="action">处理经过：</label>
+	<textarea name="action" id="action" cols="80" rows="5"></textarea>
+	<br>
+
+	<input type="submit" value="提交">
+	<br>
+	<input type="reset" value="重置">
+	<br>
+	<input type="button" value="缓存" id="idb" onclick="writeIDB()">
+	<br>
+	
+</form>
+
+</body>
+</html>
