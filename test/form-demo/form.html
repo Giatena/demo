@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>form-demo</title>
+    <link rel="stylesheet" href="iview.css">
+    <style>
+        #app {
+            padding: 10px 20px;
+            width: 50%;
+            margin: auto;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+      <vue-form-maker :options="options" />
+    </div>
+<script src="../../libs/Vue.js/2.6.11/vue.min.js"></script>
+<script src="../../libs/ViewUI/4.3.2/iview.min.js"></script>
+<script src="../../libs/vue-form-maker/vue-form-maker.js"></script>    
+
+<script>
 new Vue({
   el: "#app",
   data: {
@@ -19,7 +45,6 @@ new Vue({
       // 表单项组件数据 必需
       formItem: [
         {
-         
           type: 'input',
           key: 'accout',
           label: '账号',
@@ -120,8 +145,6 @@ new Vue({
       ],
       // 提交按钮 必需
       submit:{
-        className: 'btn-container',
-        labelWidth: 0,
         text: '提交',
         props: {
           type: 'primary'
@@ -136,3 +159,8 @@ new Vue({
     }
   }
 })
+</script>
+
+</body>
+
+</html>
