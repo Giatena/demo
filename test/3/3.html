@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8">
+    <title></title>
+    <section class="sidebar" id="sidebar-left"></section>
+    <script src="../../libs/Vue.js/2.6.11/vue.js"></script>
+
+    <script type="text/javascript">
+    $('#sidebar-left').load("./templates/IOTsidebarLeft.html", function () {
+                vmIOTsidebarLeftFun();                      
+            });
+    function vmIOTsidebarLeftFun() {
+        $.ajax({
+            url: "./staticIOT.json",
+            success: function (result) {
+                var vmIOTsidebarLeft = new Vue({
+                    el: '#numberOfAlarms',
+                    data: result
+                });
+                window.vmIOTsidebarLeft = vmIOTsidebarLeft;
+            }
+        });
+    }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

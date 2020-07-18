@@ -1,0 +1,13 @@
+ "numberOfAlarms": {
+        "name": "报警数量",
+        "attributes": {
+            "ZRnumOfAlarms": {
+                "name": "昨日报警数量",
+                "num": 2021
+            },
+            "JRnumOfAlarms": {
+                "name": "今日报警数量",
+                "num": 854,
+                }
+          }
+   }

@@ -4,13 +4,13 @@ $('#sidebar-left').load("./jsonDemoData.html", function () {
 
 function jsonDemoDatafun() {
     $.ajax({
-        url: "./data/staticIOT.json",
+        url: "./jsonDemoData.json",
         success: function (result) {
-            var vmIOTsidebarLeft = new Vue({
-                el: '#numberOfAlarms',
+            var vmformDemoData = new Vue({
+                el: '#formDemoData',
                 data: result
             });
-            window.vmIOTsidebarLeft = vmIOTsidebarLeft;
+            window.vmformDemoData = vmformDemoData;
         }
     });
 }
