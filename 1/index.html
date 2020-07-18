@@ -94,7 +94,7 @@
 		var strUrl = $("#web-storage-form").serialize()		// 首选：需提交的数据量最少
 		console.log("序列化为url格式为：" + strUrl);
 
-		// serialize() --> 返回 json 对象，而非字符串
+		// serializeArray() --> 返回 json 对象，而非字符串
 		var formJson = $("#web-storage-form").serializeArray()
 		// JSON.stringify(json对象) --> 将json对象转化为json字符串
 		console.log("序列化为json格式为：" + JSON.stringify(formJson));
