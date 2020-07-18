@@ -10,12 +10,12 @@
 <body>
   <div id="main">
         <label>GUID</label>
-        <label>{{v.formDemoData.GUID}}</label>
+        <label>{{v.resname}}</label>
   </div>
 </body>
 <script>
   $(document).ready(function () {
-    $.getJSON("jsonDemoData.json", function (result, status) {
+    $.getJSON("data.json", function (result, status) {
       var v = new Vue({
         el: '#main',
         data: result
