@@ -9,10 +9,10 @@
 </head>
 <body>
   <div id="main" >
-    <tr v-for="r in rows">
+<!--     <tr v-for="r in rows">
         <td>{{v.name}}</td>
         <td>{{v.value}}</td>
-    </tr>
+    </tr> -->
   </div>
 </body>
 <script>
@@ -20,7 +20,7 @@
     $.getJSON("jsonDemoData.json", function (result, status) {
       var v = new Vue({
         el: '#main',
-        data: result
+        // data: result
         console.log(result)
       });
     });
