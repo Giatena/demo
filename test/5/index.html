@@ -8,9 +8,9 @@
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-  <div id="main">
-        <label>GUID</label>
-        <label>{{v.name}}</label>
+  <div id="main" v-for="r in rows">
+        <td>{{r.name}}</td>
+        <td>{{r.value}}</td>
   </div>
 </body>
 <script>
@@ -18,7 +18,9 @@
     $.getJSON("jsonDemoData.json", function (result, status) {
       var v = new Vue({
         el: '#main',
-        data: result
+        data: {
+          rows: result
+        }
       });
     });
   });
