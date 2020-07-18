@@ -8,9 +8,11 @@
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-  <div id="main" v-for="r in rows">
-        <td>{{r.name}}</td>
-        <td>{{r.value}}</td>
+  <div id="main" >
+    <tr v-for="r in rows">
+        <td>{{v.name}}</td>
+        <td>{{v.value}}</td>
+    </tr>
   </div>
 </body>
 <script>
