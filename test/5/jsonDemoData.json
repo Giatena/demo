@@ -1,15 +1,3 @@
 // jsonDemoData
 // 20200718-230315-xxxx：电子工单提交/缓存的毫秒时间戳，为工单的唯一识别号。
-{
-	"formDemoData":{
-		"GUID":"20200718230315",
-		"ticket":"20200231CW_ML_01",
-		"train":"999",
-		"compartment":"999999",
-		"category":"1",
-		"type":"5",
-		"description":"牵引轻级",
-		"action":"xxxxxxxx，工况正常。",
-		"replacement":"3"
-		}
-}
+[{"name":"GUID","value":"20200718230315"},{"name":"ticket","value":"20200231CW_ML_01"},{"name":"train","value":"999"},{"name":"compartment","value":"999999"},{"name":"category","value":"1"},{"name":"type","value":"5"},{"name":"description","value":"牵引轻级"},{"name":"action","value":"xxxxxxxx，工况正常。"},{"name":"replacement","value":"3"}]
