@@ -40,7 +40,7 @@
 	
 	// 完全加载完毕时调用
 	window.onload = function(){
-		showTime();
+		setTimeout('showTime()', 1000);		// 每隔1秒运行一次 showTime()，即获取当前时间戳
 	}
 
 	function showTime() {
@@ -58,13 +58,12 @@
 		if(h < 10) {h = '0'+ h;}
 		if(m < 10) {m = '0' + m;}
 		if(s < 10) {s = '0' + s;}
+		if(ms < 100) {ms = '0' + ms;}
 
 		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
 		document.getElementById('dateTime').innerHTML = Y + "." + M + "." + D + " " + h + ":" + m + ":" + s + " " + ms;
 		
 		// console.log(ms);
-
-		setTimeout('showTime()', 1000);			// 每隔1秒获取一次时间
 	}
 
 	function postForm(url, formValues) {
@@ -133,6 +132,8 @@
 	<br>
 
 	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
+	<input type="hidden" name="GUID" id="GUID" value="">
+
 	<label for="ticket">质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<br>
