@@ -81,6 +81,33 @@
 		}
 	}
 
+	function getFormData($form) {
+		var unindexed_array = $form.serializeArray();
+		var indexed_array = {};
+
+		$.map(unindexed_array, function (n, i) {
+			indexed_array[n['name']] = n['value'];
+		});
+
+		return indexed_array;
+	}
+
+	$.fn.serializeObject = function(formJson) {
+		var o = {};
+		var a = this.serializeArray();
+		$.each(a, function() {
+			if (o[this.name] !== undefined) {
+				if (!o[this.name].push) {
+					o[this.name] = [o[this.name]];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};
+
 	function writeIDB() {
 		// form 表单封装到 FormData 对象，二合一语句 --> var formData = new FormData(document.getElementById("web-storage-form"));
 
@@ -92,19 +119,23 @@
 
 		// serialize() --> form 对象 序列化为字符串（url参数形式），输出各表单元素的name和value值
 		var strUrl = $("#web-storage-form").serialize()		// 首选：需提交的数据量最少
-		console.log("序列化为url格式为：" + strUrl);
+		console.log("serialize()序列化为url格式为：" + strUrl);
 
 		// serializeArray() --> 返回 json 对象，而非字符串
 		var formJson = $("#web-storage-form").serializeArray()
 		// JSON.stringify(json对象) --> 将json对象转化为json字符串
-		console.log("序列化为json格式为：" + JSON.stringify(formJson));
-		
-		$.each(formJson, function(i, field){
-    		$("#results").append(field.name + ":" + field.value + " ");
-  		});
-		console.log("序列化为json格式为：" + formJson);
-	}
+		console.log("serializeArray()序列化为json格式为：" + JSON.stringify(formJson));
 
+		// 防止中文乱码
+		strUrl = decodeURIComponent(strUrl, true)
+		console.log("序列化为json2格式为：" + strUrl);
+		
+		// serializeObject() 可以一劳永逸地解决上述“serialize() 不是 json数组”和“url化后的中文乱码问题”
+		var a = JSON.stringify($("#web-storage-form").serializeObject());
+		console.log("序列化为json4格式为：" + a);
+
+	}
+	
 	</script>
 
     <style type="text/css">
