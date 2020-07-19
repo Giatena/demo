@@ -53,18 +53,18 @@
 		var s = date.getSeconds();
 		var ms = date.getMilliseconds();	// 取毫秒数（3位）
 
-		if(M < 10) {M = '0'+ M;}			//当数值为个数时，在前面加0
+		if(M < 10) {M = '0'+ M;}			// 当数值为个位数时，在前面加0
 		if(D < 10) {D = '0'+ D;}
 		if(h < 10) {h = '0'+ h;}
 		if(m < 10) {m = '0' + m;}
 		if(s < 10) {s = '0' + s;}
 
 		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
-		document.getElementById('dateTime').innerHTML = Y + "." + M + "." + D + " " + h + ":" + m + ":" + s;
+		document.getElementById('dateTime').innerHTML = Y + "." + M + "." + D + " " + h + ":" + m + ":" + s + " " + ms;
 		
 		// console.log(ms);
 
-		setTimeout('showTime()', 1000);			//每隔1秒获取一次时间
+		setTimeout('showTime()', 1000);			// 每隔1秒获取一次时间
 	}
 
 	function postForm(url, formValues) {
