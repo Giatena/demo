@@ -51,6 +51,7 @@
 		var h = date.getHours();
 		var m = date.getMinutes();
 		var s = date.getSeconds();
+		var ms = date.getMilliseconds();	// 取毫秒数（3位）
 
 		if(M < 10) {M = '0'+ M;}			//当数值为个数时，在前面加0
 		if(D < 10) {D = '0'+ D;}
@@ -60,7 +61,8 @@
 
 		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
 		document.getElementById('dateTime').innerHTML = Y + "." + M + "." + D + " " + h + ":" + m + ":" + s;
-		console.log(new Date("2017-11-15 22:22:22"));
+		
+		// console.log(ms);
 
 		setTimeout('showTime()', 1000);			//每隔1秒获取一次时间
 	}
