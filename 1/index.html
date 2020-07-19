@@ -98,6 +98,11 @@
 		var formJson = $("#web-storage-form").serializeArray()
 		// JSON.stringify(json对象) --> 将json对象转化为json字符串
 		console.log("序列化为json格式为：" + JSON.stringify(formJson));
+		
+		$.each(formJson, function(i, field){
+    		$("#results").append(field.name + ":" + field.value + " ");
+  		});
+		console.log("序列化为json格式为：" + formJson);
 	}
 
 	</script>
