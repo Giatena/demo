@@ -5,8 +5,8 @@
     <title>电子工单（实验性）</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-    <script type="text/javascript">
-    // IndexedDB 支持检测
+	<script type="text/javascript">
+	// IndexedDB 支持检测
 	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
 	if(indexedDB){
 		console.log("浏览器支持IndexedDB");
@@ -45,23 +45,24 @@
 
 	function showTime() {
 		var date = new Date();
-		var Year = date.getFullYear();
-		var Month = date.getMonth() + 1			// 由于月份是从0开始计算，所以要加1
-		var Dates = date.getDate();
-		var Hour = date.getHours();
-		var Minute = date.getMinutes();
-		var Second = date.getSeconds();
+		var Y = date.getFullYear();
+		var M = date.getMonth() + 1			// 由于月份是从0开始计算，所以要加1
+		var D = date.getDate();
+		var h = date.getHours();
+		var m = date.getMinutes();
+		var s = date.getSeconds();
 
-		if(Month < 10) {Month = '0'+ Month;}	//当数值为个数时，在前面加0
-		if(Dates < 10) {Dates = '0'+ Dates;}
-		if(Hour < 10) {Hour = '0'+ Hour;}
-		if(Minute < 10) {Minute = '0' + Minute;}
-		if(Second < 10) {Second = '0' + Second;}
+		if(M < 10) {M = '0'+ M;}			//当数值为个数时，在前面加0
+		if(D < 10) {D = '0'+ D;}
+		if(h < 10) {h = '0'+ h;}
+		if(m < 10) {m = '0' + m;}
+		if(s < 10) {s = '0' + s;}
 
 		// console.log(Year +"." + Month + "." + Dates +" " + Hour+ ":" + Minute + ":" + Second);
-		document.getElementById('dateTime').innerHTML = Year + "." + Month + "." + Dates + " " + Hour + ":" + Minute + ":" + Second;
+		document.getElementById('dateTime').innerHTML = Y + "." + M + "." + D + " " + h + ":" + m + ":" + s;
+		console.log(new Date("2017-11-15 22:22:22"));
 
-		setTimeout('showTime()',1000);			//每隔1秒获取一次时间
+		setTimeout('showTime()', 1000);			//每隔1秒获取一次时间
 	}
 
 	function postForm(url, formValues) {
@@ -79,17 +80,6 @@
 				localStorage.formValues = formValues;
 			}
 		}
-	}
-
-	function getFormData($form) {
-		var unindexed_array = $form.serializeArray();
-		var indexed_array = {};
-
-		$.map(unindexed_array, function (n, i) {
-			indexed_array[n['name']] = n['value'];
-		});
-
-		return indexed_array;
 	}
 
 	$.fn.serializeObject = function(formJson) {
