@@ -141,6 +141,12 @@
 
 		openRequest.onsuccess = function(success) {
 			console.log("数据库已打开: " + success.target.result);
+			// 获取数据库实例对象 db
+			var db = success.target.result;
+			if (!db.objectStoreNames.contains(objectStoreName)) {
+				var objectStore = db.createObjectStore(objectStoreName, { autoIncrement: true });
+				console.log('没有' + objectStoreName + "表，已创建。");
+			}
 		}
 
 		openRequest.onupgradeneeded = function(event) {
