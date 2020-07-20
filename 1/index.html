@@ -102,28 +102,48 @@
 		return o;
 	};
 
-	// 参数为:数据库名和版本号。数据库存在则打开,否则创建。
+	// 参数：数据库名和版本号。数据库存在则打开,否则创建。
 	function createDatabase(dbName, version) {
+	
 		// request 返回一个 IDBOpenDBRequest 对象
 		// 而我们期望得到的DB对象在其result属性中
 		var openRequest = window.indexedDB.open(dbName, version);
 
 		openRequest.onerror = function(err) {
-			console.log("创建数据库错误: " + err.target.errorCode);
+			console.log("创建[" + dbName + "]数据库错误: " + err.target.errorCode);
 		};
 
 		openRequest.onsuccess = function(success) {
-			console.log("onsuccess：数据库已打开: " + success.target.result);
+			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 			// 获取数据库实例对象 db
 			var db = success.target.result;
 		};
 
 		// 首次先触发 onupgradeneeded，再触发 onsuccess
 		openRequest.onupgradeneeded = function(event) {
-			console.log("onupgradeneeded：数据库“" + dbName + "”不存在，已自动创建同名数据库");
+			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 			// 获取数据库实例对象 db
 			var db = event.target.result;
 		};
+	}
+
+	// 关闭与删除数据库
+	function deleteDatabase(dbName) {
+		// 删除数据库使用 indexedDB 对象的 deleteDatabase方法
+		var request = window.indexedDB.deleteDatabase(dbName);
+		console.log("运行到这里");
+
+		request.onerror = function(err) {
+			console.log("删除[" + dbName + "]数据库失败。" + err.target.errorCode);
+		}
+		request.onsuccess = function(success) {
+			console.log("删除[" + dbName + "]数据库成功。" + success.target.result);
+		}
+	}
+
+	// 关闭数据库
+	function colseDatabase(dbName) {
+		dbName.close();
 	}
 
 	// 新增数据
@@ -279,7 +299,7 @@
 	<br>
 	<label for="test">IDB 数据库操作：</label>
 	<input type="button" value="新建" id="xj" onclick="createDatabase('CW', 1)">
-	<input type="button" value="删除" id="sc" >
+	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
 	
 </form>
 
