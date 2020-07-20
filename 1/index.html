@@ -6,15 +6,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 	<script type="text/javascript">
-	// IndexedDB 支持检测
-	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
-	if(indexedDB){
-		console.log("浏览器支持IndexedDB");
-	}
-	else {
-		// 弹窗警告
-		alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
-	}
 
 	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
 	$(document).ready(function() {
@@ -41,6 +32,16 @@
 	// 完全加载完毕时调用
 	window.onload = function(){
 		showTime();
+
+		// IndexedDB 支持检测
+		var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+		if(indexedDB){
+			console.log("浏览器支持IndexedDB");
+		}
+		else {
+			// 弹窗警告
+			alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
+		}
 	}
 
 	function showTime() {
@@ -101,15 +102,37 @@
 		return o;
 	};
 
+	// 参数为:数据库名和版本号。数据库存在则打开,否则创建。
+	function createDatabase(dbName, version) {
+		var openRequest = indexedDB.open(dbName, version);
+		// request 并不会返回一个DB对象的句柄，我们得到的是一个IDBOpenDBRequest对象
+		// 而我们期望得到的DB对象在其result属性中
+		console.log(openRequest);
+
+		openRequest.onerror = function(err) {
+			console.log("Database error: " + err.target.errorCode);
+		};
+		openRequest.onsuccess = function(success) {
+			console.log(JSON.stringify(success));
+			console.log("Database created" + success.target.result);
+			
+		};
+		openRequest.onupgradeneeded = function (evt) {
+			// ...
+		};
+	}
+
 	function writeIDB() {
-		// serializeObject() 可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
+		// serializeObject() 自定义函数可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
 		var formJson = JSON.stringify($("#web-storage-form").serializeObject());
 		console.log("form数据序列化为json对象：" + formJson);
+
+		createDatabase('Tickets');
 	}
 
 	</script>
 
-    <style type="text/css">
+	<style type="text/css">
 	label, 
 	/*
 	input {
