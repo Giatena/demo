@@ -104,27 +104,25 @@
 
 	// 参数为:数据库名和版本号。数据库存在则打开,否则创建。
 	function createDatabase(dbName, version) {
-		var openRequest = window.indexedDB.open(dbName, version);
 		// request 返回一个 IDBOpenDBRequest 对象
 		// 而我们期望得到的DB对象在其result属性中
-		console.log(openRequest);
+		var openRequest = window.indexedDB.open(dbName, version);
 
 		openRequest.onerror = function(err) {
 			console.log("创建数据库错误: " + err.target.errorCode);
 		};
 
 		openRequest.onsuccess = function(success) {
-			console.log(JSON.stringify(success));
 			console.log("数据库已打开: " + success.target.result);
 			// 获取数据库实例对象 db
 			var db = success.target.result;
 		};
 
+		// 首次先触发 onupgradeneeded，再触发 onsuccess
 		openRequest.onupgradeneeded = function(event) {
-			console.log(JSON.stringify(event));
 			console.log('数据库版本有变化...');
+			// 获取数据库实例对象 db
 			var db = event.target.result;
-			return db;
 		};
 	}
 
@@ -142,23 +140,23 @@
 		openRequest.onsuccess = function(success) {
 			console.log("数据库已打开: " + success.target.result);
 			// 获取数据库实例对象 db
-			var db = success.target.result;
-			if (!db.objectStoreNames.contains(objectStoreName)) {
-				var objectStore = db.createObjectStore(objectStoreName, { autoIncrement: true });
-				console.log('没有' + objectStoreName + "表，已创建。");
-			}
+			// var db = success.target.result;
+			// var objectStore;
+			// if (!db.objectStoreNames.contains(objectStoreName)) {
+			// 	objectStore = db.createObjectStore('CW', { keyPath: 'id' });
+			// 	console.log("没有" + objectStoreName + "表，已创建。");
+			// }
 		}
 
 		openRequest.onupgradeneeded = function(event) {
 			console.log('数据库版本有变化...');
 			// 获取数据库实例对象 db
-			var db = event.target.result;
-			// 如果不存在，则新建一张名为“CW”的表，主键自动生成
-			if (!db.objectStoreNames.contains(objectStoreName)) {
-				var objectStore = db.createObjectStore(objectStoreName, autoIncrement);
-				console.log('没有' + objectStoreName + "表，已创建。");
-			}
-		};
+			// var db = event.target.result;
+			// // 如果不存在，则新建一张名为“CW”的表，主键自动生成
+			// if (!db.objectStoreNames.contains(objectStoreName)) {
+			// 	var objectStore = db.createObjectStore(objectStoreName, autoIncrement);
+			// 	console.log('没有' + objectStoreName + "表，已创建。");
+			// }
 			// // 对某个表 进行事务操作的事务权限控制 
 			// var transaction = db.transaction(objectStoreName, 'readwrite');
 			// // 对表进行操作
@@ -176,6 +174,7 @@
 			// 	// console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']失败！！');
 			// }
 		}
+	}
 
 	function writeIDB() {
 		// serializeObject() 自定义函数可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
@@ -278,6 +277,9 @@
 	<br>
 	<input type="button" value="缓存" id="idb" onclick="writeIDB()">
 	<br>
+	<label for="test">IDB 数据库操作：</label>
+	<input type="button" value="新建" id="xj" onclick="createDatabase('CW', 1)">
+	<input type="button" value="删除" id="sc" >
 	
 </form>
 
