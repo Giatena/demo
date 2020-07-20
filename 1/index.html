@@ -104,30 +104,66 @@
 
 	// 参数为:数据库名和版本号。数据库存在则打开,否则创建。
 	function createDatabase(dbName, version) {
-		var openRequest = indexedDB.open(dbName, version);
-		// request 并不会返回一个DB对象的句柄，我们得到的是一个IDBOpenDBRequest对象
+		var openRequest = window.indexedDB.open(dbName, version);
+		// request 返回一个 IDBOpenDBRequest 对象
 		// 而我们期望得到的DB对象在其result属性中
 		console.log(openRequest);
 
 		openRequest.onerror = function(err) {
-			console.log("Database error: " + err.target.errorCode);
+			console.log("创建数据库错误: " + err.target.errorCode);
 		};
+
 		openRequest.onsuccess = function(success) {
 			console.log(JSON.stringify(success));
-			console.log("Database created" + success.target.result);
-			
+			console.log("数据库已打开: " + success.target.result);
+			// 获取数据库实例对象 db
+			var db = success.target.result;
 		};
-		openRequest.onupgradeneeded = function (evt) {
-			// ...
+
+		openRequest.onupgradeneeded = function (event) {
+			console.log(JSON.stringify(event));
+			console.log('数据库版本有变化...');
+			var db = event.target.result;
+			var objectStore;
+			// 如果不存在，则新建一张名为“CW”的表，主键是“id”
+			if (!db.objectStoreNames.contains('CW')) {
+				objectStore = db.createObjectStore('CW', );
+			}
 		};
 	}
 
+	// 新增数据
+	// 数据库名称,对象仓库（表名）,传入的参数
+	function insert(dbName, objectStoreName, argument) {
+		var request = window.indexedDB.open(dbName);
+		request.onsuccess = function(success) {
+			// 获取数据库实例对象 db
+			var db = success.target.result;
+			// 对某个表 进行事务操作的事务权限控制 
+			var transaction = db.transaction(objectStoreName, 'readwrite');
+			// 对表进行操作
+			var objectStore = transaction.objectStore(objectStoreName);
+			// 使用add方法,此方法是异步的。有success,error事件
+			var add = objectStore.add(argument);
+
+			// 添加成功的回调函数
+			add.onsuccess = function(e) {
+				console.log(e);
+				console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']成功！！');
+			}
+			add.error = function(e) {
+				console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']失败！！');
+			}
+		}
+	}
+​	
 	function writeIDB() {
 		// serializeObject() 自定义函数可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
 		var formJson = JSON.stringify($("#web-storage-form").serializeObject());
 		console.log("form数据序列化为json对象：" + formJson);
 
-		createDatabase('Tickets');
+		// createDatabase('Tickets', 2);
+		// insert('Tickets','CW', formJson);
 	}
 
 	</script>
