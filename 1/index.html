@@ -120,7 +120,7 @@
 			var db = success.target.result;
 		};
 
-		openRequest.onupgradeneeded = function (event) {
+		openRequest.onupgradeneeded = function(event) {
 			console.log(JSON.stringify(event));
 			console.log('数据库版本有变化...');
 			var db = event.target.result;
@@ -129,41 +129,45 @@
 			if (!db.objectStoreNames.contains('CW')) {
 				objectStore = db.createObjectStore('CW', );
 			}
+			return db;
 		};
 	}
 
 	// 新增数据
 	// 数据库名称,对象仓库（表名）,传入的参数
-	function insert(dbName, objectStoreName, argument) {
-		var request = window.indexedDB.open(dbName);
-		request.onsuccess = function(success) {
+	function insert(dbName, version, objectStoreName, argument) {
+		var db = createDatabase(dbName, version);
+			console.log("运行到这里2");
 			// 获取数据库实例对象 db
 			var db = success.target.result;
 			// 对某个表 进行事务操作的事务权限控制 
 			var transaction = db.transaction(objectStoreName, 'readwrite');
 			// 对表进行操作
 			var objectStore = transaction.objectStore(objectStoreName);
+			console.log(argument);
 			// 使用add方法,此方法是异步的。有success,error事件
 			var add = objectStore.add(argument);
 
 			// 添加成功的回调函数
 			add.onsuccess = function(e) {
 				console.log(e);
-				console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']成功！！');
+				// console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']成功！！');
 			}
 			add.error = function(e) {
-				console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']失败！！');
+				// console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']失败！！');
 			}
 		}
-	}
-​	
+
 	function writeIDB() {
 		// serializeObject() 自定义函数可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
 		var formJson = JSON.stringify($("#web-storage-form").serializeObject());
 		console.log("form数据序列化为json对象：" + formJson);
 
-		// createDatabase('Tickets', 2);
-		// insert('Tickets','CW', formJson);
+		// var db = createDatabase('Tickets', 2);
+
+		var stu1 = {name: '欧可乐', age: 19, sex: '男'};
+
+		insert('Tickets', 2, 'CW', stu1);
 	}
 
 	</script>
