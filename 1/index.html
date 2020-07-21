@@ -131,7 +131,21 @@
 					autoIncrement: true
 				});
 			console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
-			}
+			};
+
+			objectStore.createIndex('id', 'id', {
+				unique: true    
+			});
+
+			objectStore.createIndex('GUID', 'GUID');
+			objectStore.createIndex('ticket', 'ticket');
+			objectStore.createIndex('train', 'train');
+			objectStore.createIndex('compartment', 'compartment');
+			objectStore.createIndex('category', 'category');
+			objectStore.createIndex('type', 'type');
+			objectStore.createIndex('description', 'description');
+			objectStore.createIndex('action', 'action');
+			objectStore.createIndex('replacement', 'replacement');
 		}
 	}
 
@@ -236,7 +250,6 @@
 
 <!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="web-storage-form">
-
 	<div id="dateTime"></div>
 	<br>
 
@@ -307,8 +320,26 @@
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
-	
 </form>
+
+<div id="result" class="result">
+	<table>
+		<thead>
+			<tr>
+				<th>质保工单</th>
+				<th>车厢编号</th>
+				<th>故障类别</th>
+				<th>故障级别</th>
+				<th>故障现象</th>
+				<th>处理经过</th>
+				<th>更换或对翻情况</th>
+				<th width="60">操作</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div id="status" class="status">加载中...</div>
+</div>
 
 </body>
 </html>
