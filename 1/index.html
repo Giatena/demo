@@ -103,8 +103,7 @@
 	};
 
 	// 参数：数据库名和版本号。数据库存在则打开,否则创建。
-	function createDatabase(dbName, version) {
-	
+	function createDatabase(dbName, version, objectStoreName) {
 		// request 返回一个 IDBOpenDBRequest 对象
 		// 而我们期望得到的DB对象在其result属性中
 		var openRequest = window.indexedDB.open(dbName, version);
@@ -120,11 +119,20 @@
 		};
 
 		// 首次先触发 onupgradeneeded，再触发 onsuccess
+		// 或者 window.indexedDB.open 传递的新版本（版本数值要比现在的高）
 		openRequest.onupgradeneeded = function(event) {
 			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 			// 获取数据库实例对象 db
 			var db = event.target.result;
-		};
+			// 若不存在表“CW”，则执行新建，且主键为“id”
+			if (!db.objectStoreNames.contains(objectStoreName)) {
+				objectStore = db.createObjectStore(objectStoreName, {
+					keyPath: 'id',
+					autoIncrement: true
+				});
+			console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
+			}
+		}
 	}
 
 	// 关闭与删除数据库
@@ -201,11 +209,9 @@
 		var formJson = JSON.stringify($("#web-storage-form").serializeObject());
 		console.log("form数据序列化为json对象：" + formJson);
 
-		// var db = createDatabase('Tickets', 2);
+		// var stu1 = {name: '欧可乐', age: 19, sex: '男'};
 
-		var stu1 = {name: '欧可乐', age: 19, sex: '男'};
-
-		insert('Tickets', 2, 'CW', stu1);
+		// insert('Tickets', 2, 'CW', stu1);
 	}
 
 	</script>
@@ -298,7 +304,8 @@
 	<input type="button" value="缓存" id="idb" onclick="writeIDB()">
 	<br>
 	<label for="test">IDB 数据库操作：</label>
-	<input type="button" value="新建" id="xj" onclick="createDatabase('CW', 1)">
+	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
+	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
 	
 </form>
