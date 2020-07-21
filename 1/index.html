@@ -235,9 +235,10 @@
 			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 			
 			var db = success.target.result;
-			// serializeObject() 自定义函数可以一劳永逸地解决“serialize()返回不是json数组”和“url化后的中文乱码”的问题
+			// serializeObject() 自定义函数 返回字符串型的表单数据
+			可解决“url化后的中文乱码”的问题
 			var formJson = JSON.stringify($("#web-storage-form").serializeObject());
-			console.log("form数据序列化为json对象：" + formJson);
+			console.log("form 数据序列化为（形如json的）字符串：" + formJson);
 
 
 			// 事务：对“CW”表进行读写的权限控制
@@ -247,8 +248,8 @@
 			// 添加数据
 			// var objectStoreRequest = objectStore.add(formJson);
 			var stu1 = {"GUID":"20200721232730809","ticket":"·12","train":"123","compartment":"123","category":"2","type":"2","description":"·12·12","action":"·12·12·12","replacement":"1"}
-			console.log("stu1 类型为" + typeof stu1);
-			console.log("formJson 类型为" + typeof formJson);
+			console.log("stu1 类型为" + typeof stu1);			// 返回 object
+			console.log("formJson 类型为" + typeof formJson);	// 返回 string
 			var objectStoreRequest = objectStore.add(stu1);
 			objectStoreRequest.onsuccess = function(onsuccess) {
 				console.log("onsuccess：已写入表单数据(formJson) " + onsuccess.target.result);
