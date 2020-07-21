@@ -251,9 +251,9 @@
 			// 添加数据
 			var objectStoreRequest = objectStore.add(formJson);
 			objectStoreRequest.onsuccess = function(onsuccess) {
+				// onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
 				console.log("onsuccess：已写入表单数据(formJson) " + onsuccess.target.result);
 			};
-
 		};
 
 		openRequest.onupgradeneeded = function(event) {
@@ -285,11 +285,6 @@
 				objectStore.createIndex('replacement', 'replacement');
 			};
 		}
-
-
-		// var stu1 = {name: '欧可乐', age: 19, sex: '男'};
-
-		// insert('Tickets', 2, 'CW', stu1);
 	}
 
 	</script>
