@@ -229,12 +229,14 @@
 		openRequest.onsuccess = function(success) {
 			var db = success.target.result;
 			// 打开对象存储，获得游标列表
-			var objectStore = db.transaction(dbName).objectStore(objectStoreName);
+			var objectStore = db.transaction(objectStoreName).objectStore(objectStoreName);
 			objectStore.openCursor().onsuccess = function(onsuccess) {
+				// 返回 IDBCursorWithValue 对象
 				var cursor = onsuccess.target.result;
+
 				// 如果游标没有遍历完，继续下面的逻辑
 				if (cursor) {
-					htmlProjectList = htmlProjectList + strTplList.temp(cursor.value);            
+					htmlProjectList = htmlProjectList + strTplList.temp(cursor.value);
 					// 继续下一个游标项
 					cursor.continue();
 					// 如果全部遍历完毕
