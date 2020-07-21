@@ -86,6 +86,7 @@
 		}
 	}
 
+	// 把表单提交的数据转化为字符串
 	$.fn.serializeObject = function(formJson) {
 		var o = {};
 		var a = this.serializeArray();
@@ -223,7 +224,7 @@
 		}
 	}
 
-	function add(dbName, version, objectStoreName, argument) {
+	function addData(dbName, version, objectStoreName, argument) {
 		var openRequest = window.indexedDB.open(dbName, version);
 
 		openRequest.onerror = function(err) {
@@ -238,11 +239,20 @@
 			var formJson = JSON.stringify($("#web-storage-form").serializeObject());
 			console.log("form数据序列化为json对象：" + formJson);
 
+
 			// 事务：对“CW”表进行读写的权限控制
 			var transaction = db.transaction(objectStoreName, "readwrite");
-
 			// 对表进行操作
 			var objectStore = transaction.objectStore(objectStoreName);
+			// 添加数据
+			// var objectStoreRequest = objectStore.add(formJson);
+			var stu1 = {"GUID":"20200721232730809","ticket":"·12","train":"123","compartment":"123","category":"2","type":"2","description":"·12·12","action":"·12·12·12","replacement":"1"}
+			console.log("stu1 类型为" + typeof stu1);
+			console.log("formJson 类型为" + typeof formJson);
+			var objectStoreRequest = objectStore.add(stu1);
+			objectStoreRequest.onsuccess = function(onsuccess) {
+				console.log("onsuccess：已写入表单数据(formJson) " + onsuccess.target.result);
+			};
 
 		};
 
@@ -373,7 +383,7 @@
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
-	<input type="button" value="添加数据" id="tj" onclick="add('Tickets', 1, 'CW')">
+	<input type="button" value="添加数据" id="tj" onclick="addData('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
 </form>
 
