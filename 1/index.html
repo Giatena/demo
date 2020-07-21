@@ -235,11 +235,13 @@
 			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 			
 			var db = success.target.result;
-			// serializeObject() 自定义函数 返回字符串型的表单数据
-			可解决“url化后的中文乱码”的问题
-			var formJson = JSON.stringify($("#web-storage-form").serializeObject());
-			console.log("form 数据序列化为（形如json的）字符串：" + formJson);
-
+			// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
+			// JSON.stringify(json对象) --> 把json对象转化为字符串
+			var formStr = JSON.stringify($("#web-storage-form").serializeObject());
+			console.log("form 数据序列化为（形如json的）字符串：" + formStr);
+			// JSON.parse(字符串) --> 把字符串转json对象
+			var formJson = JSON.parse(formStr);
+			console.log("formJson 对象以字符串形式打印：" + JSON.stringify(formJson));
 
 			// 事务：对“CW”表进行读写的权限控制
 			var transaction = db.transaction(objectStoreName, "readwrite");
