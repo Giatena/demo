@@ -219,6 +219,12 @@
 		}
 	}
 
+	String.prototype.temp = function(obj) {
+		return this.replace(/\$\w+\$/gi, function(matchs) {        
+			return obj[matchs.replace(/\$/g, "")] || '';
+		});
+	};
+
 	function showData(dbName, version, objectStoreName) {
 		// 模板字符内容
 		var strTplList = document.getElementById('tplList').innerHTML;
@@ -230,9 +236,9 @@
 			var db = success.target.result;
 			// 打开对象存储，获得游标列表
 			var objectStore = db.transaction(objectStoreName).objectStore(objectStoreName);
-			objectStore.openCursor().onsuccess = function(onsuccess) {
+			objectStore.openCursor().onsuccess = function(success) {
 				// 返回 IDBCursorWithValue 对象
-				var cursor = onsuccess.target.result;
+				var cursor = success.target.result;
 
 				// 如果游标没有遍历完，继续下面的逻辑
 				if (cursor) {
