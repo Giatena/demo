@@ -441,7 +441,9 @@
 	<table>
 		<thead>
 			<tr>
+				<th>GUID</th>
 				<th>质保工单</th>
+				<th>列车编号</th>
 				<th>车厢编号</th>
 				<th>故障类别</th>
 				<th>故障级别</th>
@@ -457,10 +459,11 @@
 </div>
 
 <!-- 列表数据模板 -->
+<!-- 表头必须和IDB中保存的数组顺序一致，否则显示出来的效果会错行 -->
 <script id="tplList" type="text/template">
 <tr>
 	<td data-key="GUID" data-id="$id$" contenteditable="plaintext-only">$GUID$</td>
-	<td data-key="ticket" data-id="$id$" contenteditable="plaintext-only">$begin$</td>
+	<td data-key="ticket" data-id="$id$" contenteditable="plaintext-only">$ticket$</td>
 	<td data-key="train" data-id="$id$" contenteditable="plaintext-only">$train$</td>
 	<td data-key="compartment" data-id="$id$" contenteditable="plaintext-only">$compartment$</td>
 	<td data-key="category" data-id="$id$" contenteditable="plaintext-only">$category$</td>
