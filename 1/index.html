@@ -11,7 +11,7 @@
 	var dbName = 'Tickets';
 	// 数据库版本
 	var version = 1;
-	// 数据库对象
+	// 数据库对象，全局对象对 function()内部无效，通过参数传入db对象可行。
 	var db;
 	// 数据库表名
 	var objectStoreName = 'CW';
@@ -20,19 +20,19 @@
 	var openRequest = window.indexedDB.open(dbName, version);
 
 	openRequest.onerror = function(err) {
-		console.log("全局：创建[" + dbName + "]数据库错误: " + err.target.errorCode);
+		console.log("全局 err：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
 	};
 
 	openRequest.onsuccess = function(success) {
-		console.log("全局：onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
+		console.log("全局 onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 		// 获取数据库实例对象 db
 		var db = success.target.result;
 		// 显示数据
-		showData(dbName, version, objectStoreName, db);
+		showData(db, objectStoreName);
 	};
 
 	openRequest.onupgradeneeded = function(event) {
-		console.log("全局：onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+		console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 		// 获取数据库实例对象 db
 		var db = event.target.result;
 		
@@ -279,7 +279,7 @@
 		});
 	};
 
-	function showData(dbName, version, objectStoreName, db) {
+	function showData(db, objectStoreName) {
 		// 元素们
 		var eleForm = document.querySelector('#form');
 		var eleTbody = document.querySelector('#result tbody');
@@ -299,31 +299,27 @@
 		// 最终要展示的HTML数据
 		var htmlProjectList = '';
 
-		// var openRequest = window.indexedDB.open(dbName, version);
-		// openRequest.onsuccess = function(success) {
-			// var db = success.target.result;
-			// 打开对象存储，获得游标列表
-			var objectStore = db.transaction(objectStoreName).objectStore(objectStoreName);
-			objectStore.openCursor().onsuccess = function(success) {
-				// 返回 IDBCursorWithValue 对象
-				var cursor = success.target.result;
+		// 打开对象存储，获得游标列表
+		var objectStore = db.transaction(objectStoreName).objectStore(objectStoreName);
+		objectStore.openCursor().onsuccess = function(success) {
+			// 返回 IDBCursorWithValue 对象
+			var cursor = success.target.result;
 
-				// 如果游标没有遍历完，继续下面的逻辑
-				if (cursor) {
-					htmlProjectList = htmlProjectList + strTplList.temp(cursor.value);
-					// 继续下一个游标项
-					cursor.continue();
-					// 如果全部遍历完毕
-				} else {
-					logInfo('');
-					eleTbody.innerHTML = htmlProjectList;
+			// 如果游标没有遍历完，继续下面的逻辑
+			if (cursor) {
+				htmlProjectList = htmlProjectList + strTplList.temp(cursor.value);
+				// 继续下一个游标项
+				cursor.continue();
+				// 如果全部遍历完毕
+			} else {
+				logInfo('');
+				eleTbody.innerHTML = htmlProjectList;
 	
-					if (htmlProjectList == '') {
-						logInfo('暂无数据');    
-					};
+				if (htmlProjectList == '') {
+					logInfo('暂无数据');    
 				};
 			};
-		// };
+		};
 	}
 
 	// function editData(dbName, version, objectStoreName, id, data) {
@@ -540,7 +536,7 @@
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
 	<input type="button" value="添加数据" id="tj" onclick="addData('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
-	<input type="button" value="显示数据" id="xs" onclick="showData('Tickets', 1, 'CW')">
+	<input type="button" value="显示数据" id="xs" onclick="showData(db, 'CW')">
 </form>
 
 <div id="result" class="result">
