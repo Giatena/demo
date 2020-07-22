@@ -219,6 +219,11 @@
 		}
 	}
 
+	var logInfo = function (info) {
+		eleStatus.style.display = 'block';
+		eleStatus.innerHTML = '<span class="info">'+ info + '</span>';
+	};
+
 	String.prototype.temp = function(obj) {
 		return this.replace(/\$\w+\$/gi, function(matchs) {        
 			return obj[matchs.replace(/\$/g, "")] || '';
