@@ -28,7 +28,7 @@
 		// 获取数据库实例对象 db
 		var db = success.target.result;
 		// 显示数据
-		showData(dbName, version, objectStoreName);
+		showData(dbName, version, objectStoreName, db);
 	};
 
 	openRequest.onupgradeneeded = function(event) {
@@ -279,7 +279,7 @@
 		});
 	};
 
-	function showData(dbName, version, objectStoreName) {
+	function showData(dbName, version, objectStoreName, db) {
 		// 元素们
 		var eleForm = document.querySelector('#form');
 		var eleTbody = document.querySelector('#result tbody');
@@ -299,9 +299,9 @@
 		// 最终要展示的HTML数据
 		var htmlProjectList = '';
 
-		var openRequest = window.indexedDB.open(dbName, version);
-		openRequest.onsuccess = function(success) {
-			var db = success.target.result;
+		// var openRequest = window.indexedDB.open(dbName, version);
+		// openRequest.onsuccess = function(success) {
+			// var db = success.target.result;
 			// 打开对象存储，获得游标列表
 			var objectStore = db.transaction(objectStoreName).objectStore(objectStoreName);
 			objectStore.openCursor().onsuccess = function(success) {
@@ -323,7 +323,7 @@
 					};
 				};
 			};
-		};
+		// };
 	}
 
 	// function editData(dbName, version, objectStoreName, id, data) {
