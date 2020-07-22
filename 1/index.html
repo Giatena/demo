@@ -219,13 +219,6 @@
 		}
 	}
 
-	var logInfo = function (info) {
-		eleStatus.style.display = 'block';
-		eleStatus.innerHTML = '<span class="info">'+ info + '</span>';
-	};
-
-
-
 	String.prototype.temp = function(obj) {
 		return this.replace(/\$\w+\$/gi, function(matchs) {        
 			return obj[matchs.replace(/\$/g, "")] || '';
@@ -240,6 +233,15 @@
 
 		// 模板字符内容
 		var strTplList = document.getElementById('tplList').innerHTML;
+
+		var logError = function (error) {
+			eleStatus.style.display = 'block';
+			eleStatus.innerHTML = '<span class="error">'+ error +'</span>';
+		}, logInfo = function (info) {
+			eleStatus.style.display = 'block';
+			eleStatus.innerHTML = '<span class="info">'+ info + '</span>';
+		};
+
 		// 最终要展示的HTML数据
 		var htmlProjectList = '';
 
