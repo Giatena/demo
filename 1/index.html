@@ -6,7 +6,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 	<script type="text/javascript">
-
+	
 	// 数据库名称
 	var dbName = 'Tickets';
 	// 数据库版本
@@ -30,6 +30,7 @@
 		var db = success.target.result;
 		// 显示数据
 		// showData(db, objectStoreName);
+		showData(objectStoreName);
 	};
 
 	openRequest.onupgradeneeded = function(event) {
@@ -280,7 +281,7 @@
 		});
 	};
 
-	function showData(db, objectStoreName) {
+	function showData(objectStoreName) {
 		// 元素们
 		var eleForm = document.querySelector('#form');
 		var eleTbody = document.querySelector('#result tbody');
