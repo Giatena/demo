@@ -12,12 +12,12 @@
 		// 检查旧离线会话的 Web 缓存
 		if(localStorage.formValues) {
 			console.log("localStorage.formValues: "+ localStorage.formValues);
-			postForm($("#web-storage-form").attr('action'), localStorage.formValues);
+			postForm($("#form").attr('action'), localStorage.formValues);
 			localStorage.removeItem("formValues");
 		}
 		
-		// jQuery：点击 id=web-storage-form 的 submit 按钮，执行 function
-		$("#web-storage-form").submit(function(event) {
+		// jQuery：点击 id=form 的 submit 按钮，执行 function
+		$("#form").submit(function(event) {
 
 			// Prevent the form from posting
 			event.preventDefault(); 
@@ -169,7 +169,7 @@
 
 			// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
 			// JSON.stringify(json对象) --> 把json对象转化为字符串
-			var formStr = JSON.stringify($("#web-storage-form").serializeObject());
+			var formStr = JSON.stringify($("#form").serializeObject());
 			// console.log("form 数据序列化为（形如json的）字符串：" + formStr);
 			
 			// JSON.parse(字符串) --> 把字符串转json对象
@@ -224,6 +224,8 @@
 		eleStatus.innerHTML = '<span class="info">'+ info + '</span>';
 	};
 
+
+
 	String.prototype.temp = function(obj) {
 		return this.replace(/\$\w+\$/gi, function(matchs) {        
 			return obj[matchs.replace(/\$/g, "")] || '';
@@ -231,6 +233,11 @@
 	};
 
 	function showData(dbName, version, objectStoreName) {
+		// 元素们
+		var eleForm = document.querySelector('#form');
+		var eleTbody = document.querySelector('#result tbody');
+		var eleStatus = document.getElementById('status');
+
 		// 模板字符内容
 		var strTplList = document.getElementById('tplList').innerHTML;
 		// 最终要展示的HTML数据
@@ -353,7 +360,7 @@
 <body>
 
 <!-- 表单传送到服务器的"post.php" -->
-<form action="post.php" method="post" id="web-storage-form">
+<form action="post.php" method="post" id="form">
 	<div id="dateTime"></div>
 	<br>
 
