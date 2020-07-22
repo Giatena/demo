@@ -11,7 +11,8 @@
 	var dbName = 'Tickets';
 	// 数据库版本
 	var version = 1;
-	// 数据库对象，全局对象对 function()内部无效，通过参数传入db对象可行。
+	// 数据库对象，“var db;”对function()内部无效，通过参数传入db对象可行。
+	// var global db;
 	var db;
 	// 数据库表名
 	var objectStoreName = 'CW';
@@ -28,7 +29,7 @@
 		// 获取数据库实例对象 db
 		var db = success.target.result;
 		// 显示数据
-		showData(db, objectStoreName);
+		// showData(db, objectStoreName);
 	};
 
 	openRequest.onupgradeneeded = function(event) {
@@ -536,7 +537,7 @@
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
 	<input type="button" value="添加数据" id="tj" onclick="addData('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
-	<input type="button" value="显示数据" id="xs" onclick="showData(db, 'CW')">
+<!-- 	<input type="button" value="显示数据" id="xs" onclick="showData(db, 'CW')">	// 传入db对象，行不通 -->
 </form>
 
 <div id="result" class="result">
