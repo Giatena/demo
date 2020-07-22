@@ -7,6 +7,13 @@
 
 	<script type="text/javascript">
 
+	// 数据库名称
+	var dbName = 'Tickets';
+	// 数据库版本
+	var version = 1;
+	// 数据库对象
+	var db;
+
 	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
 	$(document).ready(function() {
 		// 检查旧离线会话的 Web 缓存
@@ -260,17 +267,69 @@
 					// 继续下一个游标项
 					cursor.continue();
 					// 如果全部遍历完毕
-					} else {
-						logInfo('');
-						eleTbody.innerHTML = htmlProjectList;
-                    	
-						if (htmlProjectList == '') {
-							logInfo('暂无数据');    
-						}
-					}
-				}
-			}
+				} else {
+					logInfo('');
+					eleTbody.innerHTML = htmlProjectList;
+	
+					if (htmlProjectList == '') {
+						logInfo('暂无数据');    
+					};
+				};
+			};
+		};
+	}
+
+	function editData(dbName, version, objectStoreName, id, data) {
+
+	}
+
+	// 删除事件（按钮）
+	var eleTbody = document.querySelector('#result tbody');
+	eleTbody.addEventListener('click', function (event) {
+		var eleBtn = event.target, id = '';
+		if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
+			delBotton('Tickets', 1, 'CW', id * 1);
+			event.preventDefault();
+		};
+	});
+
+    // 编辑事件
+    eleTbody.addEventListener('focusout', function (event) {
+        var eleTd = event.target;
+        // 获取id，也就是获得主键
+        var id = eleTd && eleTd.getAttribute('data-id');
+        if (!id || !/td/.test(eleTd.tagName)) { return; }
+        
+        // 这是要替换的数据
+        var data = {
+            id: id * 1    
+        };
+        // 获得现在的数据
+        [].slice.call(eleTd.parentElement.querySelectorAll('td[data-key]')).forEach(function (td) {
+            var key = td.getAttribute('data-key');
+            var value = td.innerText || td.textContent || '';
+            
+            data[key] = value;
+        });
+        
+        // 更新本地数据库
+        method.edit(id, data);
+    });
+
+	function delBotton(dbName, version,objectStoreName, id) {
+		var openRequest = window.indexedDB.open(dbName, version);
+		openRequest.onsuccess = function(success) {
+			var db = success.target.result;
+			// 表读写的事务
+			var objectStore = db.transaction(objectStoreName, "readwrite").objectStore(objectStoreName);
+			// 删除传入id的条目
+			var objectStoreRequest = objectStore.delete(id);
+			// 删除成功后
+			objectStoreRequest.onsuccess = function() {
+				showData();
+			};
 		}
+	}
 
 	// 关闭与删除数据库
 	function deleteDatabase(dbName) {
