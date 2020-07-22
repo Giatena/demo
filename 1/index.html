@@ -13,6 +13,53 @@
 	var version = 1;
 	// 数据库对象
 	var db;
+	// 数据库表名
+	var objectStoreName = 'CW';
+
+	// 打开数据库，返回 iDB 对象
+	var openRequest = window.indexedDB.open(dbName, version);
+
+	openRequest.onerror = function(err) {
+		console.log("全局：创建[" + dbName + "]数据库错误: " + err.target.errorCode);
+	};
+
+	openRequest.onsuccess = function(success) {
+		console.log("全局：onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
+		// 获取数据库实例对象 db
+		var db = success.target.result;
+		// 显示数据
+		showData(dbName, version, objectStoreName);
+	};
+
+	openRequest.onupgradeneeded = function(event) {
+		console.log("全局：onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+		// 获取数据库实例对象 db
+		var db = event.target.result;
+		
+		// 若不存在表“CW”，则执行新建，且主键为“tk”
+		if (!db.objectStoreNames.contains(objectStoreName)) {
+			objectStore = db.createObjectStore(objectStoreName, {
+				keyPath: 'tk',
+				autoIncrement: true
+			});
+			console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
+			
+			// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
+			// objectStore.createIndex('id', 'id', {
+			// 	unique: true    
+			// });
+
+			objectStore.createIndex('GUID', 'GUID');
+			objectStore.createIndex('ticket', 'ticket');
+			objectStore.createIndex('train', 'train');
+			objectStore.createIndex('compartment', 'compartment');
+			objectStore.createIndex('category', 'category');
+			objectStore.createIndex('type', 'type');
+			objectStore.createIndex('description', 'description');
+			objectStore.createIndex('action', 'action');
+			objectStore.createIndex('replacement', 'replacement');
+		};
+	}
 
 	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
 	$(document).ready(function() {
@@ -279,42 +326,42 @@
 		};
 	}
 
-	function editData(dbName, version, objectStoreName, id, data) {
+	// function editData(dbName, version, objectStoreName, id, data) {
 
-	}
+	// }
 
-	// 删除事件（按钮）
-	var eleTbody = document.querySelector('#result tbody');
-	eleTbody.addEventListener('click', function (event) {
-		var eleBtn = event.target, id = '';
-		if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
-			delBotton('Tickets', 1, 'CW', id * 1);
-			event.preventDefault();
-		};
-	});
+	// // 删除事件（按钮）
+	// var eleTbody = document.querySelector('#result tbody');
+	// eleTbody.addEventListener('click', function (event) {
+	// 	var eleBtn = event.target, id = '';
+	// 	if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
+	// 		delBotton('Tickets', 1, 'CW', id * 1);
+	// 		event.preventDefault();
+	// 	};
+	// });
 
-    // 编辑事件
-    eleTbody.addEventListener('focusout', function (event) {
-        var eleTd = event.target;
-        // 获取id，也就是获得主键
-        var id = eleTd && eleTd.getAttribute('data-id');
-        if (!id || !/td/.test(eleTd.tagName)) { return; }
+    // // 编辑事件
+    // eleTbody.addEventListener('focusout', function (event) {
+    //     var eleTd = event.target;
+    //     // 获取id，也就是获得主键
+    //     var id = eleTd && eleTd.getAttribute('data-id');
+    //     if (!id || !/td/.test(eleTd.tagName)) { return; }
         
-        // 这是要替换的数据
-        var data = {
-            id: id * 1    
-        };
-        // 获得现在的数据
-        [].slice.call(eleTd.parentElement.querySelectorAll('td[data-key]')).forEach(function (td) {
-            var key = td.getAttribute('data-key');
-            var value = td.innerText || td.textContent || '';
+    //     // 这是要替换的数据
+    //     var data = {
+    //         id: id * 1    
+    //     };
+    //     // 获得现在的数据
+    //     [].slice.call(eleTd.parentElement.querySelectorAll('td[data-key]')).forEach(function (td) {
+    //         var key = td.getAttribute('data-key');
+    //         var value = td.innerText || td.textContent || '';
             
-            data[key] = value;
-        });
+    //         data[key] = value;
+    //     });
         
-        // 更新本地数据库
-        method.edit(id, data);
-    });
+    //     // 更新本地数据库
+    //     method.edit(id, data);
+    // });
 
 	function delBotton(dbName, version,objectStoreName, id) {
 		var openRequest = window.indexedDB.open(dbName, version);
