@@ -14,31 +14,38 @@
 	// 数据库版本
 	var version = 1;
 	// 数据库对象，“var db;”对function()内部无效，通过参数传入db对象可行。
-	// var global db;
 	var db;
 	// 数据库表名
 	var objectStoreName = 'CW';
 
-
 	function getIDBobject() {
+
+		// 优先返回缓存的数据库实例
+		if (db) {
+			return db
+		};
+
 		// 打开数据库，返回 iDB 对象
 		var openRequest = window.indexedDB.open(dbName, version);
 		openRequest.onerror = function(err) {
-			console.log("全局 err：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
+			console.log("getIDBobject()：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
 		};
 		openRequest.onsuccess = function(success) {
-			console.log("全局 onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
-			// 获取数据库实例对象 db
-			// window.db = success.target.result;
+			console.log("getIDBobject()：已打开[" + dbName + "]数据库: " + success.target.result);
+			// 获取数据库实例对象，赋值全局变量db为iDB对象
 			db = success.target.result;
-			// 显示数据
-			// console.log("getIDBobject()：" + typeof window.db);
 			console.log("getIDBobject()：" + typeof db);
+
+			// 不在 funciton() 外声明全局变量，可执行本条
+			// window.db = success.target.result;
+			// console.log("getIDBobject()：" + typeof window.db);
+
+			showData();
 		};
 		openRequest.onupgradeneeded = function(event) {
 			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 			// 获取数据库实例对象 db
-			var db = event.target.result;
+			db = event.target.result;
 		
 			// 若不存在表“CW”，则执行新建，且主键为“tk”
 			if (!db.objectStoreNames.contains(objectStoreName)) {
@@ -62,6 +69,8 @@
 				objectStore.createIndex('description', 'description');
 				objectStore.createIndex('action', 'action');
 				objectStore.createIndex('replacement', 'replacement');
+
+				showData();
 			};
 		}
 	}
@@ -103,7 +112,11 @@
 		}
 
 		// 相当于点击“显示数据”按钮。包含调用 getIDBobject() 函数，将IDB对象赋值给全局变量db
-		showData():
+		getIDBobject();
+
+		if (db) {
+			
+		};
 	}
 
 	function showTime() {
@@ -131,6 +144,9 @@
 		setTimeout('showTime()', 1000);		// 每隔1秒运行一次 showTime()，即获取当前时间戳
 	}
 
+	</script>
+
+	<script type="text/javascript">
 	function postForm(url, formValues) {
 		// 表单数据提交服务器或缓存到 localStorage
 		if(navigator.onLine) {
@@ -289,9 +305,7 @@
 
 	function showData() {
 
-		// var idb = getIDBobject();
-		// getIDBobject();
-		// console.log(typeof window.db);
+		db = window.db;
 		console.log("showData()：" + typeof db);
 
 		// 元素们
