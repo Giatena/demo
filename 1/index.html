@@ -297,7 +297,7 @@
 			} else {
 				logInfo('');
 				eleTbody.innerHTML = htmlProjectList;
-	
+				
 				if (htmlProjectList == '') {
 					logInfo('暂无数据');    
 				};
@@ -305,42 +305,27 @@
 		};
 	}
 
-	// function editData(dbName, version, objectStoreName, id, data) {
-
-	// }
-
-	// // 删除事件（按钮）
-	// var eleTbody = document.querySelector('#result tbody');
-	// eleTbody.addEventListener('click', function (event) {
-	// 	var eleBtn = event.target, id = '';
-	// 	if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
-	// 		delBotton(id * 1);
-	// 		event.preventDefault();
-	// 	};
-	// });
-
-    // // 编辑事件
-    // eleTbody.addEventListener('focusout', function (event) {
-    //     var eleTd = event.target;
-    //     // 获取id，也就是获得主键
-    //     var id = eleTd && eleTd.getAttribute('data-id');
-    //     if (!id || !/td/.test(eleTd.tagName)) { return; }
-        
-    //     // 这是要替换的数据
-    //     var data = {
-    //         id: id * 1    
-    //     };
-    //     // 获得现在的数据
-    //     [].slice.call(eleTd.parentElement.querySelectorAll('td[data-key]')).forEach(function (td) {
-    //         var key = td.getAttribute('data-key');
-    //         var value = td.innerText || td.textContent || '';
-            
-    //         data[key] = value;
-    //     });
-        
-    //     // 更新本地数据库
-    //     method.edit(id, data);
-    // });
+	function editData(id, data) {
+		// 编辑数据
+		var transaction = db.transaction(objectStoreName, "readwrite");
+		// 打开已经存储的数据对象
+		var objectStore = transaction.objectStore(objectStoreName);
+		// 获取存储的对应键的存储对象
+		var objectStoreRequest = objectStore.get(id);
+		// 获取成功后替换当前数据
+		objectStoreRequest.onsuccess = function(event) {
+			// 当前数据
+			var myRecord = objectStoreRequest.result;
+			// 遍历替换
+			for (var key in data) {
+				if (typeof myRecord[key] != 'undefined') {
+					myRecord[key] = data[key];
+				}
+			}
+			// 更新数据库存储数据
+			objectStore.put(myRecord);
+		};
+	}
 
 	function delBotton(id) {
 		// 表读写的事务
@@ -557,4 +542,46 @@
 </tr></script>
 
 </body>
+
+<script type="text/javascript">
+	// 删除事件（按钮）
+	var eleTbody = document.querySelector('#result tbody');
+	eleTbody.addEventListener('click', function (event) {
+		console.log("“删除”按钮被点击了");
+		var eleBtn = event.target, id = '';
+		console.log(eleBtn);
+		console.log(eleBtn.classList.contains('jsListDel'));
+		console.log(eleBtn.getAttribute('data-id'));
+		// if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
+		if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
+			delBotton(id * 1);
+		event.preventDefault();
+		};
+	});
+
+    // 编辑事件
+    eleTbody.addEventListener('focusout', function (event) {
+    	console.log("运行到“编辑事件”");
+        var eleTd = event.target;
+        // 获取id，也就是获得主键
+        var id = eleTd && eleTd.getAttribute('data-id');
+        if (!id || !/td/.test(eleTd.tagName)) { return; }
+        
+        // 这是要替换的数据
+        var data = {
+            id: id * 1    
+        };
+        // 获得现在的数据
+        [].slice.call(eleTd.parentElement.querySelectorAll('td[data-key]')).forEach(function (td) {
+            var key = td.getAttribute('data-key');
+            var value = td.innerText || td.textContent || '';
+            
+            data[key] = value;
+        });
+        
+        // 更新本地数据库
+        editData(id, data);
+    });
+</script>
+
 </html>
