@@ -113,10 +113,6 @@
 
 		// 相当于点击“显示数据”按钮。包含调用 getIDBobject() 函数，将IDB对象赋值给全局变量db
 		getIDBobject();
-
-		if (db) {
-			
-		};
 	}
 
 	function showTime() {
@@ -233,68 +229,27 @@
 		}
 	}
 
-	function addData(dbName, version, objectStoreName, argument) {
-		var openRequest = window.indexedDB.open(dbName, version);
+	function addData() {
+		// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
+		// JSON.stringify(json对象) --> 把json对象转化为字符串
+		var formStr = JSON.stringify($("#form").serializeObject());
+		// console.log("form 数据序列化为（形如json的）字符串：" + formStr);
+		
+		// JSON.parse(字符串) --> 把字符串转json对象
+		var formJson = JSON.parse(formStr);
+		console.log("formJson 对象以字符串形式打印：" + JSON.stringify(formJson));
 
-		openRequest.onerror = function(err) {
-			console.log("创建[" + dbName + "]数据库错误: " + err.target.errorCode);
+		// 事务：对“CW”表进行读写的权限控制
+		var transaction = db.transaction(objectStoreName, "readwrite");
+		// 对表进行操作
+		var objectStore = transaction.objectStore(objectStoreName);
+		// 添加数据
+		var objectStoreRequest = objectStore.add(formJson);
+		objectStoreRequest.onsuccess = function(onsuccess) {
+			// onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
+			console.log("onsuccess：已写入表单数据(formJson) " + onsuccess.target.result);
 		};
-
-		openRequest.onsuccess = function(success) {
-			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
-			
-			var db = success.target.result;
-
-			// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
-			// JSON.stringify(json对象) --> 把json对象转化为字符串
-			var formStr = JSON.stringify($("#form").serializeObject());
-			// console.log("form 数据序列化为（形如json的）字符串：" + formStr);
-			
-			// JSON.parse(字符串) --> 把字符串转json对象
-			var formJson = JSON.parse(formStr);
-			console.log("formJson 对象以字符串形式打印：" + JSON.stringify(formJson));
-
-			// 事务：对“CW”表进行读写的权限控制
-			var transaction = db.transaction(objectStoreName, "readwrite");
-			// 对表进行操作
-			var objectStore = transaction.objectStore(objectStoreName);
-			// 添加数据
-			var objectStoreRequest = objectStore.add(formJson);
-			objectStoreRequest.onsuccess = function(onsuccess) {
-				// onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
-				console.log("onsuccess：已写入表单数据(formJson) " + onsuccess.target.result);
-			};
-		};
-
-		openRequest.onupgradeneeded = function(event) {
-			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
-			
-			var db = event.target.result;
-			if (!db.objectStoreNames.contains(objectStoreName)) {
-				
-				objectStore = db.createObjectStore(objectStoreName, {
-					keyPath: 'id',
-					autoIncrement: true
-				});
-
-				console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
-				
-				// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
-				objectStore.createIndex('id', 'id', {
-					unique: true    
-				});
-
-				objectStore.createIndex('GUID', 'GUID');
-				objectStore.createIndex('ticket', 'ticket');
-				objectStore.createIndex('train', 'train');
-				objectStore.createIndex('compartment', 'compartment');
-				objectStore.createIndex('category', 'category');
-				objectStore.createIndex('type', 'type');
-				objectStore.createIndex('description', 'description');
-				objectStore.createIndex('action', 'action');
-				objectStore.createIndex('replacement', 'replacement');
-			};
-		}
+		showData();
 	}
 
 	String.prototype.temp = function(obj) {
@@ -562,7 +517,7 @@
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
-	<input type="button" value="添加数据" id="tj" onclick="addData('Tickets', 1, 'CW')">
+	<input type="button" value="添加数据" id="tj" onclick="addData()">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
 </form>
