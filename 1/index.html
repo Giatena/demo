@@ -314,7 +314,7 @@
 	// eleTbody.addEventListener('click', function (event) {
 	// 	var eleBtn = event.target, id = '';
 	// 	if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
-	// 		delBotton('Tickets', 1, 'CW', id * 1);
+	// 		delBotton(id * 1);
 	// 		event.preventDefault();
 	// 	};
 	// });
@@ -342,19 +342,15 @@
     //     method.edit(id, data);
     // });
 
-	function delBotton(dbName, version,objectStoreName, id) {
-		var openRequest = window.indexedDB.open(dbName, version);
-		openRequest.onsuccess = function(success) {
-			var db = success.target.result;
-			// 表读写的事务
-			var objectStore = db.transaction(objectStoreName, "readwrite").objectStore(objectStoreName);
-			// 删除传入id的条目
-			var objectStoreRequest = objectStore.delete(id);
-			// 删除成功后
-			objectStoreRequest.onsuccess = function() {
-				showData();
-			};
-		}
+	function delBotton(id) {
+		// 表读写的事务
+		var objectStore = db.transaction(objectStoreName, "readwrite").objectStore(objectStoreName);
+		// 删除传入id的条目
+		var objectStoreRequest = objectStore.delete(id);
+		// 删除成功后
+		objectStoreRequest.onsuccess = function() {
+			showData();
+		};
 	}
 
 	// 关闭与删除数据库
@@ -520,6 +516,7 @@
 	<input type="button" value="添加数据" id="tj" onclick="addData()">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
+	<input type="button" value="删除第一条" id="sc" onclick="delBotton(1)">
 </form>
 
 <div id="result" class="result">
