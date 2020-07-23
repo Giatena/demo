@@ -7,6 +7,8 @@
 
 	<script type="text/javascript">
 
+	// 表单初始化：预置 dbName、version、db、objectStoreName 四个全局变量。
+	// function() 内部 var 定义的变量优先级高于全局变量。
 	// 数据库名称
 	var dbName = 'Tickets';
 	// 数据库版本
@@ -17,50 +19,51 @@
 	// 数据库表名
 	var objectStoreName = 'CW';
 
-	// 打开数据库，返回 iDB 对象
-	var openRequest = window.indexedDB.open(dbName, version);
 
-	openRequest.onerror = function(err) {
-		console.log("全局 err：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
-	};
-
-	openRequest.onsuccess = function(success) {
-		console.log("全局 onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
-		// 获取数据库实例对象 db
-		var db = success.target.result;
-		// 显示数据
-		// showData(db, objectStoreName);
-		showData(db, objectStoreName);
-	};
-
-	openRequest.onupgradeneeded = function(event) {
-		console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
-		// 获取数据库实例对象 db
-		var db = event.target.result;
-		
-		// 若不存在表“CW”，则执行新建，且主键为“tk”
-		if (!db.objectStoreNames.contains(objectStoreName)) {
-			objectStore = db.createObjectStore(objectStoreName, {
-				keyPath: 'tk',
-				autoIncrement: true
-			});
-			console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
-			
-			// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
-			// objectStore.createIndex('id', 'id', {
-			// 	unique: true    
-			// });
-
-			objectStore.createIndex('GUID', 'GUID');
-			objectStore.createIndex('ticket', 'ticket');
-			objectStore.createIndex('train', 'train');
-			objectStore.createIndex('compartment', 'compartment');
-			objectStore.createIndex('category', 'category');
-			objectStore.createIndex('type', 'type');
-			objectStore.createIndex('description', 'description');
-			objectStore.createIndex('action', 'action');
-			objectStore.createIndex('replacement', 'replacement');
+	function getIDBobject() {
+		// 打开数据库，返回 iDB 对象
+		var openRequest = window.indexedDB.open(dbName, version);
+		openRequest.onerror = function(err) {
+			console.log("全局 err：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
 		};
+		openRequest.onsuccess = function(success) {
+			console.log("全局 onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
+			// 获取数据库实例对象 db
+			// window.db = success.target.result;
+			db = success.target.result;
+			// 显示数据
+			// console.log("getIDBobject()：" + typeof window.db);
+			console.log("getIDBobject()：" + typeof db);
+		};
+		openRequest.onupgradeneeded = function(event) {
+			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+			// 获取数据库实例对象 db
+			var db = event.target.result;
+		
+			// 若不存在表“CW”，则执行新建，且主键为“tk”
+			if (!db.objectStoreNames.contains(objectStoreName)) {
+				objectStore = db.createObjectStore(objectStoreName, {
+					keyPath: 'tk',
+					autoIncrement: true
+				});
+				console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
+			
+				// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
+				// objectStore.createIndex('id', 'id', {
+				// 	unique: true    
+				// });
+
+				objectStore.createIndex('GUID', 'GUID');
+				objectStore.createIndex('ticket', 'ticket');
+				objectStore.createIndex('train', 'train');
+				objectStore.createIndex('compartment', 'compartment');
+				objectStore.createIndex('category', 'category');
+				objectStore.createIndex('type', 'type');
+				objectStore.createIndex('description', 'description');
+				objectStore.createIndex('action', 'action');
+				objectStore.createIndex('replacement', 'replacement');
+			};
+		}
 	}
 
 	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
@@ -98,6 +101,9 @@
 			// 弹窗警告
 			alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
 		}
+
+		// 相当于点击“显示数据”按钮。包含调用 getIDBobject() 函数，将IDB对象赋值给全局变量db
+		showData():
 	}
 
 	function showTime() {
@@ -281,7 +287,13 @@
 		});
 	};
 
-	function showData(db, objectStoreName) {
+	function showData() {
+
+		// var idb = getIDBobject();
+		// getIDBobject();
+		// console.log(typeof window.db);
+		console.log("showData()：" + typeof db);
+
 		// 元素们
 		var eleForm = document.querySelector('#form');
 		var eleTbody = document.querySelector('#result tbody');
@@ -538,7 +550,7 @@
 	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
 	<input type="button" value="添加数据" id="tj" onclick="addData('Tickets', 1, 'CW')">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
-<!-- 	<input type="button" value="显示数据" id="xs" onclick="showData(db, 'CW')">	// 传入db对象，行不通 -->
+	<input type="button" value="显示数据" id="xs" onclick="showData()">
 </form>
 
 <div id="result" class="result">
