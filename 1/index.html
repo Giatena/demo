@@ -46,38 +46,9 @@
 			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 			// 获取数据库实例对象 db
 			db = event.target.result;
-		
-			// 若不存在表“CW”，则执行新建，且主键为“tk”
-			if (!db.objectStoreNames.contains(objectStoreName)) {
-				var objectStore = db.createObjectStore(objectStoreName, {
-					keyPath: 'tk',
-					autoIncrement: true
-				});
-				console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
 			
-				// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
-				// objectStore.createIndex('id', 'id', {
-				// 	unique: true    
-				// });
-
-				objectStore.createIndex('GUID', 'GUID');
-				objectStore.createIndex('ticket', 'ticket');
-				objectStore.createIndex('train', 'train');
-				objectStore.createIndex('compartment', 'compartment');
-				objectStore.createIndex('category', 'category');
-				objectStore.createIndex('type', 'type');
-				objectStore.createIndex('description', 'description');
-				objectStore.createIndex('action', 'action');
-				objectStore.createIndex('replacement', 'replacement');				
-			};
-
-			// 直到首次新建数据库、新建表完成后，才能执行 showData(); 刷新列表显示
-			objectStore.oncomplete = function (event) {
-				console.log('getIDBobject()：transaction complete');
-				console.log("运行到这里1：首次新建数据库");
-				showData();
-			};
-			
+			// 首次载入网页，且无缓存数据库，则执行 createDatabase() 的 onupgradeneeded 部分
+			// 本函数是 onupgradeneeded 部分默认无操作，因为目前用不到版本号升级，即更改数据库结构
 		}
 	}
 
@@ -198,6 +169,8 @@
 			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 			// 获取数据库实例对象 db
 			db = success.target.result;
+			
+			showData();
 		};
 
 		// 首次先触发 onupgradeneeded，再触发 onsuccess
