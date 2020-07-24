@@ -71,7 +71,11 @@
 				objectStore.createIndex('replacement', 'replacement');				
 			};
 
-			showData();
+			transaction.oncomplete = function (event) {
+				console.log('getIDBobject()：transaction complete');
+				showData();
+				};
+			
 		}
 	}
 
