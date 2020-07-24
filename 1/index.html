@@ -5,12 +5,13 @@
 	<title>电子工单（实验性）</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<!-- <script src="../libs/ViewUI/4.3.2/iview.min.js"> </script> -->
+
 <!-- import Vue.js -->
-<script src="//vuejs.org/js/vue.min.js"></script>
+<!-- <script src="//vuejs.org/js/vue.min.js"></script> -->
 <!-- import stylesheet -->
-<link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
+<!-- <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css"> -->
 <!-- import iView -->
-<script src="//unpkg.com/view-design/dist/iview.min.js"></script>
+<!-- <script src="//unpkg.com/view-design/dist/iview.min.js"></script> -->
 
 	<script type="text/javascript">
 
@@ -437,9 +438,30 @@
 	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
 	<input type="hidden" name="GUID" id="GUID">
 
-	<input type="hidden" id="gj_data">
-	<br>
+	<!-- 把当前日期 yyyymmdd 取进来 -->
+	日期 <input type="hidden" id="gj_data">
 
+	<label>基地 </label>
+	<select name="" id="factory">
+		<option value="e" selected = "selected"></option>
+		<option value="ML">梅陇(ML)</option>
+		<option value="SL">石龙(SL)</option>
+		<option value="PHT">蒲汇塘(PHT)</option>
+		<option value="JYB">江杨北(JYB)</option>
+		<option value="FJ">富锦(FJ)</option>
+		<option value="FJ">龙阳(LY)</option>
+	</select>
+
+	<label>序号 </label>
+	<select name="" id="number">
+		<option value="e" selected = "selected"></option>
+		<option value="1">01</option>
+		<option value="2">02</option>
+		<option value="3">03</option>
+		<option value="4">04</option>
+		<option value="5">05</option>
+		<option value="6">06</option>
+	</select>
 	<br>
 
 	<label for="ticket">质保工单：</label>
