@@ -18,40 +18,6 @@
 	// 数据库表名
 	var objectStoreName = 'CW';
 
-	function getIDBobject() {
-
-		// 优先返回缓存的数据库实例
-		if (db) {
-			return db
-		};
-
-		// 打开数据库，返回 iDB 对象
-		var openRequest = window.indexedDB.open(dbName, version);
-		openRequest.onerror = function(err) {
-			console.log("getIDBobject()：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
-		};
-		openRequest.onsuccess = function(success) {
-			console.log("getIDBobject()：已打开[" + dbName + "]数据库: " + success.target.result);
-			// 获取数据库实例对象，赋值全局变量db为iDB对象
-			db = success.target.result;
-			console.log("getIDBobject()：" + typeof db);
-
-			// 不在 funciton() 外声明全局变量，可执行本条
-			// window.db = success.target.result;
-			// console.log("getIDBobject()：" + typeof window.db);
-
-			// showData();
-		};
-		openRequest.onupgradeneeded = function(event) {
-			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
-			// 获取数据库实例对象 db
-			db = event.target.result;
-			
-			// 首次载入网页，且无缓存数据库，则执行 createDatabase() 的 onupgradeneeded 部分
-			// 本函数是 onupgradeneeded 部分默认无操作，因为目前用不到版本号升级，即更改数据库结构
-		}
-	}
-
 	// jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
 	$(document).ready(function() {
 		// 检查旧离线会话的 Web 缓存
@@ -88,8 +54,6 @@
 			alert("您的浏览器不支持IndexedDB，可能会影响页面功能。请更新版本或改用支持的浏览器访问，谢谢");
 		}
 
-		// 相当于点击“显示数据”按钮。包含调用 getIDBobject() 函数，将IDB对象赋值给全局变量db
-		// IDB 数据库初始化，创建[CW]表，将IDB对象赋值给全局变量db
 		createDatabase();
 	}
 
@@ -116,6 +80,93 @@
 		document.getElementById('GUID').value = Y + M + D + h + m + s + ms;
 
 		setTimeout('showTime()', 1000);		// 每隔1秒运行一次 showTime()，即获取当前时间戳
+	}
+
+	// IDB 数据库初始化，创建[CW]表，将IDB对象赋值给全局变量db
+	function createDatabase() {
+		// request 返回一个 IDBOpenDBRequest 对象
+		// 而我们期望得到的DB对象在其result属性中
+		var openRequest = window.indexedDB.open(dbName, version);
+
+		openRequest.onerror = function(err) {
+			console.log("创建[" + dbName + "]数据库错误: " + err.target.errorCode);
+		};
+
+		openRequest.onsuccess = function(success) {
+			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
+			// 获取数据库实例对象 db
+			db = success.target.result;
+
+			showData();
+		};
+
+		// 首次先触发 onupgradeneeded，再触发 onsuccess
+		// 或者 window.indexedDB.open 传递的新版本（版本数值要比现在的高）
+		openRequest.onupgradeneeded = function(event) {
+			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+			
+			// 获取数据库实例对象 db
+			db = event.target.result;
+			
+			// 若不存在表“CW”，则执行新建，且主键为“id”
+			if (!db.objectStoreNames.contains(objectStoreName)) {
+				objectStore = db.createObjectStore(objectStoreName, {
+					keyPath: 'id',
+					autoIncrement: true
+				});
+				console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
+				
+				// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
+				objectStore.createIndex('id', 'id', {
+					unique: true    
+				});
+
+				objectStore.createIndex('GUID', 'GUID');
+				objectStore.createIndex('ticket', 'ticket');
+				objectStore.createIndex('train', 'train');
+				objectStore.createIndex('compartment', 'compartment');
+				objectStore.createIndex('category', 'category');
+				objectStore.createIndex('type', 'type');
+				objectStore.createIndex('description', 'description');
+				objectStore.createIndex('action', 'action');
+				objectStore.createIndex('replacement', 'replacement');
+			};
+		}
+	}
+
+	// 弃用？
+	function getIDBobject() {
+
+		// 优先返回缓存的数据库实例
+		if (db) {
+			return db
+		};
+
+		// 打开数据库，返回 iDB 对象
+		var openRequest = window.indexedDB.open(dbName, version);
+		openRequest.onerror = function(err) {
+			console.log("getIDBobject()：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
+		};
+		openRequest.onsuccess = function(success) {
+			console.log("getIDBobject()：已打开[" + dbName + "]数据库: " + success.target.result);
+			// 获取数据库实例对象，赋值全局变量db为iDB对象
+			db = success.target.result;
+			console.log("getIDBobject()：" + typeof db);
+
+			// 不在 funciton() 外声明全局变量，可执行本条
+			// window.db = success.target.result;
+			// console.log("getIDBobject()：" + typeof window.db);
+
+			// showData();
+		};
+		openRequest.onupgradeneeded = function(event) {
+			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+			// 获取数据库实例对象 db
+			db = event.target.result;
+			
+			// 首次载入网页，且无缓存数据库，则执行 createDatabase() 的 onupgradeneeded 部分
+			// 本函数是 onupgradeneeded 部分默认无操作，因为目前用不到版本号升级，即更改数据库结构
+		}
 	}
 
 	</script>
@@ -155,57 +206,7 @@
 		return o;
 	};
 
-	// 参数：数据库名和版本号。数据库存在则打开,否则创建。
-	function createDatabase() {
-		// request 返回一个 IDBOpenDBRequest 对象
-		// 而我们期望得到的DB对象在其result属性中
-		var openRequest = window.indexedDB.open(dbName, version);
 
-		openRequest.onerror = function(err) {
-			console.log("创建[" + dbName + "]数据库错误: " + err.target.errorCode);
-		};
-
-		openRequest.onsuccess = function(success) {
-			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
-			// 获取数据库实例对象 db
-			db = success.target.result;
-			
-			showData();
-		};
-
-		// 首次先触发 onupgradeneeded，再触发 onsuccess
-		// 或者 window.indexedDB.open 传递的新版本（版本数值要比现在的高）
-		openRequest.onupgradeneeded = function(event) {
-			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
-			
-			// 获取数据库实例对象 db
-			db = event.target.result;
-			
-			// 若不存在表“CW”，则执行新建，且主键为“id”
-			if (!db.objectStoreNames.contains(objectStoreName)) {
-				objectStore = db.createObjectStore(objectStoreName, {
-					keyPath: 'id',
-					autoIncrement: true
-				});
-				console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
-				
-				// createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
-				objectStore.createIndex('id', 'id', {
-					unique: true    
-				});
-
-				objectStore.createIndex('GUID', 'GUID');
-				objectStore.createIndex('ticket', 'ticket');
-				objectStore.createIndex('train', 'train');
-				objectStore.createIndex('compartment', 'compartment');
-				objectStore.createIndex('category', 'category');
-				objectStore.createIndex('type', 'type');
-				objectStore.createIndex('description', 'description');
-				objectStore.createIndex('action', 'action');
-				objectStore.createIndex('replacement', 'replacement');
-			};
-		}
-	}
 
 	function addData() {
 		// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
