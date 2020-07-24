@@ -318,10 +318,16 @@
 	}
 
 	// 关闭与删除数据库
-	function deleteDatabase(dbName) {
+	function deleteDatabase() {
+		// // 删除数据库前，先执行 close 方法
+		// var openRequest = db.close(dbName, version);
+
+		// openRequest.onsuccess = function(success) {
+		// 	console.log("已关闭[" + dbName + "]数据库。" + success.target.result);
+		// }
+
 		// 删除数据库使用 indexedDB 对象的 deleteDatabase方法
 		var request = window.indexedDB.deleteDatabase(dbName);
-		console.log("运行到这里");
 
 		request.onerror = function(err) {
 			console.log("删除[" + dbName + "]数据库失败。" + err.target.errorCode);
@@ -329,6 +335,8 @@
 		request.onsuccess = function(success) {
 			console.log("删除[" + dbName + "]数据库成功。" + success.target.result);
 		}
+
+		showData();
 	}
 
 	// 关闭数据库
@@ -476,11 +484,11 @@
 	<!-- <br> -->
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
-	<input type="button" value="新建" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
-	<input type="button" value="添加数据" id="tj" onclick="addData()">
-	<input type="button" value="删除" id="sc" onclick="deleteDatabase('CW')">
+	<input type="button" value="初始化" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
+	<input type="button" value="添加一条数据" id="tj" onclick="addData()">
+	<input type="button" value="删除" id="sc" onclick="deleteDatabase()">
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
-	<input type="button" value="删除第一条" id="sc" onclick="delBotton(1)">
+	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
 </form>
 
 <div id="result" class="result">
