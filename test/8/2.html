@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Title</title>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.10.1/index.js"></script>
+  <link href="https://cdn.bootcss.com/element-ui/2.10.1/theme-chalk/index.css" rel="stylesheet">
+  <style>
+    #app{
+      display: flex;
+      justify-content: space-between;
+    }
+    .parent, .child{
+      width: 45%;
+    }
+    .el-card{
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="parent">
+    <el-card>
+      <div slot="header">
+        <span>父组件</span>
+      </div>
+      <el-input v-model="ParentMsg"></el-input>
+      <el-button type="primary" @click="changeChild" style="margin-top: 30px">改变子组件的msg</el-button>
+    </el-card>
+
+  </div>
+  <div class="child">
+    <el-card>
+      <div slot="header">
+        <span>子组件</span>
+      </div>
+      <child1 v-show="display" :parent-msg="childMsg"></child1>
+      <child2 @change-data-from-child="changeParent"></child2>
+    </el-card>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: '#app',
+    data(){
+      return {
+        display:true,
+        ParentMsg:"Hello This is Parent",
+        childMsg: 'Hello, 我来自父组件的数据'
+      }
+    },
+    methods: {
+      changeParent(data){
+        this.ParentMsg = data
+      },
+      changeChild(){
+        this.childMsg = '我被父组件改变了'
+      }
+    },
+    components: {
+      'child1': {
+        props: { //定义子组件的prop，用于父组件传递数据到子组件
+          parentMsg: {
+            type: String,
+            default: ''
+          }
+        },
+        template: '<div>\n' +
+            '        <h2 v-show="msgDisplay">{{msg}}</h2>\n' +
+            '        <p>{{parentMsg}}</p>\n' +
+            '        <el-button @click="toggleMsgDisplay" type="success">切换子组件1中的信息显示隐藏</el-button>\n' +
+            '    </div>',
+
+        data() {//Vue中component的data必须通过function() return
+          return {
+            msg: 'This is a Child Component1!',
+            msgDisplay: true
+          }
+        },
+        methods: {
+          toggleMsgDisplay() {
+            this.msgDisplay = !this.msgDisplay
+          }
+        }
+      },
+      'child2':{
+        template:"<el-button type='primary' @click='changeParentData' style='margin-top: 30px'>我是子组件2按钮,点击改变父组件内容</el-button>",
+        data () {
+          return {
+            msg:"点击了子组件2按钮"
+          }
+        },
+        methods:{
+          changeParentData () {
+            this.$emit('change-data-from-child', '我来自是子组件2') //事件传递用kebab-case风格
+          }
+        }
+      }
+    },
+  })
+</script>
+
+</body>
+</html>
