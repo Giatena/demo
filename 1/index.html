@@ -341,11 +341,6 @@
 		showData();
 	}
 
-	// 关闭数据库
-	function colseDatabase(dbName) {
-		dbName.close();
-	}
-
 	// 新增数据
 	// 数据库名称,对象仓库（表名）,传入的参数
 	function insert(dbName, version, objectStoreName, argument) {
@@ -412,6 +407,19 @@
 	}
 	</style>
 
+	<script type="text/javascript">
+	// 获取单个复选项的值
+	function ifchecked() {
+		var a = $("#gj").is(":checked");
+		console.log("复选框：" + a);
+		if (a) {
+			document.getElementById("gj_data").type = "text";
+		} else {
+			document.getElementById("gj_data").type = "hidden";
+		}
+	}
+	</script>
+
 </head>
 
 <body>
@@ -424,8 +432,14 @@
 	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
 	<input type="hidden" name="GUID" id="GUID">
 
+	<input type="hidden" id="gj_data">
+	<br>
+
 	<label for="ticket">质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
+	<input type="checkbox" name="123" id ="gj">
+	<label>高级</label>
+	<input type="button" value="判断" id="pd" onclick="ifchecked()">
 	<br>
 
 	<label for="train">列车编号：</label>
@@ -491,6 +505,16 @@
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase()">
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
 	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
+
+</form>
+	
+<form id="form2">
+	部件名称：<input type="text" name="name">
+	<br>
+	旧件序列号：<input type="text" name="old">
+	<br>
+	好件序列号：<input type="text" name="new">
+	<br>
 </form>
 
 <div id="result" class="result">
