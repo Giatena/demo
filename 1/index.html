@@ -71,10 +71,11 @@
 				objectStore.createIndex('replacement', 'replacement');				
 			};
 
-			transaction.oncomplete = function (event) {
+			objectStore.oncomplete = function (event) {
 				console.log('getIDBobject()：transaction complete');
+				console.log("运行到这里1：首次新建数据库");
 				showData();
-				};
+			};
 			
 		}
 	}
