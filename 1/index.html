@@ -49,7 +49,7 @@
 		
 			// 若不存在表“CW”，则执行新建，且主键为“tk”
 			if (!db.objectStoreNames.contains(objectStoreName)) {
-				objectStore = db.createObjectStore(objectStoreName, {
+				var objectStore = db.createObjectStore(objectStoreName, {
 					keyPath: 'tk',
 					autoIncrement: true
 				});
@@ -71,6 +71,7 @@
 				objectStore.createIndex('replacement', 'replacement');				
 			};
 
+			// 直到首次新建数据库、新建表完成后，才能执行 showData(); 刷新列表显示
 			objectStore.oncomplete = function (event) {
 				console.log('getIDBobject()：transaction complete');
 				console.log("运行到这里1：首次新建数据库");
@@ -117,7 +118,8 @@
 		}
 
 		// 相当于点击“显示数据”按钮。包含调用 getIDBobject() 函数，将IDB对象赋值给全局变量db
-		getIDBobject();
+		// IDB 数据库初始化，创建[CW]表，将IDB对象赋值给全局变量db
+		createDatabase();
 	}
 
 	function showTime() {
@@ -183,7 +185,7 @@
 	};
 
 	// 参数：数据库名和版本号。数据库存在则打开,否则创建。
-	function createDatabase(dbName, version, objectStoreName) {
+	function createDatabase() {
 		// request 返回一个 IDBOpenDBRequest 对象
 		// 而我们期望得到的DB对象在其result属性中
 		var openRequest = window.indexedDB.open(dbName, version);
@@ -195,7 +197,7 @@
 		openRequest.onsuccess = function(success) {
 			console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
 			// 获取数据库实例对象 db
-			var db = success.target.result;
+			db = success.target.result;
 		};
 
 		// 首次先触发 onupgradeneeded，再触发 onsuccess
@@ -204,7 +206,7 @@
 			console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
 			
 			// 获取数据库实例对象 db
-			var db = event.target.result;
+			db = event.target.result;
 			
 			// 若不存在表“CW”，则执行新建，且主键为“id”
 			if (!db.objectStoreNames.contains(objectStoreName)) {
@@ -229,8 +231,6 @@
 				objectStore.createIndex('action', 'action');
 				objectStore.createIndex('replacement', 'replacement');
 			};
-
-			window.db = db;
 		}
 	}
 
