@@ -319,14 +319,7 @@
 
 	// 关闭与删除数据库
 	function deleteDatabase() {
-		// // 删除数据库前，先执行 close 方法
-		// var openRequest = db.close(dbName, version);
-
-		// openRequest.onsuccess = function(success) {
-		// 	console.log("已关闭[" + dbName + "]数据库。" + success.target.result);
-		// }
-
-		// 删除数据库使用 indexedDB 对象的 deleteDatabase方法
+		// 删除数据库；Firefox 刷新页面，缓存才会被清除。
 		var request = window.indexedDB.deleteDatabase(dbName);
 
 		request.onerror = function(err) {
