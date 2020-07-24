@@ -410,9 +410,7 @@
 	<script type="text/javascript">
 	// 获取单个复选项的值
 	function ifchecked() {
-		var a = $("#gj").is(":checked");
-		console.log("复选框：" + a);
-		if (a) {
+		if ($("#gj").is(":checked")) {
 			document.getElementById("gj_data").type = "text";
 		} else {
 			document.getElementById("gj_data").type = "hidden";
