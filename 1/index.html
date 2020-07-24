@@ -319,7 +319,11 @@
 
 	// 关闭与删除数据库
 	function deleteDatabase() {
-		// 删除数据库；Firefox 刷新页面，缓存才会被清除。
+		db.onversionchange = function() {
+			db.close();
+		}
+		
+		// 删除数据库
 		var request = window.indexedDB.deleteDatabase(dbName);
 
 		request.onerror = function(err) {
@@ -327,6 +331,11 @@
 		}
 		request.onsuccess = function(success) {
 			console.log("删除[" + dbName + "]数据库成功。" + success.target.result);
+			// 工单列表无法重新初始化
+			// 检查数据库是否存在，相当于初始化时，检查本地是否存在缓存一样，待添加判断代码
+		}
+		request.onblocked = function(event) {
+			console.log("删除[" + dbName + "]数据库被阻止。");
 		}
 
 		showData();
