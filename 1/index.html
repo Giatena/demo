@@ -425,12 +425,12 @@
 		// 	document.getElementById("gj_data").type = "hidden";
 		// };
 
+		// 用于“高级判断”按钮控制
 		if(!id) {
-			var id = "gh1_3";
-		};
+			id = "gh1_3";
+		}
 
 		var label = id + "_label";
-		console.log("label：" + label);
 		var input = id + "_input";
 		id = "#" + id;
 
@@ -452,7 +452,7 @@
 	function formHidden(id) {
 		// 用于“显示”和“隐藏”按钮控制
 		if(!id) {
-			var id = "#gh1";
+			id = "#gh1";
 		};
 
 		// 删除原有 style 属性，并新增隐藏属性
@@ -706,7 +706,6 @@
 	// “更换或对翻情况”单选项的监听器
 	document.getElementById("replacement_1").addEventListener("click", function() {
 		formShow(gh1);
-		radioChecked(gh1);
 		formShow(gh2);
 		formShow(gh3);
 	});
@@ -719,6 +718,10 @@
 		formHidden(gh1);
 		formHidden(gh2);
 		formHidden(gh3);
+	});
+	// 监听“更换1”整个fieldset元素是否被点击
+	document.getElementById("gh1").addEventListener("click", function() {
+		radioChecked("gh1_3");
 	});
 </script>
 
