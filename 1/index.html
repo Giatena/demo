@@ -451,10 +451,12 @@
 			// $("#id") 通过 jQuery 操作元素
 			$(input).attr("name",inputName);
 		} else {
+			// 恢复隐藏原状
 			document.getElementById(label).innerHTML = "其他";
 			document.getElementById(input).type = "hidden";
 			// 移除 input 的 name="other" 属性
 			$(input).removeAttr("name");
+			// 删除用户填写在“其他：”文本框中的内容
 			document.getElementById(input).value = "";
 		};
 	}
@@ -590,13 +592,14 @@
 		<label>名称：</label>
 		<input type="text" name="component" style="width:290px;">
 		<label>　来源：</label>
-		<input type="radio" value="1" name="gh1" id="gh1_1">
+		<!-- form="noSubmit" input位于主Form之外，实现提交数据时忽略本项 -->
+		<input type="radio" value="1" name="gh1" id="gh1_1" form="noSubmit">
 		<label>甲供</label>
-		<input type="radio" value="2" name="gh1" id="gh1_2">
+		<input type="radio" value="2" name="gh1" id="gh1_2" form="noSubmit">
 		<label>电科</label>
-		<input type="radio" value="3" name="gh1" id="gh1_3">
+		<input type="radio" value="3" name="gh1" id="gh1_3" form="noSubmit">
 		<label id="gh1_3_label">其他</label>
-		<input type="hidden" id="gh1_3_input" name="source" style="width:85px;">
+		<input type="hidden" id="gh1_3_input" style="width:85px;">
 		<input type="text" id="gh1_mix" name="source">
 		<!-- <input id="gh1_mix" name="source" style="display:none"> -->
 		<br>
@@ -613,11 +616,11 @@
 		<label>名称：</label>
 		<input type="text" name="component" style="width:290px;">
 		<label>　来源：</label>
-		<input type="radio" value="1" name="gh2" id="gh2_1">
+		<input type="radio" value="1" name="gh2" id="gh2_1" form="noSubmit">
 		<label>甲供 </label>
-		<input type="radio" value="2" name="gh2" id="gh2_2">
+		<input type="radio" value="2" name="gh2" id="gh2_2" form="noSubmit">
 		<label>电科 </label>
-		<input type="radio" value="3" name="gh2" id="gh2_3">
+		<input type="radio" value="3" name="gh2" id="gh2_3" form="noSubmit">
 		<label id="gh2_3_label">其他</label>
 		<input type="hidden" id="gh2_3_input" style="width:85px;">
 		<input id="gh2_mix" name="source" style="display:none">
@@ -635,11 +638,11 @@
 		<label>名称：</label>
 		<input type="text" name="component" style="width:290px;">
 		<label>　来源：</label>
-		<input type="radio" value="1" name="gh3" id="gh3_1">
+		<input type="radio" value="1" name="gh3" id="gh3_1" form="noSubmit">
 		<label>甲供</label>
-		<input type="radio" value="2" name="gh3" id="gh3_2">
+		<input type="radio" value="2" name="gh3" id="gh3_2" form="noSubmit">
 		<label>电科</label>
-		<input type="radio" value="3" name="gh3" id="gh3_3">
+		<input type="radio" value="3" name="gh3" id="gh3_3" form="noSubmit">
 		<label id="gh3_3_label" >其他</label>
 		<input type="hidden" id="gh3_3_input" name="source" style="width:85px;">
 		<br>
