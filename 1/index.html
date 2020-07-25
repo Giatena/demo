@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width/2, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
 	<title>电子工单（实验性）</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<!-- <script src="../libs/ViewUI/4.3.2/iview.min.js"> </script> -->
@@ -418,16 +419,13 @@
 	<script type="text/javascript">
 	// 获取单个复选项的值
 	function ifchecked() {
-		if ($("#gj").is(":checked")) {
-			document.getElementById("gj_data").type = "text";
-		} else {
-			document.getElementById("gj_data").type = "hidden";
-		}
-	}
+		// if ($("#gj").is(":checked")) {
+		// 	document.getElementById("gj_data").type = "text";
+		// } else {
+		// 	document.getElementById("gj_data").type = "hidden";
+		// };
 
-	// 获取单个复选项的值
-	function ifchecked() {
-		if ($("#f2-3").is(":checked")) {
+		if ($("#gh1-3").is(":checked")) {
 			document.getElementById("other_input").type = "text";
 			document.getElementById("other_label").innerHTML = "其他：";
 			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
@@ -438,15 +436,28 @@
 			document.getElementById("other_label").innerHTML = "其他";
 			// 移除 input 的 name="other" 属性
 			$("#other_input").removeAttr("name");
+		};
+
+		if ($("#replacement_1").is(":checked")) {
+			formShow();
+		} else {
+			formHidden();
+		};
+	}
+
+	function formHidden(id) {
+		if(!id) {
+			id = "gh1";
 		}
+		$(id).removeAttr("style");
+		$(id).attr("style", "display:none");
 	}
 
-	function formHidden() {
-		$("#gh1").attr("style", "display:none");
-	}
-
-	function formShow() {
-		$("#gh1").removeAttr("style");
+	function formShow(id) {
+		$(id).removeAttr("style");
+		$(id).attr("style", "width:730px");
+		// $("#gh1").removeAttr("style");
+		// $("#gh1").attr("style", "width:730px");
 	}
 
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
@@ -537,20 +548,21 @@
 
 	<label for="action">处理经过：</label>
 	<textarea name="action" id="action" cols="80" rows="5"></textarea>
-	<br>
+	<br><br>
 
 	<label for="replacement">更换或对翻情况：</label>
-	<input type="radio" value="1" name="replacement" id="replacement" checked />
+	<input type="radio" value="1" name="replacement" id="replacement_1">
 	<label>更换</label>
-	<input type="radio" value="2" name="replacement" id="replacement">
+	<input type="radio" value="2" name="replacement" id="replacement_2">
 	<label>对翻</label>
-	<input type="radio" value="3" name="replacement" id="replacement">
+	<input type="radio" value="3" name="replacement" id="replacement_3">
 	<label>无坏件</label>
+	<input type="button" value="显示" onclick="formShow()">
+	<input type="button" value="隐藏" onclick="formHidden()">
 	<br>
 
 	<!-- style='display:none' 通过CSS隐藏元素，且不占位 -->
-	<fieldset id="gh1" style="width:730px;">
-	<!-- <fieldset id="gh1" style='display:none'> -->
+	<fieldset id="gh1" style='display:none'>
 		<legend>更换1</legend>
 		<label>名称：</label>
 		<input type="text" name="name" style="width:290px;">
@@ -559,7 +571,7 @@
 		<label>甲供</label>
 		<input type="radio" value="2" name="from" id="from">
 		<label>电科</label>
-		<input type="radio" value="3" name="from" id="f2-3">
+		<input type="radio" value="3" name="from" id="gh1-3">
 		<label id="other_label" >其他</label>
 		<input type="hidden" id="other_input">
 		<br>
@@ -569,16 +581,14 @@
 		<input type="text" name="new" style="width:290px;">
 		<br>
 	</fieldset>
-	<input type="button" value="隐藏" onclick="formHidden()">
-	<input type="button" value="显示" onclick="formShow()">
-	<br><br>
 
+	<br>
 	<input type="submit" value="提交">
 	<br>
 	<input type="reset" value="重置">
 	<br>
 	<!-- <input type="button" value="缓存" id="idb" onclick="writeIDB()"> -->
-	<!-- <br> -->
+
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
 	<input type="button" value="初始化" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
@@ -667,6 +677,20 @@
         // 更新本地数据库
         editData(id, data);
     });
+</script>
+
+<script type="text/javascript">
+	// “更换或对翻情况”单选项的监听器
+	document.getElementById("replacement_1").addEventListener("click", function() {
+		formShow(gh1);
+	});
+	document.getElementById("replacement_2").addEventListener("click", function() {
+		formHidden(gh1);
+	});
+	document.getElementById("replacement_3").addEventListener("click", function() {
+		formHidden(gh1);
+	});
+	formHidden
 </script>
 
 </html>
