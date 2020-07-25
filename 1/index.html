@@ -64,6 +64,12 @@
 		}
 
 		createDatabase();
+
+		if ($("#replacement_1").is(":checked")) {
+			formShow(gh1);
+			formShow(gh2);
+			formShow(gh3);
+		}
 	}
 
 	function showTime() {
@@ -597,12 +603,12 @@
 	<br>
 
 	<fieldset id="gh2" style='display:none'>
-		<legend>2</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　来源：</label><input type="radio" value="1" name="from" id="from"><label>甲供</label><input type="radio" value="2" name="from" id="from"><label>电科</label><input type="radio" value="3" name="from" id="gh2-3"><label id="other_label" >其他</label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　好件：</label><input type="text" name="new" style="width:290px;"><br>
+		<legend>2</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　 来源：</label><input type="radio" value="1" name="from" id="from"><label> 甲供 </label><input type="radio" value="2" name="from" id="from"><label> 电科 </label><input type="radio" value="3" name="from" id="gh2-3"><label id="other_label" > 其他 </label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　 好件：</label><input type="text" name="new" style="width:290px;"><br>
 	</fieldset>
 	<br>
 
 	<fieldset id="gh3" style='display:none'>
-		<legend>3</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　来源：</label><input type="radio" value="1" name="from" id="from"><label>甲供</label><input type="radio" value="2" name="from" id="from"><label>电科</label><input type="radio" value="3" name="from" id="gh3-3"><label id="other_label" >其他</label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　好件：</label><input type="text" name="new" style="width:290px;"><br>
+		<legend>3</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　 来源：</label><input type="radio" value="1" name="from" id="from"><label> 甲供 </label><input type="radio" value="2" name="from" id="from"><label> 电科 </label><input type="radio" value="3" name="from" id="gh3-3"><label id="other_label" > 其他 </label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　 好件：</label><input type="text" name="new" style="width:290px;"><br>
 	</fieldset>
 	<br>
 
