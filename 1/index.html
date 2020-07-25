@@ -600,8 +600,7 @@
 		<input type="radio" value="3" name="gh1" id="gh1_3" form="noSubmit">
 		<label id="gh1_3_label">其他</label>
 		<input type="hidden" id="gh1_3_input" style="width:85px;">
-		<input type="text" id="gh1_mix" name="source">
-		<!-- <input id="gh1_mix" name="source" style="display:none"> -->
+		<input type="text" id="gh1_mix" name="source" style="display:none">
 		<br>
 		<label>旧件：</label>
 		<input type="text" name="old" style="width:290px;">
@@ -623,7 +622,7 @@
 		<input type="radio" value="3" name="gh2" id="gh2_3" form="noSubmit">
 		<label id="gh2_3_label">其他</label>
 		<input type="hidden" id="gh2_3_input" style="width:85px;">
-		<input id="gh2_mix" name="source" style="display:none">
+		<input type="text" id="gh2_mix" name="source" style="display:none">
 		<br>
 		<label>旧件：</label>
 		<input type="text" name="old" style="width:290px;">
@@ -644,7 +643,8 @@
 		<label>电科</label>
 		<input type="radio" value="3" name="gh3" id="gh3_3" form="noSubmit">
 		<label id="gh3_3_label" >其他</label>
-		<input type="hidden" id="gh3_3_input" name="source" style="width:85px;">
+		<input type="hidden" id="gh3_3_input" style="width:85px;">
+		<input type="text" id="gh3_mix" name="source" style="display:none">
 		<br>
 		<label>旧件：</label>
 		<input type="text" name="old" style="width:290px;">
@@ -777,7 +777,7 @@
 
 		// 获取组(name)中被选中项的值
 		var val = $('input[name=gh1]:checked').val();
-		console.log("gh1：选中" + val);
+		// console.log("gh1：选中" + val);
 		// val 为字符串，switch 需要数字做比对。parseInt() 把字符串转换为整数
 		switch(parseInt(val)) {
 			case 1:
@@ -790,9 +790,8 @@
 				document.getElementById("gh1_mix").value = document.getElementById("gh1_3_input").value;
 				break
 		};
-		console.log(document.getElementById("gh1_mix").value);
+		// console.log(document.getElementById("gh1_mix").value);
 	});
-
 	// blur 事件：元素失去焦点
 	document.getElementById("gh1_3_input").addEventListener("blur", function() {
 		document.getElementById("gh1_mix").value = document.getElementById("gh1_3_input").value;
@@ -800,10 +799,47 @@
 
 	document.getElementById("gh2").addEventListener("click", function() {
 		radioChecked("gh2_3");
+
+		var val = $('input[name=gh2]:checked').val();
+		// console.log("gh2：选中" + val);
+		// val 为字符串，switch 需要数字做比对。parseInt() 把字符串转换为整数
+		switch(parseInt(val)) {
+			case 1:
+				document.getElementById("gh2_mix").value = "甲供";
+				break
+			case 2:
+				document.getElementById("gh2_mix").value = "电科";
+				break
+			case 3:
+				document.getElementById("gh2_mix").value = document.getElementById("gh2_3_input").value;
+				break
+		};
 	});
+	document.getElementById("gh2_3_input").addEventListener("blur", function() {
+		document.getElementById("gh2_mix").value = document.getElementById("gh2_3_input").value;
+ 	});
+
 	document.getElementById("gh3").addEventListener("click", function() {
 		radioChecked("gh3_3");
+
+		var val = $('input[name=gh3]:checked').val();
+		// console.log("gh3：选中" + val);
+		// val 为字符串，switch 需要数字做比对。parseInt() 把字符串转换为整数
+		switch(parseInt(val)) {
+			case 1:
+				document.getElementById("gh3_mix").value = "甲供";
+				break
+			case 2:
+				document.getElementById("gh3_mix").value = "电科";
+				break
+			case 3:
+				document.getElementById("gh3_mix").value = document.getElementById("gh3_3_input").value;
+				break
+		};
 	});
+	document.getElementById("gh3_3_input").addEventListener("blur", function() {
+		document.getElementById("gh3_mix").value = document.getElementById("gh3_3_input").value;
+ 	});
 </script>
 
 </html>
