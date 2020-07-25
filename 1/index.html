@@ -431,6 +431,7 @@
 			document.getElementById("other_input").type = "text";
 			document.getElementById("other_label").innerHTML = "其他：";
 			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
+			// $("#id") 通过 jQuery 操作元素
 			$("#other_input").attr("name","other");
 		} else {
 			document.getElementById("other_input").type = "hidden";
@@ -439,6 +440,9 @@
 			$("#other_input").removeAttr("name");
 		}
 	}
+
+	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
+	// 高级模式下：工单项默认灰色，不可修改
 	</script>
 
 </head>
