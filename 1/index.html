@@ -441,6 +441,12 @@
 		}
 	}
 
+	function change() {
+		var a = $("c1");
+		console.log(a);
+		a.removeClass("change");
+	}
+
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
 	// 高级模式下：工单项默认灰色，不可修改
 	</script>
@@ -448,6 +454,13 @@
 </head>
 
 <body>
+
+<form id="delForm">
+	<div id="c1" style='display:none'>
+		<p>更换1：表单内容</p>
+	</div>
+	<input type="button" value="删除表格" onclick="change()">
+</form>
 
 <!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="form">
