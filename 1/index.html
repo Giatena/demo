@@ -485,6 +485,13 @@
 		// $("#gh1").attr("style", "width:730px");
 	}
 
+	function resetForm() {
+		// $('input[form=noSubmit]').reset();
+		$("#form").find('input[form=noSubmit]').each(function() {
+            this.checked = "";
+		});
+	}
+
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
 	// 高级模式下：工单项默认灰色，不可修改
 	</script>
@@ -656,7 +663,7 @@
 
 	<input type="submit" value="提交">
 	<br>
-	<input type="reset" value="重置">
+	<input type="reset" value="重置" onclick="resetForm()">
 	<br>
 	<!-- <input type="button" value="缓存" id="idb" onclick="writeIDB()"> -->
 
@@ -668,6 +675,10 @@
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
 	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
 
+</form>
+
+<form id="noSubmit">
+	<input type="reset" value="重置2">
 </form>
 
 <div id="result" class="result">
