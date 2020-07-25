@@ -485,11 +485,9 @@
 		// $("#gh1").attr("style", "width:730px");
 	}
 
+	// 解决因过滤表单数组，造成表外项无法重置
 	function resetForm() {
-		// $('input[form=noSubmit]').reset();
-		$("#form").find('input[form=noSubmit]').each(function() {
-            this.checked = "";
-		});
+		document.getElementById("noSubmit").reset();
 	}
 
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
