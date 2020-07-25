@@ -65,10 +65,11 @@
 
 		createDatabase();
 
+		// 初始化没有运行From的reset()，处理“更换”被选中，再刷新页面，隐藏元素不显示问题
 		if ($("#replacement_1").is(":checked")) {
-			formShow(gh1);
-			formShow(gh2);
-			formShow(gh3);
+			formShow(gh1);radioChecked("gh1_3");
+			formShow(gh2);radioChecked("gh2_3");
+			formShow(gh3);radioChecked("gh2_3");
 		}
 	}
 
@@ -437,7 +438,9 @@
 		}
 
 		var label = id + "_label";
+		console.log(label);
 		var input = id + "_input";
+		var inputName = id + "_from";
 		id = "#" + id;
 
 		// 如果“更换1”中“其他”被选中，则显示“：”和文本框
@@ -446,7 +449,7 @@
 			document.getElementById(input).type = "text";
 			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
 			// $("#id") 通过 jQuery 操作元素
-			$(input).attr("name","other");
+			$(input).attr("name",inputName);
 		} else {
 			document.getElementById(label).innerHTML = "其他";
 			document.getElementById(input).type = "hidden";
@@ -586,12 +589,12 @@
 		<label>名称：</label>
 		<input type="text" name="name" style="width:290px;">
 		<label>　来源：</label>
-		<input type="radio" value="1" name="from" id="gh1_1">
+		<input type="radio" value="1" name="gh1" id="gh1_1">
 		<label>甲供</label>
-		<input type="radio" value="2" name="from" id="gh1_2">
+		<input type="radio" value="2" name="gh1" id="gh1_2">
 		<label>电科</label>
-		<input type="radio" value="3" name="from" id="gh1_3">
-		<label id="gh1_3_label" >其他</label>
+		<input type="radio" value="3" name="gh1" id="gh1_3">
+		<label id="gh1_3_label">其他</label>
 		<input type="hidden" id="gh1_3_input" style="width:85px;">
 		<br>
 		<label>旧件：</label>
@@ -603,12 +606,44 @@
 	<br>
 
 	<fieldset id="gh2" style='display:none'>
-		<legend>2</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　 来源：</label><input type="radio" value="1" name="from" id="from"><label> 甲供 </label><input type="radio" value="2" name="from" id="from"><label> 电科 </label><input type="radio" value="3" name="from" id="gh2-3"><label id="other_label" > 其他 </label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　 好件：</label><input type="text" name="new" style="width:290px;"><br>
+		<legend>2</legend>
+		<label>名称：</label>
+		<input type="text" name="name" style="width:290px;">
+		<label>　来源：</label>
+		<input type="radio" value="1" name="gh2" id="gh2_1">
+		<label>甲供 </label>
+		<input type="radio" value="2" name="gh2" id="gh2_2">
+		<label>电科 </label>
+		<input type="radio" value="3" name="gh2" id="gh2_3">
+		<label id="gh2_3_label">其他</label>
+		<input type="hidden" id="gh2_3_input" style="width:85px;">
+		<br>
+		<label>旧件：</label>
+		<input type="text" name="old" style="width:290px;">
+		<label>　好件：</label>
+		<input type="text" name="new" style="width:290px;">
+		<br>
 	</fieldset>
 	<br>
 
 	<fieldset id="gh3" style='display:none'>
-		<legend>3</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　 来源：</label><input type="radio" value="1" name="from" id="from"><label> 甲供 </label><input type="radio" value="2" name="from" id="from"><label> 电科 </label><input type="radio" value="3" name="from" id="gh3-3"><label id="other_label" > 其他 </label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　 好件：</label><input type="text" name="new" style="width:290px;"><br>
+		<legend>3</legend>
+		<label>名称：</label>
+		<input type="text" name="name" style="width:290px;">
+		<label>　来源：</label>
+		<input type="radio" value="1" name="gh3" id="gh3_1">
+		<label>甲供</label>
+		<input type="radio" value="2" name="gh3" id="gh3_2">
+		<label>电科</label>
+		<input type="radio" value="3" name="gh3" id="gh3_3">
+		<label id="gh3_3_label" >其他</label>
+		<input type="hidden" id="gh3_3_input" style="width:85px;">
+		<br>
+		<label>旧件：</label>
+		<input type="text" name="old" style="width:290px;">
+		<label>　好件：</label>
+		<input type="text" name="new" style="width:290px;">
+		<br>
 	</fieldset>
 	<br>
 
@@ -728,6 +763,12 @@
 	// 监听“更换1”整个fieldset元素是否被点击
 	document.getElementById("gh1").addEventListener("click", function() {
 		radioChecked("gh1_3");
+	});
+	document.getElementById("gh2").addEventListener("click", function() {
+		radioChecked("gh2_3");
+	});
+	document.getElementById("gh3").addEventListener("click", function() {
+		radioChecked("gh3_3");
 	});
 </script>
 
