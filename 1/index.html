@@ -418,38 +418,42 @@
 
 	<script type="text/javascript">
 	// 获取单个复选项的值
-	function ifchecked() {
+	function radioChecked(id) {
 		// if ($("#gj").is(":checked")) {
 		// 	document.getElementById("gj_data").type = "text";
 		// } else {
 		// 	document.getElementById("gj_data").type = "hidden";
 		// };
 
-		if ($("#gh1-3").is(":checked")) {
-			document.getElementById("other_input").type = "text";
-			document.getElementById("other_label").innerHTML = "其他：";
-			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
-			// $("#id") 通过 jQuery 操作元素
-			$("#other_input").attr("name","other");
-		} else {
-			document.getElementById("other_input").type = "hidden";
-			document.getElementById("other_label").innerHTML = "其他";
-			// 移除 input 的 name="other" 属性
-			$("#other_input").removeAttr("name");
+		if(!id) {
+			var id = "gh1_3";
 		};
 
-		if ($("#replacement_1").is(":checked")) {
-			formShow();
+		var label = id + "_label";
+		console.log("label：" + label);
+		var input = id + "_input";
+		id = "#" + id;
+
+		// 如果“更换1”中“其他”被选中，则显示“：”和文本框
+		if ($(id).is(":checked")) {
+			document.getElementById(label).innerHTML = "其他：";
+			document.getElementById(input).type = "text";
+			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
+			// $("#id") 通过 jQuery 操作元素
+			$(input).attr("name","other");
 		} else {
-			formHidden();
+			document.getElementById(label).innerHTML = "其他";
+			document.getElementById(input).type = "hidden";
+			// 移除 input 的 name="other" 属性
+			$(input).removeAttr("name");
 		};
 	}
 
 	function formHidden(id) {
 		// 用于“显示”和“隐藏”按钮控制
 		if(!id) {
-			id = "#gh1";
-		}
+			var id = "#gh1";
+		};
 
 		// 删除原有 style 属性，并新增隐藏属性
 		$(id).removeAttr("style");
@@ -515,7 +519,7 @@
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<input type="checkbox" name="123" id ="gj">
 	<label>高级</label>
-	<input type="button" value="判断" id="pd" onclick="ifchecked()">
+	<input type="button" value="判断" id="pd" onclick="radioChecked()">
 	<br>
 
 	<label for="train">列车编号：</label>
@@ -572,17 +576,17 @@
 
 	<!-- style='display:none' 通过CSS隐藏元素，且不占位 -->
 	<fieldset id="gh1" style='display:none'>
-		<legend>更换1</legend>
+		<legend>1</legend>
 		<label>名称：</label>
 		<input type="text" name="name" style="width:290px;">
 		<label>　来源：</label>
-		<input type="radio" value="1" name="from" id="from">
+		<input type="radio" value="1" name="from" id="gh1_1">
 		<label>甲供</label>
-		<input type="radio" value="2" name="from" id="from">
+		<input type="radio" value="2" name="from" id="gh1_2">
 		<label>电科</label>
-		<input type="radio" value="3" name="from" id="gh1-3">
-		<label id="other_label" >其他</label>
-		<input type="hidden" id="other_input">
+		<input type="radio" value="3" name="from" id="gh1_3">
+		<label id="gh1_3_label" >其他</label>
+		<input type="hidden" id="gh1_3_input" style="width:85px;">
 		<br>
 		<label>旧件：</label>
 		<input type="text" name="old" style="width:290px;">
@@ -590,8 +594,18 @@
 		<input type="text" name="new" style="width:290px;">
 		<br>
 	</fieldset>
-
 	<br>
+
+	<fieldset id="gh2" style='display:none'>
+		<legend>2</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　来源：</label><input type="radio" value="1" name="from" id="from"><label>甲供</label><input type="radio" value="2" name="from" id="from"><label>电科</label><input type="radio" value="3" name="from" id="gh2-3"><label id="other_label" >其他</label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　好件：</label><input type="text" name="new" style="width:290px;"><br>
+	</fieldset>
+	<br>
+
+	<fieldset id="gh3" style='display:none'>
+		<legend>3</legend><label>名称：</label><input type="text" name="name" style="width:290px;"><label>　来源：</label><input type="radio" value="1" name="from" id="from"><label>甲供</label><input type="radio" value="2" name="from" id="from"><label>电科</label><input type="radio" value="3" name="from" id="gh3-3"><label id="other_label" >其他</label><input type="hidden" id="other_input"><br><label>旧件：</label><input type="text" name="old" style="width:290px;"><label>　好件：</label><input type="text" name="new" style="width:290px;"><br>
+	</fieldset>
+	<br>
+
 	<input type="submit" value="提交">
 	<br>
 	<input type="reset" value="重置">
@@ -692,14 +706,20 @@
 	// “更换或对翻情况”单选项的监听器
 	document.getElementById("replacement_1").addEventListener("click", function() {
 		formShow(gh1);
+		radioChecked(gh1);
+		formShow(gh2);
+		formShow(gh3);
 	});
 	document.getElementById("replacement_2").addEventListener("click", function() {
 		formHidden(gh1);
+		formHidden(gh2);
+		formHidden(gh3);
 	});
 	document.getElementById("replacement_3").addEventListener("click", function() {
 		formHidden(gh1);
+		formHidden(gh2);
+		formHidden(gh3);
 	});
-	formHidden
 </script>
 
 </html>
