@@ -424,6 +424,17 @@
 			document.getElementById("gj_data").type = "hidden";
 		}
 	}
+
+	// 获取单个复选项的值
+	function ifchecked() {
+		if ($("#f2-3").is(":checked")) {
+			document.getElementById("other_input").type = "text";
+			document.getElementById("other_label").type = "text";
+		} else {
+			document.getElementById("other_input").type = "hidden";
+			document.getElementById("other_label").type = "hidden";
+		}
+	}
 	</script>
 
 </head>
@@ -538,11 +549,21 @@
 </form>
 	
 <form id="form2">
-	部件名称：<input type="text" name="name">
+	<label>更换1</label>
 	<br>
-	旧件序列号：<input type="text" name="old">
+	名称：<input type="text" name="name" style="width:300px;">
+	<label>来源：</label>
+	<input type="radio" value="1" name="from" id="from">
+	<label>甲供</label>
+	<input type="radio" value="2" name="from" id="from">
+	<label>电科</label>
+	<input type="radio" value="3" name="from" id="f2-3">
+	<label>其他</label><label type="hidden" id="other_label">：</label>
+	<input type="hidden" name="other" id="other_input">
 	<br>
-	好件序列号：<input type="text" name="new">
+	<br>
+	旧件：<input type="text" name="old" style="width:300px;">
+	好件：<input type="text" name="new" style="width:300px;">
 	<br>
 </form>
 
