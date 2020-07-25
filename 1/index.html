@@ -446,14 +446,23 @@
 	}
 
 	function formHidden(id) {
+		// 用于“显示”和“隐藏”按钮控制
 		if(!id) {
-			id = "gh1";
+			id = "#gh1";
 		}
+
+		// 删除原有 style 属性，并新增隐藏属性
 		$(id).removeAttr("style");
 		$(id).attr("style", "display:none");
 	}
 
 	function formShow(id) {
+		// 用于“显示”和“隐藏”按钮控制
+		if(!id) {
+			id = "#gh1";
+		}
+
+		// 删除原有 style 属性，并新增隐藏属性
 		$(id).removeAttr("style");
 		$(id).attr("style", "width:730px");
 		// $("#gh1").removeAttr("style");
