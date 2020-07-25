@@ -429,10 +429,11 @@
 	function ifchecked() {
 		if ($("#f2-3").is(":checked")) {
 			document.getElementById("other_input").type = "text";
-			document.getElementById("other_label").type = "text";
+			document.getElementById("other_label").innerHTML = "其他：";
+			label
 		} else {
 			document.getElementById("other_input").type = "hidden";
-			document.getElementById("other_label").type = "hidden";
+			document.getElementById("other_label").innerHTML = "其他";
 		}
 	}
 	</script>
@@ -542,7 +543,7 @@
 	<input type="radio" value="2" name="from" id="from">
 	<label>电科</label>
 	<input type="radio" value="3" name="from" id="f2-3">
-	<label>其他</label><label id="other_label" style="">：</label>
+	<label id="other_label" >其他</label>
 	<input type="hidden" name="other" id="other_input">
 	<br>
 	<label>旧件：</label>
