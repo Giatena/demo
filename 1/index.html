@@ -442,11 +442,11 @@
 	}
 
 	function formHidden() {
-		$("#c1").attr("style", "display:none");
+		$("#gh1").attr("style", "display:none");
 	}
 
 	function formShow() {
-		$("#c1").removeAttr("style");
+		$("#gh1").removeAttr("style");
 	}
 
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
@@ -456,30 +456,6 @@
 </head>
 
 <body>
-
-<!-- style='display:none' 通过CSS隐藏元素，且不占位 -->
-<form id="c1" style='display:none'>
-	<label>更换1</label>
-	<br>
-	<label>名称：</label>
-	<input type="text" name="name" style="width:300px;">
-	<label>　来源：</label>
-	<input type="radio" value="1" name="from" id="from">
-	<label>甲供</label>
-	<input type="radio" value="2" name="from" id="from">
-	<label>电科</label>
-	<input type="radio" value="3" name="from" id="f2-3">
-	<label id="other_label" >其他</label>
-	<input type="hidden" id="other_input">
-	<br>
-	<label>旧件：</label>
-	<input type="text" name="old" style="width:300px;">
-	<label>　好件：</label>
-	<input type="text" name="new" style="width:300px;">
-	<br>
-</form>
-<input type="button" value="隐藏" onclick="formHidden()">
-<input type="button" value="显示" onclick="formShow()">
 
 <!-- 表单传送到服务器的"post.php" -->
 <form action="post.php" method="post" id="form">
@@ -572,24 +548,30 @@
 	<label>无坏件</label>
 	<br>
 
-	<label>更换1</label>
-	<br>
-	<label>名称：</label>
-	<input type="text" name="name" style="width:300px;">
-	<label>　来源：</label>
-	<input type="radio" value="1" name="from" id="from">
-	<label>甲供</label>
-	<input type="radio" value="2" name="from" id="from">
-	<label>电科</label>
-	<input type="radio" value="3" name="from" id="f2-3">
-	<label id="other_label" >其他</label>
-	<input type="hidden" id="other_input">
-	<br>
-	<label>旧件：</label>
-	<input type="text" name="old" style="width:300px;">
-	<label>　好件：</label>
-	<input type="text" name="new" style="width:300px;">
-	<br>
+	<!-- style='display:none' 通过CSS隐藏元素，且不占位 -->
+	<fieldset id="gh1">
+	<!-- <fieldset id="gh1" style='display:none'> -->
+		<legend>更换1</legend>
+		<label>名称：</label>
+		<input type="text" name="name" style="width:300px;">
+		<label>　来源：</label>
+		<input type="radio" value="1" name="from" id="from">
+		<label>甲供</label>
+		<input type="radio" value="2" name="from" id="from">
+		<label>电科</label>
+		<input type="radio" value="3" name="from" id="f2-3">
+		<label id="other_label" >其他</label>
+		<input type="hidden" id="other_input">
+		<br>
+		<label>旧件：</label>
+		<input type="text" name="old" style="width:300px;">
+		<label>　好件：</label>
+		<input type="text" name="new" style="width:300px;">
+		<br>
+	</fieldset>
+	<input type="button" value="隐藏" onclick="formHidden()">
+	<input type="button" value="显示" onclick="formShow()">
+	<br><br>
 
 	<input type="submit" value="提交">
 	<br>
