@@ -430,10 +430,13 @@
 		if ($("#f2-3").is(":checked")) {
 			document.getElementById("other_input").type = "text";
 			document.getElementById("other_label").innerHTML = "其他：";
-			label
+			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
+			$("#other_input").attr("name","other");
 		} else {
 			document.getElementById("other_input").type = "hidden";
 			document.getElementById("other_label").innerHTML = "其他";
+			// 移除 input 的 name="other" 属性
+			$("#other_input").removeAttr("name");
 		}
 	}
 	</script>
@@ -544,7 +547,7 @@
 	<label>电科</label>
 	<input type="radio" value="3" name="from" id="f2-3">
 	<label id="other_label" >其他</label>
-	<input type="hidden" name="other" id="other_input">
+	<input type="hidden" id="other_input">
 	<br>
 	<label>旧件：</label>
 	<input type="text" name="old" style="width:300px;">
