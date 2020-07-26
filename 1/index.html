@@ -332,12 +332,6 @@
 	<script type="text/javascript">
 	// 获取单个复选项的值
 	function radioChecked(id) {
-		// if ($("#gj").is(":checked")) {
-		// 	document.getElementById("gj_data").type = "text";
-		// } else {
-		// 	document.getElementById("gj_data").type = "hidden";
-		// };
-
 		// 用于“高级判断”按钮控制
 		// if(!id) {
 			// id = "gh1_3";
@@ -405,24 +399,32 @@
 	}
 
 	function addTicketID() {
-		var dateTime = document.getElementById("dateTime").innerHTML;
-		// null、undefined、NaN、empty string ("") 在 if 里都属于 false
-		if (dateTime) {
-			console.log("here");
-		}
-		// console.log("dateTime：" + dateTime);
-		dateTime = dateTime.substr(0, 10);
-		// \. 转义“.”为其本身，/\./g 修饰符g表示全部替换
-		dateTime = dateTime.replace(/\./g, '');
-		console.log(dateTime);
+		var datePicker = document.getElementById("date").value;
+		
+		// /-/g 修饰符g表示把“-”全部替换
+		datePicker = datePicker.replace(/-/g, '');
+		console.log(datePicker);
 
 		var factory = $("#factory").find("option:selected").val();
 		var number = $("#number").find("option:selected").val();
 
-		if (dateTime && factory != "e" && number != "e") {
-			document.getElementById("ticket").value = dateTime + "_" + factory + "_" + number;
+		// null、undefined、NaN、empty string ("") 在 if 里都属于 false
+		if (datePicker && factory != "e" && number != "e") {
+			document.getElementById("ticket").value = datePicker + "_" + factory + "_" + number;
+		} else {
+			document.getElementById("ticket").value = "";
 		}
 	}
+
+	function gjButtom() {
+		if ($("#gj").is(":checked")) {
+			console.log("高级复选框被选中");
+		}
+		// 	document.getElementById("gj_data").type = "text";
+		// } else {
+		// 	document.getElementById("gj_data").type = "hidden";
+	}
+
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
 	// 高级模式下：工单项默认灰色，不可修改
 	</script>
@@ -468,9 +470,9 @@
 
 	<label for="ticket">质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
-	<input type="checkbox" name="123" id ="gj">
+	<input type="checkbox" name="gj" id ="gj">
 	<label>高级</label>
-	<input type="button" value="判断" id="pd" onclick="radioChecked()">
+	<input type="button" value="高级按钮" onclick="gjButtom()">
 	<br>
 
 	<label for="train">列车编号：</label>
