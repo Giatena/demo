@@ -34,7 +34,7 @@
     <label>处理经过：</label>
     <label>{{obge.action}}</label>
     <br>
-    <label>{{obge.replacement}}情况：</label>
+    <label>{{d}}</label>
     <!-- <label>{{obge.replacement}}</label> -->
     <br>
     <label>{{a}}</label>
@@ -48,11 +48,12 @@
 <script>
     //准备一个json 对象
     // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"3"}
-    var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"2","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
+    var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
 
     var a = "";
     var b = "";
     var c = "";
+    var d = "";
 
     //通过vue.js 把数据和对应的视图关联起来
     //每个 Vue 应用都需要通过实例化 Vue 来实现
@@ -106,16 +107,16 @@
             a = obge.replacement +  "、"
             b = (parseInt(obge.replacement) + 1) +  "、"
             c = (parseInt(obge.replacement) + 2) +  "、"
-            obge.replacement = "更换"
+            d = "更换情况："
             break;
         case "2":
             a = (parseInt(obge.replacement) - 1) +  "、"
             b = obge.replacement +  "、"
             c = (parseInt(obge.replacement) + 1) +  "、"
-            obge.replacement = "对翻"
+            d = "对翻情况："
             break;
         case "3":
-            obge.replacement = "无坏件"
+            d = "更换情况：无坏件"
             break;
     }
 </script>
