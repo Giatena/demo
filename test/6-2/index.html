@@ -142,24 +142,19 @@
     }
 
     function importJson() {
-        console.log("obge：" + obge);
+        // console.log("obge：" + obge);
         // 把用户输入的Json赋值 obge
         uerImput = document.getElementById("importJson").value
-        console.log("uerImput：" + uerImput);
+        // console.log("uerImput：" + uerImput);
         obge = JSON.parse(uerImput);
-        console.log("obge：" + obge);
-
-        // vm.$set(obge, uerImput)
-        vm.$set(obge, 100, "");
+        // console.log("obge：" + obge);
+        // console.log("obge：" + JSON.stringify(obge));
         
-        console.log("obge：" + JSON.stringify(obge));
-        
-        // 对用户导入的 json 做预处理
+        // 预处理 obge 数组
         jsonParse()
 
-        // set 操作数组失败，还是强制重新渲染 vue 实例
+        // 强制重新渲染 vue 实例
         vm.$forceUpdate();
-        console.log("obge：" + obge);
 
     }
 
