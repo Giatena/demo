@@ -234,6 +234,8 @@
 		var formJson = JSON.parse(formStr);
 		console.log("formJson 对象以字符串形式打印：" + JSON.stringify(formJson));
 
+		// return JSON.stringify(formJson)
+
 		// 事务：对“CW”表进行读写的权限控制
 		var transaction = db.transaction(objectStoreName, "readwrite");
 		// 对表进行操作
@@ -490,6 +492,13 @@
 		document.getElementById("noSubmit").reset();
 	}
 
+	function copyText() {
+		var formStr = JSON.stringify($("#form").serializeObject());
+		var formJson = JSON.stringify(JSON.parse(formStr));
+		navigator.clipboard.writeText(formJson);
+		console.log("已导出到剪贴板：" + formJson);
+	}
+
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
 	// 高级模式下：工单项默认灰色，不可修改
 	</script>
@@ -672,6 +681,8 @@
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase()">
 	<input type="button" value="显示数据" id="xs" onclick="showData()">
 	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
+	<input type="button" value="导出" id="sc" onclick="copyText()">
+	<input type="button" value="保存+导出" id="sc" onclick="addData();copyText();">
 
 </form>
 
