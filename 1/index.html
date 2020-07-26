@@ -456,10 +456,11 @@
 	<label>质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<input type="checkbox" name="gj" id ="gj">
-	<label>高级：</label>
-	<label>日期 </label>
+	<label>（</label>
+	<!-- <label>日期 </label> -->
 	<input type="date" id="date" disabled="disabled">
-	<label>基地 </label>
+	<label>CW_</label>
+	<!-- <label>基地 </label> -->
 	<select name="" id="factory" disabled="disabled">
 		<option value="e" selected = "selected"></option>
 		<option value="ML">梅陇(ML)</option>
@@ -469,7 +470,8 @@
 		<option value="FJ">富锦(FJ)</option>
 		<option value="FJ">龙阳(LY)</option>
 	</select>
-	<label>序号 </label>
+	<label>_</label>
+	<!-- <label>序号 </label> -->
 	<select name="" id="number" disabled="disabled">
 		<option value="e" selected = "selected"></option>
 		<option value="01">01</option>
@@ -480,6 +482,7 @@
 		<option value="06">06</option>
 	</select>
 	<input type="button" value="添加" id="tj" onclick="addTicketID()">
+	<label>）</label>
 	<br>
 
 	<label for="train">列车编号：</label>
@@ -556,7 +559,6 @@
 		<input type="text" name="new" style="width:290px;">
 		<br>
 	</fieldset>
-	<br>
 
 	<fieldset id="gh2" style='display:none'>
 		<legend>2</legend>
@@ -578,7 +580,6 @@
 		<input type="text" name="new" style="width:290px;">
 		<br>
 	</fieldset>
-	<br>
 
 	<fieldset id="gh3" style='display:none'>
 		<legend>3</legend>
@@ -604,7 +605,7 @@
 
 	<label for="compartment">当班人员：</label>
 	<input type="text" name="member" id="member">
-	<br>
+	<br><br>
 
 	<!-- <input type="submit" value="提交"> -->
 	<input type="reset" value="重置" onclick="resetForm()">
