@@ -20,8 +20,11 @@
 <div id="d1">
     <!-- <label>GUID：</label> -->
     <!-- <label>{{obge.GUID}}</label> -->
+    <label>导入</label>
+    <input type="text" id="importJson">
+    <input type="button" value="预览" id="show" onclick="importJson()">
     <input type="button" value="复制工单文本" id="copy" onclick="copyText()">
-    <br>
+    <br><br>
     <label>质保工单：</label>
     <label>{{obge.ticket}}</label>
     <br>
@@ -58,11 +61,12 @@
 <script>
     //准备一个json 对象
     // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"3"}
-    var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
+    // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
+    var obge = {"GUID":"","ticket":"","train":"","compartment":"","description":"","action":"","component":["","",""],"source":["","",""],"old":["","",""],"new":["","",""]}
 
-    var a = "① ";
-    var b = "② ";
-    var c = "③ ";
+    var a = "";
+    var b = "";
+    var c = "";
     var d = "";
 
     //通过vue.js 把数据和对应的视图关联起来
@@ -118,21 +122,29 @@
             d = "更换情况："
             // console.log(obge.component)
             // console.log(obge.component[0])
-            a = a + obge.component[num-1] + "，旧件：" + obge.old[num-1] + "，新件：" + obge.new[num-1]
-            b = b + obge.component[num] + "，旧件：" + obge.old[num] + "，新件：" + obge.new[num]
-            c = c + obge.component[num+1] + "，旧件：" + obge.old[num+1] + "，新件：" + obge.new[num+1]
+            a = "① " + obge.component[num-1] + "，旧件：" + obge.old[num-1] + "，新件：" + obge.new[num-1]
+            b = "② " + obge.component[num] + "，旧件：" + obge.old[num] + "，新件：" + obge.new[num]
+            c = "③ " + obge.component[num+1] + "，旧件：" + obge.old[num+1] + "，新件：" + obge.new[num+1]
             break;
         case "2":
             var num = parseInt(obge.replacement)
-            a = (num - 1) +  "、"
-            b = num +  "、"
-            c = (num + 1) +  "、"
+            a = "① " + (num - 1) +  "、"
+            b = "② " + num +  "、"
+            c = "③ " + (num + 1) +  "、"
             d = "对翻情况："
             break;
         case "3":
             d = "更换情况：无坏件"
             a = b = c = ""
             break;
+    }
+
+    function importJson() {
+        // 把用户输入的Json赋值 obge
+        uerImput = document.getElementById("importJson").value
+        console.log("uerImput：" + uerImput);
+        vm.$set(obge, uerImput)
+        console.log("obge：" + obge);
     }
 
     function copyText() {
