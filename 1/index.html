@@ -450,7 +450,10 @@
 	}
 
 	function dataCheck() {
+		// 复选框 取消勾选，但无法触发监听器（click和change事件都不行）
 		$("#gj").attr("checked", false);
+		// 重新运行一下判断函数，撤销“质保工单”的禁用状态
+		gjButtom();
 	}
 	</script>
 
