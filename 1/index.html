@@ -63,6 +63,9 @@
 			formShow(gh2);radioChecked("gh2_3");
 			formShow(gh3);radioChecked("gh3_3");
 		}
+
+		// 初始化没有运行From的reset()，处理“高级”被选中，再刷新页面，元素见无法正常互锁
+		gjButtom();
 	}
 
 	function showTime() {
@@ -349,7 +352,7 @@
 			document.getElementById(input).type = "text";
 			// 在 input 里添加 name="other" 属性以便提交时，能获取到用户输入的值；默认不获取
 			// $("#id") 通过 jQuery 操作元素
-			$(input).attr("name",inputName);
+			$(input).attr("name", inputName);
 		} else {
 			// 恢复隐藏原状
 			document.getElementById(label).innerHTML = "其他";
@@ -418,12 +421,19 @@
 
 	function gjButtom() {
 		if ($("#gj").is(":checked")) {
-			console.log("高级复选框被选中");
+			// console.log("高级复选框被选中");
+			$("#ticket").attr("disabled", true);
+			$("#date").removeAttr("disabled");
+			$("#factory").removeAttr("disabled");
+			$("#number").removeAttr("disabled");
+		} else {
+			$("#ticket").removeAttr("disabled");
+			$("#date").attr("disabled", true);
+			$("#factory").attr("disabled", true);
+			$("#number").attr("disabled", true);
 		}
-		// 	document.getElementById("gj_data").type = "text";
-		// } else {
-		// 	document.getElementById("gj_data").type = "hidden";
 	}
+	
 
 	// 如果点击 日期框 基地下拉框 和 序号下拉框 就执行函数 拼贴三项用户输入到 工单项
 	// 高级模式下：工单项默认灰色，不可修改
@@ -442,10 +452,10 @@
 	<input type="hidden" name="GUID" id="GUID">
 
 	<label>日期 </label>
-	<input type="date" id="date">
+	<input type="date" id="date" disabled="disabled">
 
 	<label>基地 </label>
-	<select name="" id="factory">
+	<select name="" id="factory" disabled="disabled">
 		<option value="e" selected = "selected"></option>
 		<option value="ML">梅陇(ML)</option>
 		<option value="SL">石龙(SL)</option>
@@ -456,7 +466,7 @@
 	</select>
 
 	<label>序号 </label>
-	<select name="" id="number">
+	<select name="" id="number" disabled="disabled">
 		<option value="e" selected = "selected"></option>
 		<option value="01">01</option>
 		<option value="02">02</option>
@@ -468,7 +478,7 @@
 	<input type="button" value="添加" id="tj" onclick="addTicketID()">
 	<br>
 
-	<label for="ticket">质保工单：</label>
+	<label>质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
 	<input type="checkbox" name="gj" id ="gj">
 	<label>高级</label>
@@ -697,6 +707,10 @@
 </script>
 
 <script type="text/javascript">
+	// 质保工单“高级”选项的监听器
+	document.getElementById("gj").addEventListener("click", function() {
+		gjButtom();
+	});
 	// “更换或对翻情况”单选项的监听器
 	document.getElementById("replacement_1").addEventListener("click", function() {
 		formShow(gh1);
