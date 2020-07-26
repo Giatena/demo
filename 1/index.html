@@ -5,15 +5,7 @@
 	<meta name="viewport" content="width=device-width/2, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>电子工单：录入（实验性）</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<!-- <script src="../libs/ViewUI/4.3.2/iview.min.js"> </script> -->
 </head>
-<!-- import Vue.js -->
-<!-- <script src="//vuejs.org/js/vue.min.js"></script> -->
-<!-- import stylesheet -->
-<!-- <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css"> -->
-<!-- import iView -->
-<!-- <script src="//unpkg.com/view-design/dist/iview.min.js"></script> -->
-
 	<script type="text/javascript">
 
 	// 表单初始化：预置 dbName、version、db、objectStoreName 四个全局变量。
@@ -149,42 +141,6 @@
 			};
 		}
 	}
-
-	// 弃用？
-	function getIDBobject() {
-
-		// 优先返回缓存的数据库实例
-		if (db) {
-			return db
-		};
-
-		// 打开数据库，返回 iDB 对象
-		var openRequest = window.indexedDB.open(dbName, version);
-		openRequest.onerror = function(err) {
-			console.log("getIDBobject()：打开[" + dbName + "]数据库错误: " + err.target.errorCode);
-		};
-		openRequest.onsuccess = function(success) {
-			console.log("getIDBobject()：已打开[" + dbName + "]数据库: " + success.target.result);
-			// 获取数据库实例对象，赋值全局变量db为iDB对象
-			db = success.target.result;
-			console.log("getIDBobject()：" + typeof db);
-
-			// 不在 funciton() 外声明全局变量，可执行本条
-			// window.db = success.target.result;
-			// console.log("getIDBobject()：" + typeof window.db);
-
-			// showData();
-		};
-		openRequest.onupgradeneeded = function(event) {
-			console.log("全局 onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
-			// 获取数据库实例对象 db
-			db = event.target.result;
-			
-			// 首次载入网页，且无缓存数据库，则执行 createDatabase() 的 onupgradeneeded 部分
-			// 本函数是 onupgradeneeded 部分默认无操作，因为目前用不到版本号升级，即更改数据库结构
-		}
-	}
-
 	</script>
 
 	<script type="text/javascript">
@@ -221,8 +177,6 @@
 		});
 		return o;
 	};
-
-
 
 	function addData() {
 		// serializeObject() 自定义函数 返回字符串型的表单数据，可解决“url化后的中文乱码”的问题
@@ -359,56 +313,6 @@
 		showData();
 	}
 
-	// 新增数据
-	// 数据库名称,对象仓库（表名）,传入的参数
-	function insert(dbName, version, objectStoreName, argument) {
-		// openRequest 返回一个 IDBOpenDBRequest 对象
-		// 而我们期望得到的DB对象在其result属性中
-		var openRequest = window.indexedDB.open(dbName, version);
-
-		openRequest.onerror = function(err) {
-			console.log("创建数据库错误: " + err.target.errorCode);
-		};
-
-		openRequest.onsuccess = function(success) {
-			console.log("数据库已打开: " + success.target.result);
-			// 获取数据库实例对象 db
-			// var db = success.target.result;
-			// var objectStore;
-			// if (!db.objectStoreNames.contains(objectStoreName)) {
-			// 	objectStore = db.createObjectStore('CW', { keyPath: 'id' });
-			// 	console.log("没有" + objectStoreName + "表，已创建。");
-			// }
-		}
-
-		openRequest.onupgradeneeded = function(event) {
-			console.log('数据库版本有变化...');
-			// 获取数据库实例对象 db
-			// var db = event.target.result;
-			// // 如果不存在，则新建一张名为“CW”的表，主键自动生成
-			// if (!db.objectStoreNames.contains(objectStoreName)) {
-			// 	var objectStore = db.createObjectStore(objectStoreName, autoIncrement);
-			// 	console.log('没有' + objectStoreName + "表，已创建。");
-			// }
-			// // 对某个表 进行事务操作的事务权限控制 
-			// var transaction = db.transaction(objectStoreName, 'readwrite');
-			// // 对表进行操作
-			// var objectStore = transaction.objectStore(objectStoreName);
-			// console.log(argument);
-			// // 使用add方法,此方法是异步的。有success,error事件
-			// var add = objectStore.add(argument);
-
-			// // 添加成功的回调函数
-			// add.onsuccess = function(e) {
-			// 	console.log(e);
-			// 	// console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']成功！！');
-			// }
-			// add.error = function(e) {
-			// 	// console.log('向表[' + objectStoreName + ']新增一条数据为[' + argument + ']失败！！');
-			// }
-		}
-	}
-
 	</script>
 
 	<style type="text/css">
@@ -435,9 +339,9 @@
 		// };
 
 		// 用于“高级判断”按钮控制
-		if(!id) {
-			id = "gh1_3";
-		}
+		// if(!id) {
+			// id = "gh1_3";
+		// }
 
 		var label = id + "_label";
 		// console.log(label);
@@ -465,9 +369,9 @@
 
 	function formHidden(id) {
 		// 用于“显示”和“隐藏”按钮控制
-		if(!id) {
-			id = "#gh1";
-		};
+		// if(!id) {
+			// id = "#gh1";
+		// };
 
 		// 删除原有 style 属性，并新增隐藏属性
 		$(id).removeAttr("style");
@@ -492,6 +396,7 @@
 		document.getElementById("noSubmit").reset();
 	}
 
+	// 表单数据序列化，并复制到剪贴板
 	function copyText() {
 		var formStr = JSON.stringify($("#form").serializeObject());
 		var formJson = JSON.stringify(JSON.parse(formStr));
@@ -596,8 +501,8 @@
 	<label>对翻</label>
 	<input type="radio" value="3" name="replacement" id="replacement_3">
 	<label>无坏件</label>
-	<input type="button" value="显示" onclick="formShow()">
-	<input type="button" value="隐藏" onclick="formHidden()">
+	<!-- <input type="button" value="显示" onclick="formShow()"> -->
+	<!-- <input type="button" value="隐藏" onclick="formHidden()"> -->
 	<br>
 
 	<!-- style='display:none' 通过CSS隐藏元素，且不占位 -->
@@ -676,18 +581,14 @@
 
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
-	<input type="button" value="初始化" id="xj" onclick="createDatabase('Tickets', 1, 'CW')">
+	<!-- <input type="button" value="初始化" id="xj" onclick="createDatabase('Tickets', 1, 'CW')"> -->
 	<input type="button" value="添加一条数据" id="tj" onclick="addData()">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase()">
-	<input type="button" value="显示数据" id="xs" onclick="showData()">
+	<!-- <input type="button" value="显示数据" id="xs" onclick="showData()"> -->
 	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
 	<input type="button" value="导出" id="sc" onclick="copyText()">
 	<input type="button" value="保存+导出" id="sc" onclick="addData();copyText();">
 
-</form>
-
-<form id="noSubmit">
-	<input type="reset" value="重置2">
 </form>
 
 <div id="result" class="result">
@@ -703,9 +604,6 @@
 				<th>故障现象</th>
 				<th>处理经过</th>
 				<th>更换或对翻情况</th>
-
-
-
 				<th width="60">操作</th>
 			</tr>
 		</thead>
