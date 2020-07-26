@@ -427,15 +427,18 @@
 			$("#factory").removeAttr("disabled");
 			$("#number").removeAttr("disabled");
 		} else {
+			// 禁用元素时，局部重置
+			// "yyyy-mm-dd" 应放在 attr("disabled", true) 之前
+			document.getElementById("date").value = "yyyy-mm-dd";
+			document.getElementById("factory").value = "";
+			document.getElementById("number").value = "";
+
 			$("#ticket").removeAttr("disabled");
 			$("#date").attr("disabled", true);
 			$("#factory").attr("disabled", true);
 			$("#number").attr("disabled", true);
 
-			// 禁用元素时，局部重置
-			document.getElementById("date").value = "YYYY-MM-DD";
-			document.getElementById("factory").value = "";
-			document.getElementById("number").value = "";
+
 			
 		}
 	}
