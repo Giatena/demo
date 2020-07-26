@@ -57,9 +57,9 @@
     // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"3"}
     var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
 
-    var a = "";
-    var b = "";
-    var c = "";
+    var a = "① ";
+    var b = "② ";
+    var c = "③ ";
     var d = "";
 
     //通过vue.js 把数据和对应的视图关联起来
@@ -113,9 +113,9 @@
         case "1":
             // var num：声明 switch 内部变量 num
             var num = parseInt(obge.replacement)
-            a = num +  "、"
-            b = (num + 1) +  "、"
-            c = (num) + 2 +  "、"
+            // a = num +  "、"
+            // b = (num + 1) +  "、"
+            // c = (num) + 2 +  "、"
             d = "更换情况："
             // console.log(obge.component)
             // console.log(obge.component[0])
