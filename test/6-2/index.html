@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta content="text/html; charset=UTF-8">
     <title>formDemoData</title>
     <!--引入vue v2.6.11 -->
     <script src="./vue.min.js"> </script>
     <!-- <script src="../../libs/Vue.js/2.6.11/vue.min.js"> </script> -->
-    
 </head>
 
 <body>
@@ -36,8 +34,10 @@
     <label>处理经过：</label>
     <label>{{obge.action}}</label>
     <br>
-    <label>更换或对翻情况：</label>
-    <label>{{obge.replacement}}</label>
+    <label>{{obge.replacement}}情况：</label>
+    <!-- <label>{{obge.replacement}}</label> -->
+    <br>
+    <label>{{a}}</label>
     <br>
 </div>
 <!--Vue.js 使用了基于 HTML 的模版语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。
@@ -46,6 +46,9 @@
     //准备一个json 对象
     // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"3"}
     var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
+
+    var a = "";
+
     //通过vue.js 把数据和对应的视图关联起来
     //每个 Vue 应用都需要通过实例化 Vue 来实现
     var vm = new Vue({
@@ -54,6 +57,7 @@
         data:{
             //关联json对象
             message:obge
+            // message:a
         }
     })
 
@@ -94,7 +98,9 @@
 
     switch (obge.replacement) {
         case "1":
+            a = "（" + obge.replacement +  ")"
             obge.replacement = "更换"
+            
             break;
         case "2":
             obge.replacement = "对翻"
@@ -103,7 +109,6 @@
             obge.replacement = "无坏件"
             break;
     }
-
 </script>
 
 <!--<script>-->
