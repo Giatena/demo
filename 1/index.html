@@ -412,7 +412,7 @@
 		var number = $("#number").find("option:selected").val();
 
 		// null、undefined、NaN、empty string ("") 在 if 里都属于 false
-		if (datePicker && factory != "e" && number != "e") {
+		if (datePicker && factory && factory != "e" && number && number != "e") {
 			document.getElementById("ticket").value = datePicker + "_" + factory + "_" + number;
 		} else {
 			document.getElementById("ticket").value = "";
@@ -431,6 +431,12 @@
 			$("#date").attr("disabled", true);
 			$("#factory").attr("disabled", true);
 			$("#number").attr("disabled", true);
+
+			// 禁用元素时，局部重置
+			document.getElementById("date").value = "YYYY-MM-DD";
+			document.getElementById("factory").value = "";
+			document.getElementById("number").value = "";
+			
 		}
 	}
 	
@@ -451,9 +457,12 @@
 	<!-- 获取模糊地理位置，本地日期和拉取服务器工单列表数据，自动生成提示性工单号。并提供一键填入的按钮 -->
 	<input type="hidden" name="GUID" id="GUID">
 
+	<label>质保工单：</label>
+	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
+	<input type="checkbox" name="gj" id ="gj">
+	<label>高级：</label>
 	<label>日期 </label>
 	<input type="date" id="date" disabled="disabled">
-
 	<label>基地 </label>
 	<select name="" id="factory" disabled="disabled">
 		<option value="e" selected = "selected"></option>
@@ -464,7 +473,6 @@
 		<option value="FJ">富锦(FJ)</option>
 		<option value="FJ">龙阳(LY)</option>
 	</select>
-
 	<label>序号 </label>
 	<select name="" id="number" disabled="disabled">
 		<option value="e" selected = "selected"></option>
@@ -476,13 +484,6 @@
 		<option value="06">06</option>
 	</select>
 	<input type="button" value="添加" id="tj" onclick="addTicketID()">
-	<br>
-
-	<label>质保工单：</label>
-	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
-	<input type="checkbox" name="gj" id ="gj">
-	<label>高级</label>
-	<input type="button" value="高级按钮" onclick="gjButtom()">
 	<br>
 
 	<label for="train">列车编号：</label>
@@ -729,6 +730,7 @@
 	});
 
 	// 监听“更换1”整个fieldset元素是否被点击
+	// 是否可以尝试"change"触发事件来简化？
 	document.getElementById("gh1").addEventListener("click", function() {
 		radioChecked("gh1_3");
 
