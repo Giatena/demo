@@ -106,13 +106,20 @@
 		switch (obge.replacement) {
 			case "1":
 				// var num：声明 switch 内部变量 num
-				var num = parseInt(obge.replacement)
+				// var num = parseInt(obge.replacement)
 				d = "更换情况："
 				// console.log(obge.component)
 				// console.log(obge.component[0])
-				a = "① " + obge.component[num-1] + "，旧件：" + obge.old[num-1] + "，新件：" + obge.new[num-1]
-				b = "② " + obge.component[num] + "，旧件：" + obge.old[num] + "，新件：" + obge.new[num]
-				c = "③ " + obge.component[num+1] + "，旧件：" + obge.old[num+1] + "，新件：" + obge.new[num+1]
+				// console.log(typeof obge.component[0])
+				if (obge.component[0] != "") {
+					a = "① " + obge.component[0] + "，旧件：" + obge.old[0] + "，新件：" + obge.new[0]
+				}
+				if (obge.component[1] != "") {
+					b = "② " + obge.component[1] + "，旧件：" + obge.old[1] + "，新件：" + obge.new[1]
+				}
+				if (obge.component[2] != "") {
+					c = "③ " + obge.component[2] + "，旧件：" + obge.old[2] + "，新件：" + obge.new[2]
+				}
 				break;
 			case "2":
 				var num = parseInt(obge.replacement)
