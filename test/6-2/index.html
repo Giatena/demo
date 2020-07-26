@@ -9,15 +9,18 @@
     <!-- <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script> -->
 
     <!-- iview.min.js  v3.5.4 -->
-    <script type="text/javascript" src="./iview.min.js"> </script>
+    <!-- <script type="text/javascript" src="./iview.min.js"> </script> -->
     <!-- <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script> -->
     
+    <!-- clipboard.js v2.0.6 -->
+    <!-- <script type="text/javascript" src="./clipboard.min.js"> </script> -->
 </head>
 
 <body>
 <div id="d1">
-    <label>GUID：</label>
-    <label>{{obge.GUID}}</label>
+    <!-- <label>GUID：</label> -->
+    <!-- <label>{{obge.GUID}}</label> -->
+    <input type="button" value="复制工单文本" id="copy" onclick="copyText()">
     <br>
     <label>质保工单：</label>
     <label>{{obge.ticket}}</label>
@@ -55,7 +58,7 @@
 <script>
     //准备一个json 对象
     // var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"3"}
-    var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"2","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
+    var obge = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"]}
 
     var a = "① ";
     var b = "② ";
@@ -130,6 +133,28 @@
             d = "更换情况：无坏件"
             a = b = c = ""
             break;
+    }
+
+    function copyText() {
+        // var ele = document.getElementById("d1");
+        // console.log(ele);
+        // d1.select();
+        // document.execCommand("copy");
+        // console.log(ele.textContent);
+
+        // 使用textarea支持换行，使用input不支持换行
+        var content = "质保工单："+obge.ticket+"\n列车编号："+obge.train+"\n车厢编号："+obge.compartment+"\n故障类别："+obge.category+"\n故障级别："+obge.type+"\n故障现象："+obge.description+"\n处理经过："+obge.action+"\n"+d+"\n"+a+"\n"+b+"\n"+c;
+        const textarea = document.createElement('textarea');
+        textarea.value = content;
+        console.log(content);
+        document.body.appendChild(textarea);
+ 
+        textarea.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+            // alert(content);
+        }
+        document.body.removeChild(textarea);
     }
 </script>
 
