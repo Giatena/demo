@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>ViewUI test page</title>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <link href="/dist/main.css" rel="stylesheet"> -->
+</head>
+<template>
+    <div style="width: 800px; background-color:#F8F8FF">
+        <h3>一、可以使用 v-model 实现双向绑定， placeholder 可以定义提示内容， size 可以设置输入框大小</h3>
+        <Input v-model="value" placeholder="Enter something..." style="width: 300px" size="large" />
+        <Input v-model="value" placeholder="Enter something..." />
+        <Input v-model="value" placeholder="Enter something..." style="width: 300px" size="small" />
+        <br><br>
+
+        <h3>二、使用 clearable 可以在输入框中显示清除按钮(输入框有值时). maxlength、show-word-limit 可以用于提示限制字符输入（会影响clearable）</h3>
+        <Input v-model="value" placeholder="Enter something..." clearable />
+        <Input v-model="value" maxlength="10" show-word-limit placeholder="Enter something..." />
+        <Input v-model="value" maxlength="100" show-word-limit type="textarea" placeholder="Enter something..." />
+        <br><br>
+
+        <h3>三、使用密码框(type="password" password 可以隐藏、显示密码).
+            使用 icon 可以定义图标，点击图标可以触发 on-click 事件.
+            使用 search 可以设置搜索框样式, 可以结合 enter-button 使搜索图标变成 按钮的形式</h3>
+        <Input v-model="value" placeholder="Enter something..." type="password" password />
+        <Input v-model="value" @on-click="iconClick" icon="ios-clock-outline" placeholder="Enter something..." style="width: 200px" />
+        <Input v-model="value" search placeholder="Enter something..." style="width: 200px" />
+        <Input v-model="value" search enter-button placeholder="Enter something..." style="width: 200px" />
+        <Input v-model="value" search enter-button="search" placeholder="Enter something..." style="width: 200px" />
+        <br><br>
+
+        <h3>四、可以通过 prefix 和 suffix 设置图标位置，直接使用 或者 使用slot同名引用</h3>
+        <div>
+            Props：
+            <Input prefix="ios-contact" placeholder="Enter name" style="width: auto" />
+            <Input suffix="ios-search" placeholder="Enter text" style="width: auto" />
+        </div>
+        <div style="margin-top: 6px">
+            Slots：
+            <i-input placeholder="Enter name" style="width: auto">
+                <Icon type="ios-contact" slot="prefix" />
+            </i-input>
+            <i-input placeholder="Enter text" style="width: auto">
+                <Icon type="ios-search" slot="suffix" />
+            </i-input>
+        </div>
+        <br><br>
+        
+        <h3>五、可以使用 slot 引用 prepend， append 来设置前后样式</h3>
+        <div>
+            <i-input v-model="value">
+                <span slot="prepend">http://</span>
+                <span slot="append">.com</span>
+            </i-input>
+        </div>
+    </div>
+</template>
+<script>
+    export default {
+        data() {
+            return {
+                value: 'HelloWorld'
+            }
+        },
+        methods: {
+            iconClick() {
+                alert("hello")
+            }
+        }
+    }
+</script>
+<style>
+    .demo-badge {
+        width: 42px;
+        height: 42px;
+        background: #eee;
+        border-radius: 6px;
+        display: inline-block;
+    }
+</style>
