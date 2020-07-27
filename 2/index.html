@@ -57,6 +57,7 @@
 	var b = "";
 	var c = "";
 	var d = "";
+	var abc = "";
 
 	//通过vue.js 把数据和对应的视图关联起来
 	//每个 Vue 应用都需要通过实例化 Vue 来实现
@@ -116,12 +117,15 @@
 				// console.log(typeof obge.component[0])
 				if (obge.component[0] != "") {
 					a = "① " + obge.component[0] + "，旧件：" + obge.old[0] + "，新件：" + obge.new[0]
+					abc = a;
 				}
 				if (obge.component[1] != "") {
 					b = "② " + obge.component[1] + "，旧件：" + obge.old[1] + "，新件：" + obge.new[1]
+					abc = a + b;
 				}
 				if (obge.component[2] != "") {
 					c = "③ " + obge.component[2] + "，旧件：" + obge.old[2] + "，新件：" + obge.new[2]
+					abc = a + b + c;
 				}
 				break;
 			case "2":
@@ -156,7 +160,7 @@
 
 	function copyText() {
 		// 使用textarea支持换行，使用input不支持换行
-		var content = "质保工单："+obge.ticket+"\n列车编号："+obge.train+"\n车厢编号："+obge.compartment+"\n故障类别："+obge.category+"\n故障级别："+obge.type+"\n故障现象："+obge.description+"\n处理经过："+obge.action+"\n"+d+"\n"+a+"\n"+b+"\n"+c;
+		var content = "质保工单："+obge.ticket+"\n列车编号："+obge.train+"\n车厢编号："+obge.compartment+"\n故障类别："+obge.category+"\n故障级别："+obge.type+"\n故障现象："+obge.description+"\n处理经过："+obge.action+"\n"+d+"\n"+abc+"\n当班人员："+obge.member;
 		const textarea = document.createElement('textarea');
 		textarea.value = content;
 		console.log(content);
