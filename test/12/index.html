@@ -9,20 +9,21 @@
 <body>
 
 <div id="app">
-	<p>{{ message }}</p>
-	<button v-on:click="reverseMessage">反转消息</button>
+	<ol>
+		<!-- 创建一个 todo-item 组件的实例 -->
+		<todo-item></todo-item>
+	</ol>
 </div>
 
 <script>
+Vue.component('todo-item', {
+	template: '<li>这是个待办项</li>'
+})
+
 var app = new Vue({
 	el: '#app',
 	data: {
-		message: 'Hello Vue.js!'
-	},
-	methods: {
-		reverseMessage: function () {
-			this.message = this.message.split('').reverse().join('')
-		}
+		message: 'Hello Vue!'
 	}
 })
 </script>
