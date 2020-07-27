@@ -32,6 +32,7 @@
 	<!-- input 可缺省，<textarea ></textarea> 必须成对使用-->
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
+	<span>分厂报单：</span><input v-model="user_ticket"><br>
 </div>
 
 <script>
@@ -48,7 +49,8 @@ var app = new Vue({
 		fault_compartment: '',
 		fault_compartment_checked: '',
 		description: '',
-		action: ''
+		action: '',
+		user_ticket: ''
 	}
 })
 
