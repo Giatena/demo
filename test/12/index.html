@@ -12,7 +12,12 @@
 	<span>质保工单：</span><input v-model="ticket" placeholder="日期CW_基地_序号"><br>
 	<span>列车编号：</span><input v-model="train"><br>
 	<span>车厢编号：</span><input v-model="compartment"><br>
-
+	<span>故障类别：</span>
+	<input type="radio" value="辅逆" v-model="category">辅逆
+	<input type="radio" value="牵引" v-model="category">牵引
+	<input type="radio" value="列控" v-model="category">列控<br>
+	<!-- <p>{{ category }}</p> -->
+	<!-- input 可缺省，<textarea ></textarea> 必须成对使用-->
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
 </div>
@@ -25,7 +30,7 @@ var app = new Vue({
 		ticket: '',
 		train: '',
 		compartment: '',
-
+		category: '',
 		description: '',
 		action: ''
 	}
