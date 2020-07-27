@@ -9,7 +9,8 @@
 <body>
 
 <div id="app">
-	<span>质保工单：</span><input v-model="ticket" placeholder="日期CW_基地_序号"><br>
+	<span>质保工单：</span><input v-model="ticket" placeholder="日期CW_基地_序号">
+	<input type="checkbox" v-model="ticket_checked"><br>
 	<span>列车编号：</span><input v-model="train"><br>
 	<span>车厢编号：</span><input v-model="compartment"><br>
 	<span>故障类别：</span>
@@ -39,6 +40,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		ticket: '',
+		ticket_checked: '',
 		train: '',
 		compartment: '',
 		category: '',
