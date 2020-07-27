@@ -3,19 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>ViewUI example</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 </head>
 <body>
 
 <div id="app">
-	{{ message }}
+	<ol>
+		<li v-for="a in todos">
+			{{ a.text }}
+		</li>
+	</ol>
 </div>
 
 <script>
 var app = new Vue({
 	el: '#app',
 	data: {
-		message: 'Hello Vue!'
+		todos: [
+			{ text: '学习 JavaScript' },
+			{ text: '学习 Vue' },
+			{ text: '整个牛项目' }
+		]
 	}
 })
 </script>
