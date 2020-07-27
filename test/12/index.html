@@ -16,7 +16,13 @@
 	<input type="radio" value="辅逆" v-model="category">辅逆
 	<input type="radio" value="牵引" v-model="category">牵引
 	<input type="radio" value="列控" v-model="category">列控<br>
-	<!-- <p>{{ category }}</p> -->
+	<span>故障级别：</span>
+	<input type="radio" value="救援" v-model="type">救援
+	<input type="radio" value="清客" v-model="type">清客
+	<input type="radio" value="掉线" v-model="type">掉线
+	<input type="radio" value="换表" v-model="type">换表
+	<input type="radio" value="无影响" v-model="type">无影响
+	<input type="radio" value="均修" v-model="type">均修<br>
 	<!-- input 可缺省，<textarea ></textarea> 必须成对使用-->
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
@@ -31,6 +37,7 @@ var app = new Vue({
 		train: '',
 		compartment: '',
 		category: '',
+		type: '',
 		description: '',
 		action: ''
 	}
