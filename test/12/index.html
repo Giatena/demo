@@ -23,6 +23,11 @@
 	<input type="radio" value="换表" v-model="type">换表
 	<input type="radio" value="无影响" v-model="type">无影响
 	<input type="radio" value="均修" v-model="type">均修<br>
+
+	<!-- 复选框：与车厢号相同，不用再次输入 -->
+	<span>故障位置：</span><input v-model="fault_compartment">
+	<input type="checkbox" v-model="fault_compartment_checked"><br>
+
 	<!-- input 可缺省，<textarea ></textarea> 必须成对使用-->
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
@@ -38,10 +43,13 @@ var app = new Vue({
 		compartment: '',
 		category: '',
 		type: '',
+		fault_compartment: '',
 		description: '',
 		action: ''
 	}
 })
+
+// 如果 fault_compartment_checked = true（被选中），则 fault_compartment = train
 </script>
 
 </body>
