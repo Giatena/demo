@@ -409,6 +409,7 @@
 		navigator.clipboard.writeText(formJson);
 		console.log("已导出到剪贴板：" + formJson);
 
+		// 表单数据 压缩探讨：url 只比数组少了40个字符左右
 		var serializeUrl = $("#form").serialize()
 		console.log("序列化为url格式为：" + serializeUrl);
 	}
