@@ -12,13 +12,15 @@
     <i-button @click="show">Click me!</i-button>
     <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
     <Slider v-model="value1"></Slider>
+    <Input v-model="value" />
 </div>
 <script>
     new Vue({
         el: '#app',
         data: {
             visible: false,
-            value1: '成功'
+            value1: '成功',
+            value: ''
         },
         methods: {
             show: function () {
