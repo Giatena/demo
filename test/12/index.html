@@ -14,43 +14,44 @@
 	<span>列车编号：</span><input v-model="train"><br>
 	<span>车厢编号：</span><input v-model="compartment"><br>
 	<span>故障类别：</span>
-	<input type="radio" value="辅逆" v-model="category">辅逆
-	<input type="radio" value="牵引" v-model="category">牵引
-	<input type="radio" value="列控" v-model="category">列控<br>
+	<!-- radio（单选），v-model 绑定变量 category，当被勾选时，把 value 的值赋值给变量 category -->
+	<input type="radio" v-model="category" value="辅逆">辅逆
+	<input type="radio" v-model="category" value="牵引">牵引
+	<input type="radio" v-model="category" value="列控">列控<br>
 	<span>故障级别：</span>
-	<input type="radio" value="救援" v-model="type">救援
-	<input type="radio" value="清客" v-model="type">清客
-	<input type="radio" value="掉线" v-model="type">掉线
-	<input type="radio" value="换表" v-model="type">换表
-	<input type="radio" value="无影响" v-model="type">无影响
-	<input type="radio" value="均修" v-model="type">均修<br>
+	<input type="radio" v-model="type" value="救援">救援
+	<input type="radio" v-model="type" value="清客">清客
+	<input type="radio" v-model="type" value="掉线">掉线
+	<input type="radio" v-model="type" value="换表">换表
+	<input type="radio" v-model="type" value="无影响">无影响
+	<input type="radio" v-model="type" value="均修">均修<br>
 
-	<!-- 复选框：与车厢号相同，不用再次输入 -->
-	<span>故障位置：</span><input v-model="fault_compartment">
-	<input type="checkbox" v-model="fault_compartment_checked"><br>
+	<!-- checkbox（复选框）：与车厢号相同，不用再次输入 -->
+	<span>故障位置：</span>
+	<input v-model="fault_compartment">
+	<!-- 点击事件的响应方法 fc_fault_compartment_checked() -->
+	<!-- vm 是 Vue 实例，js 可执行 vm.fc_fault_compartment_checked() -->
+	<input
+		type="checkbox"
+		v-model="fault_compartment_checked"
+		true-value=true
+		false-value=false
+		v-on:click="fc_fault_compartment_checked"
+	>
+	<br>
 
 	<!-- input 可缺省，<textarea ></textarea> 必须成对使用-->
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
 	<span>分厂报单：</span><input v-model="user_ticket"><br>
 
-    <div class="box">
-      <checker v-model="demo1" default-item-class="demo1-item" selected-item-class="demo1-item-selected">
-      <checker-item value="1">{{ $t('潘') }}</checker-item>
-      <checker-item value="2">{{ $t('闲') }}</checker-item>
-      <checker-item value="3">{{ $t('邓') }}</checker-item>
-      <checker-item value="4">{{ $t('小') }}</checker-item>
-      <checker-item value="5">{{ $t('驴') }}</checker-item>
-      </checker>
-    </div>
-
 </div>
 
 <script>
 // 局部 Vux 组件注册
-import { Checker, CheckerItem } from 'vux'
+// import { Checker, CheckerItem } from 'vux'
 
-var app = new Vue({
+var vm = new Vue({
 	el: '#app',
 	data: {
 		ticket: '',
@@ -60,17 +61,45 @@ var app = new Vue({
 		category: '',
 		type: '',
 		fault_compartment: '',
-		fault_compartment_checked: '',
+		// 复选框赋初值，为未选中，解决第一次响应条件判断跳过的问题
+		fault_compartment_checked: false,
 		description: '',
 		action: '',
 		user_ticket: '',
 		demo1: ''
 	},
-	components: {
-    	Checker,
-    	CheckerItem
-  	}
+	// 在 methods 中定义方法本体
+	methods: {
+		fc_fault_compartment_checked: function () {
+			console.log(vm.fault_compartment_checked);
+			// vm 就是刚刚创建的 Vue 示例
+			// === 严格相等，比较值和类型
+			// 当 fault_compartment_checked 复选框选中时
+			// 经多次测试，勾选复选框，只能取出前值（='no'，值未变化）。与一般的逻辑相反，所以判断条件需做修改
+			if (!vm.fault_compartment_checked) {
+				if (!vm.compartment) {
+					alert("“车厢编号”未填写，高级辅助功能无效");
+				};
+				vm.fault_compartment = vm.compartment;
+				console.log("故障车厢 = 接报车厢：" + vm.fault_compartment);
+			} else {
+				// 否则就是没有选中
+				vm.fault_compartment_checked = true;
+				// 清空输入
+				vm.fault_compartment = "";
+				// 撤销 input 的禁用属性
+
+			}
+			console.log(vm.fault_compartment_checked);
+		}
+	}
+	// components: {
+ //    	Checker,
+ //    	CheckerItem
+ //  	}
 })
+
+console.log(vm.fault_compartment_checked);
 
 // 如果 fault_compartment_checked = true（被选中），则 fault_compartment = train
 </script>
