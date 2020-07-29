@@ -33,9 +33,22 @@
 	<span>故障现象：</span><textarea v-model="description"></textarea><br>
 	<span>处理经过：</span><textarea v-model="action"></textarea><br>
 	<span>分厂报单：</span><input v-model="user_ticket"><br>
+
+    <div class="box">
+      <checker v-model="demo1" default-item-class="demo1-item" selected-item-class="demo1-item-selected">
+      <checker-item value="1">{{ $t('潘') }}</checker-item>
+      <checker-item value="2">{{ $t('闲') }}</checker-item>
+      <checker-item value="3">{{ $t('邓') }}</checker-item>
+      <checker-item value="4">{{ $t('小') }}</checker-item>
+      <checker-item value="5">{{ $t('驴') }}</checker-item>
+      </checker>
+    </div>
+
 </div>
 
 <script>
+// 局部 Vux 组件注册
+import { Checker, CheckerItem } from 'vux'
 
 var app = new Vue({
 	el: '#app',
@@ -50,12 +63,30 @@ var app = new Vue({
 		fault_compartment_checked: '',
 		description: '',
 		action: '',
-		user_ticket: ''
-	}
+		user_ticket: '',
+		demo1: ''
+	},
+	components: {
+    	Checker,
+    	CheckerItem
+  	}
 })
 
 // 如果 fault_compartment_checked = true（被选中），则 fault_compartment = train
 </script>
+
+<style scoped>
+.box {
+  padding: 0 15px;
+}
+.demo1-item {
+  border: 1px solid #ececec;
+  padding: 5px 15px;
+}
+.demo1-item-selected {
+  border: 1px solid green;
+}
+</style>
 
 </body>
 </html>
