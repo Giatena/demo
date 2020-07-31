@@ -1,0 +1,28 @@
+<!-- https://www.cnblogs.com/wancy86/p/5623051.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vue-vux</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--include Vux style-->
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <!--include Vue yourself-->
+    <script type="text/javascript" src="./vue.js"></script>
+    <!-- vue-router -->
+    <!-- <script src="bower_components/vue-router/dist/vue-router.js"></script> -->
+    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
+    <!-- jquery -->
+    <script type="text/javascript" src="./jquery.js"></script>
+    <!--include the components you need-->
+    <!-- <script src="bower_components/vux/dist/components/actionsheet/index.js"></script> -->
+    <!-- <script src="bower_components/vux/dist/components/address/index.js"></script> -->
+        <script src="./vux/src/components/checker/index.js"></script>
+        <script>
+        // register components
+        Vue.component("checker", vuxChecker);
+        </script>
+</head>
+<body>
+
+</body>
+</html>
