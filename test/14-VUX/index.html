@@ -4,25 +4,77 @@
 <head>
     <title>vue-vux</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!--include Vux style-->
-    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <!--include style v4.3.2 -->
+    <link rel="stylesheet" type="text/css" href="./iview.css">
+    <script type="text/javascript" src="./iview.js"></script>
     <!--include Vue yourself-->
     <script type="text/javascript" src="./vue.js"></script>
     <!-- vue-router -->
     <!-- <script src="bower_components/vue-router/dist/vue-router.js"></script> -->
-    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
-    <!-- jquery -->
     <script type="text/javascript" src="./jquery.js"></script>
-    <!--include the components you need-->
-    <!-- <script src="bower_components/vux/dist/components/actionsheet/index.js"></script> -->
+    <!-- include the components you need -->
+    <!-- <script src="bower_components/vux/dist/components/actionsheet/index.js"></script>  -->
     <!-- <script src="bower_components/vux/dist/components/address/index.js"></script> -->
-        <script src="./vux/src/components/checker/index.js"></script>
-        <script>
-        // register components
-        Vue.component("checker", vuxChecker);
-        </script>
+    <script src="./vux/src/components/checker/index.js"></script>
+    <script src="./vux/src/components/divider/index.js"></script>
+
+<script>
+    // register components
+    Vue.component("checker", vuxChecker);
+    Vue.component("checker-item", vuxCheckerItem);
+    Vue.component("divider", vuxDivider);
+</script>
 </head>
+
 <body>
+    <div id="app">
+        <i-button @click="show">Click me!</i-button>
+        <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
+        <Slider v-model="value1"></Slider>
+        <Input v-model="value" />
+            <divider>{{ $t('Radio: no default value') }}</divider>
+            <checker v-model="demo1" default-item-class="demo1-item" selected-item-class="demo1-item-selected">
+            <checker-item value="1">{{ $t('潘') }}</checker-item>
+            <checker-item value="2">{{ $t('闲') }}</checker-item>
+            <checker-item value="3">{{ $t('邓') }}</checker-item>
+            <checker-item value="4">{{ $t('小') }}</checker-item>
+            <checker-item value="5">{{ $t('驴') }}</checker-item>
+            </checker>
+            <br>
+            <span>{{ $t('Current value is') }}: {{ demo1 }}</span>
+            <br>
+    </div>
+
+    <script>
+    new Vue({
+        el: '#app',
+        data: {
+            visible: false,
+            value1: '成功',
+            value: '',
+            demo1: ''
+        },
+        methods: {
+            show: function () {
+                this.visible = true
+            }
+        }
+    })
+    </script>
 
 </body>
+
+<style scoped>
+.box {
+  padding: 0 15px;
+}
+.demo1-item {
+  border: 1px solid #ececec;
+  padding: 5px 15px;
+}
+.demo1-item-selected {
+  border: 1px solid green;
+}
+</style>
+
 </html>
