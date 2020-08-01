@@ -29,10 +29,6 @@
       <x-input title="当班人员" v-model="member"></x-input>
     </group>
     <br><br>
-
-      <popup-radio title="故障类别" :options="category_list1" v-model="category1"></popup-radio>
-      <popup-picker title="故障类别" :data="category_list2" :value.sync="category2" inline-desc="提示性文字"></popup-picker>
-
   </div>
 </template>
 
@@ -64,12 +60,7 @@ export default {
       description: '',
       action: '',
       user_ticket: '',
-      member: '',
-      demo1: '',
-      category1: '',
-      category_list1: ['辅逆', '牵引', '列控'],
-      category2: [],
-      category_list2: [["辅逆", "牵引", "列控"]],
+      member: ''
 		}
 	}
 }
