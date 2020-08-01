@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
   	<h1>电子工单</h1>
-    <group>
+    <group :title="1">
       <x-input title="质保工单" v-model="ticket" placeholder="xxxxxxxxCW_基地_xx"></x-input>
       <x-input title="列车编号" v-model="train" type="number"></x-input>
       <x-input title="车厢编号" v-model="compartment" type="number"></x-input>
@@ -22,7 +22,7 @@
       </checker>
       <x-textarea title="故障现象" v-model="description" :max="2000" autosize=true></x-textarea>
     </group>
-    <group>
+    <group :title="2">
       <x-input title="故障位置" v-model="fault_compartment" type="number"></x-input>
       <x-textarea title="处理经过" v-model="action" :max="2000" autosize=true></x-textarea>
       <x-input title="分厂报单" v-model="user_ticket" type="number"></x-input>
