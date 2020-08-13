@@ -464,8 +464,11 @@
 		console.log("运行到 exchange()");
 		formShow(gh4);
 		formShow(gh5);
-		document.getElementById("gh4_0").value = document.getElementById("df_component").value;
-		document.getElementById("gh5_0").value = document.getElementById("df_component").value;
+		// 把“部件”的名称赋值到两个独立的“更换”项内
+		document.getElementById("gh4_0").value = document.getElementById("gh5_0").value = document.getElementById("df_component").value;
+		// 把对翻后，故障车厢安装部件的序列号（应为它车厢的好件），赋值到“对翻1”的“好件”、“对翻2”的“旧件”
+		document.getElementById("gh4_new").value = document.getElementById("gh5_old").value = document.getElementById("df_new").value;
+
 	}
 
 	</script>
@@ -646,9 +649,9 @@
 		<input type="text" id="gh4_mix" name="source" style="display:none">
 		<br>
 		<label>旧件：</label>
-		<input type="text" name="old" style="width:290px;">
+		<input type="text" name="old" id="gh4_old" style="width:290px;">
 		<label>　好件：</label>
-		<input type="text" name="new" style="width:290px;">
+		<input type="text" name="new" id="gh4_new" style="width:290px;">
 		<br>
 	</fieldset>
 
@@ -667,14 +670,15 @@
 		<input type="text" id="gh5_mix" name="source" style="display:none">
 		<br>
 		<label>旧件：</label>
-		<input type="text" name="old" style="width:290px;">
+		<input type="text" name="old" id="gh5_old" style="width:290px;">
 		<label>　好件：</label>
-		<input type="text" name="new" style="width:290px;">
+		<input type="text" name="new" id="gh5_new" style="width:290px;">
 		<br>
 	</fieldset>
 
 	<fieldset id="df1" style='display:none'>
 		<!-- 若需对翻和更换同时有效，请先输完“对翻”并转换，再输入“更换”项 -->
+		<!-- 输入时，按对翻后的登记，即“故障车厢”的序列号的它车厢的好件 -->
 		<legend>1</legend>
 		<label>部件名称：</label>
 		<input type="text" name="df_component" id="df_component" style="width:290px;">
@@ -682,14 +686,14 @@
 		<input type="button" value="锁定/解锁" id="" onclick="exchange()">
 		<br>
 		<label>故障车厢：</label>
-		<input type="text" name="fault_compartment">
+		<input type="text" name="fault_compartment" id="fault_compartment">
 		<label>　序列号：</label>
-		<input type="text" name="df_old" style="width:400px;">
+		<input type="text" name="df_new" id="df_new" style="width:400px;">
 		<br>
 		<label>对翻车厢：</label>
-		<input type="text" name="exchange_compartment">
+		<input type="text" name="exchange_compartment" id="exchange_compartment">
 		<label>　序列号：</label>
-		<input type="text" name="df_new" style="width:400px;">
+		<input type="text" name="df_old" id="df_old" style="width:400px;">
 		<br>
 	</fieldset>
 
