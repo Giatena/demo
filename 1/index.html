@@ -459,6 +459,9 @@
 			$("#date").removeAttr("disabled");
 			$("#factory").removeAttr("disabled");
 			$("#number").removeAttr("disabled");
+
+			// 显示7个元素
+			$("#gj_div").removeAttr("style");
 		} else {
 			// 禁用元素时，局部重置
 			// "yyyy-mm-dd" 应放在 attr("disabled", true) 之前
@@ -470,6 +473,8 @@
 			$("#date").attr("disabled", true);
 			$("#factory").attr("disabled", true);
 			$("#number").attr("disabled", true);
+
+			$("#gj_div").attr("style", "display:none");
 		}
 	}
 
@@ -553,8 +558,11 @@
 
 	<label>质保工单：</label>
 	<input type="text" name="ticket" id="ticket" placeholder="日期CW_基地_序号">
-	<input type="checkbox" id ="gj">
-	<label>（</label>
+	<input type="checkbox" id="gj">
+	<br>
+	
+	<div id="gj_div" style='display:none'>
+	<!-- <label>（</label> -->
 	<!-- <label>日期 </label> -->
 	<input type="date" id="date" disabled="disabled">
 	<label>CW_</label>
@@ -580,8 +588,10 @@
 		<option value="06">06</option>
 	</select>
 	<input type="button" value="添加" id="tj" onclick="addTicketID()">
-	<label>）</label>
+	<!-- <label>）</label> -->
 	<br>
+	</div>
+
 
 	<label for="train">列车编号：</label>
 	<input type="text" name="train" id="train">
