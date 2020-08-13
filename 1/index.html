@@ -69,6 +69,15 @@
 			formShow(gh4); radioChecked("gh4_3");
 			formShow(gh5); radioChecked("gh5_3");
 			formShow(df1);
+
+			// 只要 gh4 和 gh5 无任何值，则隐藏自身
+			if((document.getElementById("gh4_0").value + document.getElementById("gh4_old").value + document.getElementById("gh4_new").value + document.getElementById("gh5_0").value + document.getElementById("gh5_old").value + document.getElementById("gh5_new").value) != "") {
+				formShow(gh4);
+				formShow(gh5);
+			} else {
+				formHidden(gh4);
+				formHidden(gh5);
+			};
 		}
 
 		// 初始化没有运行From的reset()，处理“高级”被选中，再刷新页面，元素见无法正常互锁
@@ -472,23 +481,26 @@
 	}
 
 	function exchange() {
-		// console.log("运行到 exchange()");
-		formShow(gh4);
-		formShow(gh5);
-		// 把“部件”的名称赋值到两个独立的“更换”项内
-		document.getElementById("gh4_0").value = document.getElementById("gh5_0").value = document.getElementById("df_component").value;
-		// 把对翻后，故障车厢安装部件的序列号（应为它车厢的好件），赋值到“对翻1”的“好件”、“对翻2”的“旧件”
-		document.getElementById("gh4_new").value = document.getElementById("gh5_old").value = document.getElementById("df_new").value;
-		// 把对翻后，故障车厢安装部件的序列号（应为故障车厢的疑似件），赋值到“对翻2”的“好件”、“对翻1”的“旧件”
-		document.getElementById("gh4_old").value = document.getElementById("gh5_new").value = document.getElementById("df_old").value;
-		// 把对翻后，“对翻车厢”赋值到“对翻1”的“来源”
-		document.getElementById("gh4_3_input").value = document.getElementById("exchange_compartment").value;
-		// 把对翻后，“故障车厢”赋值到“对翻2”的“来源”
-		document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
-		// 强制选中“对翻1”、“对翻2”的“来源”的“其他”项，并显示输入框（已填入数据）
-		$("#gh4_3").attr("checked", true); radioChecked("gh4_3");
-		$("#gh5_3").attr("checked", true); radioChecked("gh5_3");
-		// 这里有问题，attr 设置属性是选中的默认值，重置函数此时对其是失效的。改个选中方式。
+		if((document.getElementById("df_component").value + document.getElementById("fault_compartment").value + document.getElementById("df_new").value + document.getElementById("exchange_compartment").value + document.getElementById("df_old").value) != "") {
+			// 把“部件”的名称赋值到两个独立的“更换”项内
+			document.getElementById("gh4_0").value = document.getElementById("gh5_0").value = document.getElementById("df_component").value;
+			// 把对翻后，故障车厢安装部件的序列号（应为它车厢的好件），赋值到“对翻1”的“好件”、“对翻2”的“旧件”
+			document.getElementById("gh4_new").value = document.getElementById("gh5_old").value = document.getElementById("df_new").value;
+			// 把对翻后，故障车厢安装部件的序列号（应为故障车厢的疑似件），赋值到“对翻2”的“好件”、“对翻1”的“旧件”
+			document.getElementById("gh4_old").value = document.getElementById("gh5_new").value = document.getElementById("df_old").value;
+			// 把对翻后，“对翻车厢”赋值到“对翻1”的“来源”
+			document.getElementById("gh4_3_input").value = document.getElementById("exchange_compartment").value;
+			// 把对翻后，“故障车厢”赋值到“对翻2”的“来源”
+			document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
+			// 强制选中“对翻1”、“对翻2”的“来源”的“其他”项，并显示输入框（已填入数据）
+			$("#gh4_3").attr("checked", true); radioChecked("gh4_3");
+			$("#gh5_3").attr("checked", true); radioChecked("gh5_3");
+			// 这里有问题，attr 设置属性是选中的默认值，重置函数此时对其是失效的。改个选中方式。
+			formShow(gh4);
+			formShow(gh5);
+			$("#gh4").attr("disabled", "disabled");
+			$("#gh5").attr("disabled", "disabled");
+		}
 	}
 
 	function lockSwitch() {
@@ -875,11 +887,14 @@
 		formHidden(gh3);
 		formShow(df1);
 
-		var gh4 = document.getElementById("gh4_0").value + document.getElementById("gh4_old").value + document.getElementById("gh4_new").value
-		if(gh4 != "") {
+		// 只要 gh4 和 gh5 无任何值，则隐藏自身
+		if((document.getElementById("gh4_0").value + document.getElementById("gh4_old").value + document.getElementById("gh4_new").value + document.getElementById("gh5_0").value + document.getElementById("gh5_old").value + document.getElementById("gh5_new").value) != "") {
 			formShow(gh4);
 			formShow(gh5);
-		}
+		} else {
+			formHidden(gh4);
+			formHidden(gh5);
+		};
 	});
 	document.getElementById("replacement_3").addEventListener("click", function() {
 		formHidden(gh1);
