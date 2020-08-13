@@ -489,6 +489,25 @@
 			$("#gh5").attr("disabled", "disabled");
 		};
 	}
+
+	function reset_df() {
+		// 移除禁用状态
+		$("#gh4").removeAttr("disabled");
+		$("#gh5").removeAttr("disabled");
+		// 移除“其他”的选中状态
+		$("#gh4_3").attr("checked", false); radioChecked("gh4_3");
+		$("#gh5_3").attr("checked", false); radioChecked("gh5_3");
+		// 重置所有输入框
+		document.getElementById("gh4_0").value = "";
+		document.getElementById("gh4_new").value = "";
+		document.getElementById("gh4_old").value = "";
+		document.getElementById("gh5_0").value = "";
+		document.getElementById("gh5_new").value = "";
+		document.getElementById("gh5_old").value = "";
+		// 隐藏 gh4 和 gh5
+		formHidden(gh4);
+		formHidden(gh5);
+	}
 	</script>
 
 </head>
@@ -702,7 +721,7 @@
 		<input type="text" name="df_component" id="df_component" style="width:290px;">
 		<input type="button" value="转换为2条“更换”记录" id="df_to_gh" onclick="exchange()">
 		<input type="button" value="锁定/解锁" id="" onclick="lockSwitch()">
-		<input type="button" value="重置“对翻”" id="" onclick="resetForm()">
+		<input type="button" value="重置“对翻”" id="" onclick="reset_df()">
 		<br>
 		<label>故障车厢：</label>
 		<input type="text" name="fault_compartment" id="fault_compartment">
