@@ -477,6 +477,7 @@
 		// 强制选中“对翻1”、“对翻2”的“来源”的“其他”项，并显示输入框（已填入数据）
 		$("#gh4_3").attr("checked", true); radioChecked("gh4_3");
 		$("#gh5_3").attr("checked", true); radioChecked("gh5_3");
+		// 这里有问题，attr 设置属性是选中的默认值，重置函数此时对其是失效的。改个选中方式。
 	}
 
 	function lockSwitch() {
@@ -701,6 +702,7 @@
 		<input type="text" name="df_component" id="df_component" style="width:290px;">
 		<input type="button" value="转换为2条“更换”记录" id="df_to_gh" onclick="exchange()">
 		<input type="button" value="锁定/解锁" id="" onclick="lockSwitch()">
+		<input type="button" value="重置“对翻”" id="" onclick="resetForm()">
 		<br>
 		<label>故障车厢：</label>
 		<input type="text" name="fault_compartment" id="fault_compartment">
