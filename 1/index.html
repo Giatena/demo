@@ -474,7 +474,7 @@
 		document.getElementById("gh4_3_input").value = document.getElementById("exchange_compartment").value;
 		document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
 
-		// $('input[name=gh4]:checked').val() = "3";
+		$("#gh4_3").attr("checked", true);
 		if ($("#gh4_3").is(":checked")) {
 			console.log("对翻4 其他被选中");
 			document.getElementById("gh4_3_input").type = "text";
