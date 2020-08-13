@@ -472,15 +472,13 @@
 		document.getElementById("gh4_old").value = document.getElementById("gh5_new").value = document.getElementById("df_old").value;
 		// 把对翻后，“对翻车厢”赋值到“对翻1”的“来源”
 		document.getElementById("gh4_3_input").value = document.getElementById("exchange_compartment").value;
+		// 把对翻后，“故障车厢”赋值到“对翻2”的“来源”
 		document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
-
+		// 强制选中“对翻1”、“对翻2”的“来源”的“其他”项，并显示输入框
 		$("#gh4_3").attr("checked", true);
-		if ($("#gh4_3").is(":checked")) {
-			console.log("对翻4 其他被选中");
-			document.getElementById("gh4_3_input").type = "text";
-		};
-			// $('input[name=gh5]:checked').val() = "3";
-		// radioChecked(gh5_3);
+		document.getElementById("gh4_3_input").type = "text";
+		$("#gh5_3").attr("checked", true);
+		document.getElementById("gh5_3_input").type = "text";
 	}
 	</script>
 
