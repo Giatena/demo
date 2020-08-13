@@ -461,7 +461,7 @@
 	}
 
 	function exchange() {
-		console.log("运行到 exchange()");
+		// console.log("运行到 exchange()");
 		formShow(gh4);
 		formShow(gh5);
 		// 把“部件”的名称赋值到两个独立的“更换”项内
@@ -475,8 +475,18 @@
 		// 把对翻后，“故障车厢”赋值到“对翻2”的“来源”
 		document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
 		// 强制选中“对翻1”、“对翻2”的“来源”的“其他”项，并显示输入框（已填入数据）
-		$("#gh4_3").attr("checked", true);radioChecked("gh4_3");
-		$("#gh5_3").attr("checked", true);radioChecked("gh5_3");
+		$("#gh4_3").attr("checked", true); radioChecked("gh4_3");
+		$("#gh5_3").attr("checked", true); radioChecked("gh5_3");
+	}
+
+	function lockSwitch() {
+		if(document.getElementById("gh4").disabled) {
+			$("#gh4").removeAttr("disabled");
+			$("#gh5").removeAttr("disabled");
+		} else {
+			$("#gh4").attr("disabled", "disabled");
+			$("#gh5").attr("disabled", "disabled");
+		};
 	}
 	</script>
 
@@ -641,7 +651,7 @@
 		<br>
 	</fieldset>
 
-	<fieldset id="gh4" style='display:none'>
+	<fieldset id="gh4" style='display:none' disabled="disabled">
 		<legend>对翻1-故障位置</legend>
 		<label>名称：</label>
 		<input type="text" name="component" id="gh4_0" style="width:290px;">
@@ -662,7 +672,7 @@
 		<br>
 	</fieldset>
 
-	<fieldset id="gh5" style='display:none'>
+	<fieldset id="gh5" style='display:none' disabled="disabled">
 		<legend>对翻1-对翻位置</legend>
 		<label>名称：</label>
 		<input type="text" name="component" id="gh5_0" style="width:290px;">
@@ -690,7 +700,7 @@
 		<label>部件名称：</label>
 		<input type="text" name="df_component" id="df_component" style="width:290px;">
 		<input type="button" value="转换为2条“更换”记录" id="df_to_gh" onclick="exchange()">
-		<input type="button" value="锁定/解锁" id="" onclick="exchange()">
+		<input type="button" value="锁定/解锁" id="" onclick="lockSwitch()">
 		<br>
 		<label>故障车厢：</label>
 		<input type="text" name="fault_compartment" id="fault_compartment">
