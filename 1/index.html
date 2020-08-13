@@ -468,9 +468,20 @@
 		document.getElementById("gh4_0").value = document.getElementById("gh5_0").value = document.getElementById("df_component").value;
 		// 把对翻后，故障车厢安装部件的序列号（应为它车厢的好件），赋值到“对翻1”的“好件”、“对翻2”的“旧件”
 		document.getElementById("gh4_new").value = document.getElementById("gh5_old").value = document.getElementById("df_new").value;
+		// 把对翻后，故障车厢安装部件的序列号（应为故障车厢的疑似件），赋值到“对翻2”的“好件”、“对翻1”的“旧件”
+		document.getElementById("gh4_old").value = document.getElementById("gh5_new").value = document.getElementById("df_old").value;
+		// 把对翻后，“对翻车厢”赋值到“对翻1”的“来源”
+		document.getElementById("gh4_3_input").value = document.getElementById("exchange_compartment").value;
+		document.getElementById("gh5_3_input").value = document.getElementById("fault_compartment").value;
 
+		// $('input[name=gh4]:checked').val() = "3";
+		if ($("#gh4_3").is(":checked")) {
+			console.log("对翻4 其他被选中");
+			document.getElementById("gh4_3_input").type = "text";
+		};
+			// $('input[name=gh5]:checked').val() = "3";
+		// radioChecked(gh5_3);
 	}
-
 	</script>
 
 </head>
@@ -671,7 +682,7 @@
 		<br>
 		<label>旧件：</label>
 		<input type="text" name="old" id="gh5_old" style="width:290px;">
-		<label>　好件：</label>
+		<label>　疑件：</label>
 		<input type="text" name="new" id="gh5_new" style="width:290px;">
 		<br>
 	</fieldset>
@@ -896,6 +907,50 @@
 	});
 	document.getElementById("gh3_3_input").addEventListener("blur", function() {
 		document.getElementById("gh3_mix").value = document.getElementById("gh3_3_input").value;
+ 	});
+
+	document.getElementById("gh4").addEventListener("change", function() {
+		radioChecked("gh4_3");
+
+		var val = $('input[name=gh4]:checked').val();
+		// console.log("gh4：选中" + val);
+		// val 为字符串，switch 需要数字做比对。parseInt() 把字符串转换为整数
+		switch(parseInt(val)) {
+			case 1:
+				document.getElementById("gh4_mix").value = "甲供";
+				break
+			case 2:
+				document.getElementById("gh4_mix").value = "电科";
+				break
+			case 3:
+				document.getElementById("gh4_mix").value = document.getElementById("gh4_3_input").value;
+				break
+		};
+	});
+	document.getElementById("gh4_3_input").addEventListener("blur", function() {
+		document.getElementById("gh4_mix").value = document.getElementById("gh4_3_input").value;
+ 	});
+
+	document.getElementById("gh5").addEventListener("change", function() {
+		radioChecked("gh5_3");
+
+		var val = $('input[name=gh5]:checked').val();
+		// console.log("gh4：选中" + val);
+		// val 为字符串，switch 需要数字做比对。parseInt() 把字符串转换为整数
+		switch(parseInt(val)) {
+			case 1:
+				document.getElementById("gh5_mix").value = "甲供";
+				break
+			case 2:
+				document.getElementById("gh5_mix").value = "电科";
+				break
+			case 3:
+				document.getElementById("gh5_mix").value = document.getElementById("gh5_3_input").value;
+				break
+		};
+	});
+	document.getElementById("gh5_3_input").addEventListener("blur", function() {
+		document.getElementById("gh5_mix").value = document.getElementById("gh5_3_input").value;
  	});
 </script>
 
