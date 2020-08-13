@@ -59,9 +59,16 @@
 
 		// 初始化没有运行From的reset()，处理“更换”、“其他”被选中，再刷新页面，隐藏元素不显示问题
 		if ($("#replacement_1").is(":checked")) {
-			formShow(gh1);radioChecked("gh1_3");
-			formShow(gh2);radioChecked("gh2_3");
-			formShow(gh3);radioChecked("gh3_3");
+			formShow(gh1); radioChecked("gh1_3");
+			formShow(gh2); radioChecked("gh2_3");
+			formShow(gh3); radioChecked("gh3_3");
+		}
+
+		// 初始化没有运行From的reset()，处理“对翻”、“其他”被选中，再刷新页面，隐藏元素不显示问题
+		if ($("#replacement_2").is(":checked")) {
+			formShow(gh4); radioChecked("gh4_3");
+			formShow(gh5); radioChecked("gh5_3");
+			formShow(df1);
 		}
 
 		// 初始化没有运行From的reset()，处理“高级”被选中，再刷新页面，元素见无法正常互锁
@@ -396,6 +403,10 @@
 
 	// 解决因过滤表单数组，造成表外项无法重置
 	function resetForm() {
+		// 解决后台选中 gh4 或 gh5 的“其他”项，全局重置函数对此无效的问题
+		reset_df();
+
+		// 运行 form2 的重置。搜索 noSubmit 可知道不作为数据提交的输入框
 		document.getElementById("noSubmit").reset();
 	}
 
@@ -507,6 +518,12 @@
 		// 隐藏 gh4 和 gh5
 		formHidden(gh4);
 		formHidden(gh5);
+		// 重置 df1 所有输入框
+		document.getElementById("df_component").value = "";
+		document.getElementById("fault_compartment").value = "";
+		document.getElementById("df_new").value = "";
+		document.getElementById("exchange_compartment").value = "";
+		document.getElementById("df_old").value = "";
 	}
 	</script>
 
@@ -857,11 +874,19 @@
 		formHidden(gh2);
 		formHidden(gh3);
 		formShow(df1);
+
+		var gh4 = document.getElementById("gh4_0").value + document.getElementById("gh4_old").value + document.getElementById("gh4_new").value
+		if(gh4 != "") {
+			formShow(gh4);
+			formShow(gh5);
+		}
 	});
 	document.getElementById("replacement_3").addEventListener("click", function() {
 		formHidden(gh1);
 		formHidden(gh2);
 		formHidden(gh3);
+		formHidden(gh4);
+		formHidden(gh5);
 		formHidden(df1);
 	});
 
