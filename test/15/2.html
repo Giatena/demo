@@ -28,6 +28,7 @@
  	<table id="example" class="display" role="grid" aria-describedby="example_info">
  		<thead>
             <tr>
+                <th>GUID</th>
                 <th>质保工单</th>
                 <th>列车编号</th>
                 <th>车厢编号</th>
@@ -62,10 +63,14 @@
 	            description: "牵引轻级",
 	            action: "xxxxxxxx，工况正常。",
 	            replacement: "更换",
-	            component: ["PIM1","PIM2","IM"],
-	            source: ["电科","甲供","申南"],
-	            old: ["01","02","03"],
-	            new: ["1N","2N","3N"],
+	            // component: ["PIM1","PIM2","IM"],
+	            component: "PIM1"+"<br>"+"PIM2"+"<br>"+"IM",
+	            // source: ["电科","甲供","申南"],
+	            source: "电科"+"<br>"+"甲供"+"<br>"+"申南",
+	            // old: ["01","02","03"],
+	            old: "01"+"<br>"+"02"+"<br>"+"03",
+	            // new: ["1N","2N","3N"],
+	            new: "1N"+"<br>"+"2N"+"<br>"+"3N",
 	            member: "路人甲"
 	        },
 	        {
@@ -80,7 +85,7 @@
 	    
 	    
 	    for(i=0;i<xx.length;i++){
-	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td></tr>";
+	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+"</td><td>"+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td></tr>";
 	    	$("#example tbody").append(html);
 	    }
 	    
