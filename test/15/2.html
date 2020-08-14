@@ -28,11 +28,19 @@
  	<table id="example" class="display" role="grid" aria-describedby="example_info">
  		<thead>
             <tr>
-                <th>事件ID</th>
-                <th>员工ID</th>
-                <th>标题</th>
-                <th>地址</th>
-                <th>时间</th>
+                <th>质保工单</th>
+                <th>列车编号</th>
+                <th>车厢编号</th>
+                <th>故障类别</th>
+                <th>故障级别</th>
+                <th>故障现象</th>
+                <th>处理经过</th>
+                <th>更换或对翻情况</th>
+                <th>部件</th>
+                <th>来源</th>
+                <th>旧件序列号</th>
+                <th>好件序列号</th>
+                <th>当班人员</th>
             </tr>
         </thead>
         <tbody>
@@ -45,148 +53,23 @@
     $(document).ready(function(){ 
     	var xx=[
 	        {
-		        id: 1,
-		        emptyid:"1",
-		        title: '早班',
-		        start: '2018-03-01'
+	            GUID: "20200231230315",
+		        ticket: "20200231CW_ML_01",
+	            train: "999",
+	            compartment: "999999",
+	            category: "辅逆",
+	            type: "无影响",
+	            description: "牵引轻级",
+	            action: "xxxxxxxx，工况正常。",
+	            replacement: "更换",
+	            component: ["PIM1","PIM2","IM"],
+	            source: ["电科","甲供","申南"],
+	            old: ["01","02","03"],
+	            new: ["1N","2N","3N"],
+	            member: "路人甲"
 	        },
 	        {
-	        	id: 2,
-		        emptyid:"2",
-	          	title: '中班',
-	          	start: '2018-03-07'
-	        },
-	        {
-	            id: 3,
-		        emptyid:"3",
-	            title: '晚班',
-	            start: '2018-03-09'
-	        },
-	        {
-	            id: 4,
-		        emptyid:"4",
-	            title: '其他',
-	            start: '2018-03-16'
-	        },
-	        {
-	            id: 5,
-		        emptyid:"5",
-		        title: '早班',
-		        start: '2018-03-11',
-	        },
-	        {
-	            id: 6,
-		        emptyid:"6",
-	            title: '晚班',
-	            start: '2018-03-12'
-	        },
-	        {
-	            id: 7,
-		        emptyid:"7",
-	            title: '中班',
-	            start: '2018-03-12'
-	        },
-	        {
-	            id: 8,
-		        emptyid:"8",
-	            title: '其他',
-	            start: '2018-03-12'
-	        },
-	        {
-	            id: 9,
-		        emptyid:"9",
-	            title: '早班',
-	            start: '2018-03-12'
-	        },
-	        {
-	            id: 11,
-		        emptyid:"10",
-	            title: '其他',
-	            start: '2018-03-13'
-	        },
-	        {
-	            id: 12,
-		        emptyid:"11",
-	            title: '晚班',
-	            url: 'http://www.baidu.com/',
-	            start: '2018-03-28'
-	        },
-	        {
-	            id: 13,
-		        emptyid:"1",
-	            title: '晚班',
-	//          url: 'http://baidu.com/',
-	            start: '2018-02-28'
-	        },
-	        {
-		        id: 14,
-		        emptyid:"1",
-		        title: '早班',
-		        start: '2018-04-01'
-	        },
-	        {
-	        	id: 15,
-		        emptyid:"2",
-	          	title: '中班',
-	          	start: '2018-04-07'
-	        },
-	        {
-	            id: 16,
-		        emptyid:"3",
-	            title: '晚班',
-	            start: '2018-04-09'
-	        },
-	        {
-	            id: 17,
-		        emptyid:"4",
-	            title: '其他',
-	            start: '2018-04-16'
-	        },
-	        {
-	            id: 18,
-		        emptyid:"5",
-		        title: '早班',
-		        start: '2018-04-11',
-	        },
-	        {
-	            id: 19,
-		        emptyid:"6",
-	            title: '晚班',
-	            start: '2018-04-12'
-	        },
-	        {
-	            id: 20,
-		        emptyid:"7",
-	            title: '中班',
-	            start: '2018-04-12'
-	        },
-	        {
-	            id: 21,
-		        emptyid:"8",
-	            title: '其他',
-	            start: '2018-04-12'
-	        },
-	        {
-	            id: 22,
-		        emptyid:"9",
-	            title: '早班',
-	            start: '2018-04-12'
-	        },
-	        {
-	            id: 23,
-		        emptyid:"10",
-	            title: '其他',
-	            start: '2018-04-13'
-	        },
-	        {
-	            id: 24,
-		        emptyid:"11",
-	            title: '晚班',
-	            url: 'http://www.baidu.com/',
-	            start: '2018-04-28'
-	        },
-	        {
-	            id: 25,
+	            id: 2,
 		        emptyid:"1",
 	            title: '晚班',
 	//          url: 'http://baidu.com/',
@@ -197,7 +80,7 @@
 	    
 	    
 	    for(i=0;i<xx.length;i++){
-	    	var html="<tr><td>"+xx[i].id+"</td><td>"+xx[i].emptyid+"</td><td>"+xx[i].title+"</td><td>"+xx[i].url+"</td><td>"+xx[i].start+"</td></tr>";
+	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td></tr>";
 	    	$("#example tbody").append(html);
 	    }
 	    
