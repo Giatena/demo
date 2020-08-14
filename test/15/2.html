@@ -42,6 +42,7 @@
                 <th>旧件序列号</th>
                 <th>好件序列号</th>
                 <th>当班人员</th>
+                <th>json</th>
             </tr>
         </thead>
         <tbody>
@@ -51,7 +52,7 @@
  	</table>
 
   <script>  
-    $(document).ready(function(){ 
+    $(document).ready(function(){
     	var xx=[
 	        {
 	            GUID: "20200231230315",
@@ -71,7 +72,8 @@
 	            old: "01"+",<br>"+"02"+",<br>"+"03",
 	            // new: ["1N","2N","3N"],
 	            new: "1N"+",<br>"+"2N"+",<br>"+"3N",
-	            member: "路人甲"
+	            member: "路人甲",
+	            json: ""
 	        },
 	        {
 	            id: 2,
@@ -83,9 +85,13 @@
 	        
 	    ];
 	    
+	    var jsonObj = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"],"member":"路人甲"};
+	    // 对象序列化
+	    xx[0].json = JSON.stringify(jsonObj);
+	    // console.log(xx[0].json);
 	    
 	    for(i=0;i<xx.length;i++){
-	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+"</td><td>"+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td></tr>";
+	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+"</td><td>"+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td><td>"+xx[i].json+"</td></tr>";
 	    	$("#example tbody").append(html);
 	    }
 	    
@@ -96,6 +102,7 @@
   </script>
 
     <script type="text/javascript">
+
         $(document).ready( function () {
             $('#example').DataTable({
                 dom: 'Bfrtip',
