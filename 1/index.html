@@ -833,7 +833,10 @@
 	<td data-key="description" data-id="$id$" contenteditable="plaintext-only">$description$</td>
 	<td data-key="action" data-id="$id$" contenteditable="plaintext-only">$action$</td>
 	<td data-key="replacement" data-id="$id$" contenteditable="plaintext-only">$replacement$</td>
-	<td><a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a></td>
+	<td>
+		<a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a>
+		<a href="javascript:" role="button" class="jsListDel" data-id="$id$">导出</a>
+	</td>
 </tr></script>
 
 </body>
@@ -845,6 +848,7 @@
 		console.log("“删除”按钮被点击了");
 		var eleBtn = event.target, id = '';
 		console.log(eleBtn);
+		// 如果点击的不是删除按钮所在的单元格，则第二条输出为false，不满足if条件的第一个与条件。
 		console.log(eleBtn.classList.contains('jsListDel'));
 		console.log(eleBtn.getAttribute('data-id'));
 		// if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
