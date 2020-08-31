@@ -317,11 +317,11 @@
 		// 获取传入id的条目
 		var objectStoreRequest = objectStore.get(id);
 		objectStoreRequest.onsuccess = function(event) {
-			// console.log(id + "的条目内容为：" + objectStoreRequest.result.GUID);
-			console.log(id + "的条目内容为：" + objectStoreRequest.result);
+			// console.log("key=" + id + "的内容为：" + objectStoreRequest.result);
+			// console.log("key=" + id + "的内容的第一个值为：" + objectStoreRequest.result.GUID);
 			// json对象序列化
 			var getJson = JSON.stringify(objectStoreRequest.result);
-			console.log(getJson);
+			// console.log(getJson);
 			navigator.clipboard.writeText(getJson);
 			console.log("已导出到剪贴板：" + getJson);
 		};
