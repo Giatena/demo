@@ -317,8 +317,8 @@
 		// 获取传入id的条目
 		var objectStoreRequest = objectStore.get(id);
 		// var objectStoreRequest = objectStore.getKey(id);
-		objectStoreRequest.onsuccess = function(onsuccess) {
-			console.log(id + "的条目内容为：" + onsuccess.target.result);
+		objectStoreRequest.onsuccess = function(event) {
+			console.log(id + "的条目内容为：" + objectStoreRequest.result);
 		};
 		
 		// objectStoreRequest = JSON.parse(objectStoreRequest);
