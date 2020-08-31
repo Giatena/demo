@@ -317,16 +317,14 @@
 		// 获取传入id的条目
 		var objectStoreRequest = objectStore.get(id);
 		objectStoreRequest.onsuccess = function(event) {
-			console.log(id + "的条目内容为：" + objectStoreRequest.result.GUID);
-			// var obge = JSON.parse(onsuccess.result);
-			// console.log(id + "的条目内容为：" + obge);
+			// console.log(id + "的条目内容为：" + objectStoreRequest.result.GUID);
+			console.log(id + "的条目内容为：" + objectStoreRequest.result);
+			// json对象序列化
+			var getJson = JSON.stringify(objectStoreRequest.result);
+			console.log(getJson);
+			navigator.clipboard.writeText(getJson);
+			console.log("已导出到剪贴板：" + getJson);
 		};
-		
-		// objectStoreRequest = JSON.parse(objectStoreRequest);
-		// 删除成功后
-		// objectStoreRequest.onsuccess = function() {
-		// 	showData();
-		// };
 	}
 
 	// 关闭与删除数据库
