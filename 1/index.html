@@ -311,6 +311,23 @@
 		};
 	}
 
+	function ReadBotton(id) {
+		// 表读写的事务
+		var objectStore = db.transaction(objectStoreName, "readwrite").objectStore(objectStoreName);
+		// 获取传入id的条目
+		var objectStoreRequest = objectStore.get(id);
+		// var objectStoreRequest = objectStore.getKey(id);
+		objectStoreRequest.onsuccess = function(onsuccess) {
+			console.log(id + "的条目内容为：" + onsuccess.target.result);
+		};
+		
+		// objectStoreRequest = JSON.parse(objectStoreRequest);
+		// 删除成功后
+		// objectStoreRequest.onsuccess = function() {
+		// 	showData();
+		// };
+	}
+
 	// 关闭与删除数据库
 	function deleteDatabase() {
 		db.onversionchange = function() {
@@ -833,10 +850,8 @@
 	<td data-key="description" data-id="$id$" contenteditable="plaintext-only">$description$</td>
 	<td data-key="action" data-id="$id$" contenteditable="plaintext-only">$action$</td>
 	<td data-key="replacement" data-id="$id$" contenteditable="plaintext-only">$replacement$</td>
-	<td>
-		<a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a>
-		<a href="javascript:" role="button" class="jsListDel" data-id="$id$">导出</a>
-	</td>
+	<td><a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a></td>
+	<td><a href="javascript:" role="button" class="jsListRead" data-id="$id$">导出</a></td>
 </tr></script>
 
 </body>
@@ -845,7 +860,7 @@
 	// 删除事件（按钮）
 	var eleTbody = document.querySelector('#result tbody');
 	eleTbody.addEventListener('click', function (event) {
-		console.log("“删除”按钮被点击了");
+		console.log("有按钮被点击了");
 		var eleBtn = event.target, id = '';
 		console.log(eleBtn);
 		// 如果点击的不是删除按钮所在的单元格，则第二条输出为false，不满足if条件的第一个与条件。
@@ -855,6 +870,12 @@
 		if (eleBtn && eleBtn.classList.contains('jsListDel') && (id = eleBtn.getAttribute('data-id'))) {
 			delBotton(id * 1);
 		event.preventDefault();
+		};
+
+		// 导出事件（按钮）
+		if (eleBtn && eleBtn.classList.contains('jsListRead') && (id = eleBtn.getAttribute('data-id'))) {
+			ReadBotton(id * 1);
+		// event.preventDefault();
 		};
 	});
 
