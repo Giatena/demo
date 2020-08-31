@@ -318,6 +318,8 @@
 		var objectStoreRequest = objectStore.get(id);
 		objectStoreRequest.onsuccess = function(event) {
 			console.log(id + "的条目内容为：" + objectStoreRequest.result.GUID);
+			// var obge = JSON.parse(onsuccess.result);
+			// console.log(id + "的条目内容为：" + obge);
 		};
 		
 		// objectStoreRequest = JSON.parse(objectStoreRequest);
