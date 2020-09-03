@@ -794,15 +794,19 @@
 	<input type="text" name="member" id="member" style="width:305px;">
 	<br><br>
 
+	<input type="button" value="添加+重置" onclick="addData();resetForm();">
+	<br>
+
 	<!-- <input type="submit" value="提交"> -->
 	<input type="reset" value="重置" onclick="resetForm()">
 	<br>
-	<!-- <input type="button" value="缓存" id="idb" onclick="writeIDB()"> -->
 
 	<label for="test">IDB 数据库操作：</label>
 	<!-- 创建一个名称为“Tickets”的数据库，版本为“1”；若不存在“CW”表，则新建 -->
 	<!-- <input type="button" value="初始化" id="xj" onclick="createDatabase('Tickets', 1, 'CW')"> -->
 	<!-- <input type="button" value="保存前检查" id="tj" onclick="dataCheck()"> -->
+	<!-- <input type="submit" value="提交"> -->
+	<input type="reset" value="重置" onclick="resetForm()">
 	<input type="button" value="添加一条数据" id="tj" onclick="addData()">
 	<input type="button" value="删除" id="sc" onclick="deleteDatabase()">
 	<!-- <input type="button" value="显示数据" id="xs" onclick="showData()"> -->
