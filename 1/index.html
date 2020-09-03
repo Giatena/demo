@@ -157,6 +157,12 @@
 				objectStore.createIndex('description', 'description');
 				objectStore.createIndex('action', 'action');
 				objectStore.createIndex('replacement', 'replacement');
+				objectStore.createIndex('component', 'component');
+				objectStore.createIndex('source', 'source');
+				objectStore.createIndex('old', 'old');
+				objectStore.createIndex('new', 'new');
+				objectStore.createIndex('member', 'member');
+				objectStore.createIndex('id', 'id');
 			};
 		}
 	}
@@ -819,6 +825,7 @@
 	<table>
 		<thead>
 			<tr>
+				<th>key</th>
 				<th>GUID</th>
 				<th>质保工单</th>
 				<th>列车编号</th>
@@ -828,6 +835,11 @@
 				<th>故障现象</th>
 				<th>处理经过</th>
 				<th>更换或对翻情况</th>
+				<th>部件</th>
+				<th>来源</th>
+				<th>旧件序列号</th>
+				<th>好件序列号</th>
+				<th>当班人员</th>
 				<th width="60">操作</th>
 			</tr>
 		</thead>
@@ -840,6 +852,7 @@
 <!-- 表头必须和IDB中保存的数组顺序一致，否则显示出来的效果会错行 -->
 <script id="tplList" type="text/template">
 <tr>
+	<td data-key="id" data-id="$id$" contenteditable="plaintext-only">$id$</td>
 	<td data-key="GUID" data-id="$id$" contenteditable="plaintext-only">$GUID$</td>
 	<td data-key="ticket" data-id="$id$" contenteditable="plaintext-only">$ticket$</td>
 	<td data-key="train" data-id="$id$" contenteditable="plaintext-only">$train$</td>
@@ -849,8 +862,15 @@
 	<td data-key="description" data-id="$id$" contenteditable="plaintext-only">$description$</td>
 	<td data-key="action" data-id="$id$" contenteditable="plaintext-only">$action$</td>
 	<td data-key="replacement" data-id="$id$" contenteditable="plaintext-only">$replacement$</td>
-	<td><a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a></td>
-	<td><a href="javascript:" role="button" class="jsListRead" data-id="$id$">导出</a></td>
+	<td data-key="component" data-id="$id$" contenteditable="plaintext-only">$component$</td>
+	<td data-key="source" data-id="$id$" contenteditable="plaintext-only">$source$</td>
+	<td data-key="old" data-id="$id$" contenteditable="plaintext-only">$old$</td>
+	<td data-key="new" data-id="$id$" contenteditable="plaintext-only">$new$</td>
+	<td data-key="member" data-id="$id$" contenteditable="plaintext-only">$member$</td>
+	<td width="10%">
+		<a href="javascript:" role="button" class="jsListDel" data-id="$id$">删除</a>
+		<a href="javascript:" role="button" class="jsListRead" data-id="$id$">导出</a>
+	</td>
 </tr></script>
 
 </body>
