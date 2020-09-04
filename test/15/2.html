@@ -20,10 +20,16 @@
   		text-align: center;
   	}
   </style>
- </head>  
+ </head>
   
  <body>  
- 	<h1>表格数据导出案例</h1>
+ 	<h1>表格数据导入/导出案例</h1>
+
+    <label>导入</label>
+    <input type="text" id="importJson">
+    <input type="button" value="导入一条数据" id="sc" onclick="importJson()">
+    <input type="button" value="清空" id="sc" onclick="importJsonEmpty()">
+    <br><br>
 
  	<table id="example" class="display" role="grid" aria-describedby="example_info">
  		<thead>
@@ -48,10 +54,99 @@
         <tbody>
             
         </tbody>
-
  	</table>
 
   <script>  
+
+    var dbName = 'Tickets';
+    var version = 1;
+    var db;
+    var objectStoreName = 'CW';
+
+    // 完全加载完毕时调用
+    window.onload = function() {
+        createDatabase();
+    }
+
+    // IDB 数据库初始化，创建[CW]表，将IDB对象赋值给全局变量db
+    function createDatabase() {
+        // request 返回一个 IDBOpenDBRequest 对象
+        // 而我们期望得到的DB对象在其result属性中
+        var openRequest = window.indexedDB.open(dbName, version);
+
+        openRequest.onerror = function(err) {
+            console.log("创建[" + dbName + "]数据库错误: " + err.target.errorCode);
+        };
+
+        openRequest.onsuccess = function(success) {
+            console.log("onsuccess：已打开[" + dbName + "]数据库: " + success.target.result);
+            // 获取数据库实例对象 db
+            db = success.target.result;
+        };
+
+        // 首次先触发 onupgradeneeded，再触发 onsuccess
+        // 或者 window.indexedDB.open 传递的新版本（版本数值要比现在的高）
+        openRequest.onupgradeneeded = function(event) {
+            console.log("onupgradeneeded：不存在[" + dbName + "]数据库，已自动创建同名数据库");
+            
+            // 获取数据库实例对象 db
+            db = event.target.result;
+            
+            // 若不存在表“CW”，则执行新建，且主键为“id”
+            if (!db.objectStoreNames.contains(objectStoreName)) {
+                objectStore = db.createObjectStore(objectStoreName, {
+                    keyPath: 'id',
+                    autoIncrement: true
+                });
+                console.log("onupgradeneeded：已创建[" + objectStoreName + "]表");
+                
+                // createIndex(indexName, keyPath, objectParameters)，unique 字段是唯一的
+                objectStore.createIndex('id', 'id', {
+                    unique: true    
+                });
+
+                objectStore.createIndex('GUID', 'GUID');
+                objectStore.createIndex('ticket', 'ticket');
+                objectStore.createIndex('train', 'train');
+                objectStore.createIndex('compartment', 'compartment');
+                objectStore.createIndex('category', 'category');
+                objectStore.createIndex('type', 'type');
+                objectStore.createIndex('description', 'description');
+                objectStore.createIndex('action', 'action');
+                objectStore.createIndex('replacement', 'replacement');
+                objectStore.createIndex('component', 'component');
+                objectStore.createIndex('source', 'source');
+                objectStore.createIndex('old', 'old');
+                objectStore.createIndex('new', 'new');
+                objectStore.createIndex('member', 'member');
+                // objectStore.createIndex('id', 'id');
+            };
+        }
+    }
+
+    function importJson() {
+        // 从数据框获取用户提交的json字符串
+        userImput = document.getElementById("importJson").value
+        // JSON.parse(字符串) --> 把字符串转json对象
+        userJson = JSON.parse(userImput);
+        
+        // console.log(userJson.id);
+        // 删除json对象中名为“id”的属性
+        delete userJson['id'];
+        console.log("userJson 对象以字符串形式打印：" + JSON.stringify(userJson));
+
+        // 事务：对“CW”表进行读写的权限控制
+        var transaction = db.transaction(objectStoreName, "readwrite");
+        // 对表进行操作
+        var objectStore = transaction.objectStore(objectStoreName);
+        // 添加数据
+        var objectStoreRequest = objectStore.add(userJson);
+        objectStoreRequest.onsuccess = function(onsuccess) {
+            // onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
+            console.log("onsuccess：已写入表单数据(userJson) " + onsuccess.target.result);
+        };
+    }
+
     $(document).ready(function(){
     	var xx=[
 	        {

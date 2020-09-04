@@ -162,7 +162,7 @@
 				objectStore.createIndex('old', 'old');
 				objectStore.createIndex('new', 'new');
 				objectStore.createIndex('member', 'member');
-				objectStore.createIndex('id', 'id');
+				// objectStore.createIndex('id', 'id');
 			};
 		}
 	}
@@ -439,6 +439,9 @@
 
 		// 运行 form2 的重置。搜索 noSubmit 可知道不作为数据提交的输入框
 		document.getElementById("noSubmit").reset();
+
+		// 清空：用户提供的用于单条导入的json字符串
+		importJsonEmpty();
 	}
 
 	// 表单数据序列化，并复制到剪贴板
