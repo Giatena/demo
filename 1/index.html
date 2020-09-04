@@ -589,6 +589,10 @@
 		showData();
 	}
 
+	function importJsonEmpty() {
+		document.getElementById("importJson").value = "";
+	}
+
 	</script>
 
 </head>
@@ -851,6 +855,7 @@
 <label>导入</label>
 <input type="text" id="importJson">
 <input type="button" value="导入一条数据" id="sc" onclick="importJson()">
+<input type="button" value="清空" id="sc" onclick="importJsonEmpty()">
 
 <div id="result" class="result">
 	<table>
