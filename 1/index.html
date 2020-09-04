@@ -564,6 +564,31 @@
 		document.getElementById("exchange_compartment").value = "";
 		document.getElementById("df_old").value = "";
 	}
+
+	function importJson() {
+		// 从数据框获取用户提交的json字符串
+		userImput = document.getElementById("importJson").value
+		// JSON.parse(字符串) --> 把字符串转json对象
+		userJson = JSON.parse(userImput);
+		
+		// console.log(userJson.id);
+		// 删除json对象中名为“id”的属性
+		delete userJson['id'];
+		console.log("userJson 对象以字符串形式打印：" + JSON.stringify(userJson));
+
+		// 事务：对“CW”表进行读写的权限控制
+		var transaction = db.transaction(objectStoreName, "readwrite");
+		// 对表进行操作
+		var objectStore = transaction.objectStore(objectStoreName);
+		// 添加数据
+		var objectStoreRequest = objectStore.add(userJson);
+		objectStoreRequest.onsuccess = function(onsuccess) {
+			// onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
+			console.log("onsuccess：已写入表单数据(userJson) " + onsuccess.target.result);
+		};
+		showData();
+	}
+
 	</script>
 
 </head>
@@ -815,11 +840,17 @@
 	<input type="button" value="删除第一条数据" id="sc" onclick="delBotton(1)">
 	<input type="button" value="导出" id="sc" onclick="copyText()">
 	<input type="button" value="保存+导出" id="sc" onclick="addData();copyText();">
+	<br>
+
 </form>
 
 <form id="noSubmit" style='display:none'>
 	<input type="reset" value="重置2">
 </form>
+
+<label>导入</label>
+<input type="text" id="importJson">
+<input type="button" value="导入一条数据" id="sc" onclick="importJson()">
 
 <div id="result" class="result">
 	<table>
