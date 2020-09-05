@@ -1,75 +1,44 @@
 <!-- https://blog.csdn.net/code_aJack/article/details/102859243 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">   
- <head>  
-  <title> 导出到Excel </title>  
-  <meta charset='utf-8'>
-  <link rel="stylesheet" href="./css/jquery.datatables.min.css" />    <!-- dataTable主要css -->
-  <link rel="stylesheet" href="./css/buttons.dataTables.min.css" />   <!-- dataTable表格按钮主要css -->
+<head>
+    <title> 导出到Excel </title>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href="./css/jquery.datatables.min.css" />   <!-- dataTable主要css -->
+    <link rel="stylesheet" href="./css/buttons.dataTables.min.css" />  <!-- dataTable表格按钮主要css -->
 
     <script src="./js/jquery-3.5.1.js"></script>                       <!-- dataTable表格主要js -->
-    <script src="./js/jquery.datatables.min.js"></script>            <!-- dataTable表格主要js -->
-    <script src="./js/dataTables.buttons.min.js"></script>           <!-- dataTable表格按钮主要js -->
+    <script src="./js/jquery.datatables.min.js"></script>              <!-- dataTable表格主要js -->
+    <script src="./js/dataTables.buttons.min.js"></script>             <!-- dataTable表格按钮主要js -->
     <script src="./js/jszip.min.js"></script>
-    <script src="./js/buttons.html5.min.js"></script>          <!-- 导出功能相关js -->
-    <script src="./js/buttons.flash.min.js"></script>          <!-- 导出功能相关js -->
-    <script src="./js/pdfmake.min.js"></script>               <!-- 导出功能相关js -->
-    <script src="./js/vfs_fonts.js"></script>               <!-- 导出功能相关js -->
-    <script src="./js/buttons.print.min.js"></script>       <!-- 导出功能相关js -->
-  <style>
-  	tbody td{
-  		text-align: center;
-  	}
-  </style>
- </head>
-  
- <body>  
- 	<h1>表格数据导入/导出案例</h1>
+    <script src="./js/buttons.html5.min.js"></script>              <!-- 导出功能相关js -->
+    <script src="./js/buttons.flash.min.js"></script>              <!-- 导出功能相关js -->
+    <script src="./js/pdfmake.min.js"></script>                    <!-- 导出功能相关js --> 
+    <script src="./js/vfs_fonts.js"></script>                      <!-- 导出功能相关js -->
+    <script src="./js/buttons.print.min.js"></script>              <!-- 导出功能相关js -->
+    <!-- <script src="./jquery.min.js"></script>     <!-- jQuery：IDB相关 --> -->
+    <style>
+        tbody td{
+        text-align: center;
+        }
+        </style>
+</head>
 
-    <label>导入</label>
-    <input type="text" id="importJson">
-    <input type="button" value="导入一条数据" id="sc" onclick="importJson()">
-    <input type="button" value="清空" id="sc" onclick="importJsonEmpty()">
-    <br><br>
-
- 	<table id="example" class="display" role="grid" aria-describedby="example_info">
- 		<thead>
-            <tr>
-                <th>GUID</th>
-                <th>质保工单</th>
-                <th>列车编号</th>
-                <th>车厢编号</th>
-                <th>故障类别</th>
-                <th>故障级别</th>
-                <th>故障现象</th>
-                <th>处理经过</th>
-                <th>更换或对翻情况</th>
-                <th>部件</th>
-                <th>来源</th>
-                <th>旧件序列号</th>
-                <th>好件序列号</th>
-                <th>当班人员</th>
-                <th>json</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
- 	</table>
-
-  <script>  
+<script type="text/javascript">
 
     var dbName = 'Tickets';
     var version = 1;
     var db;
     var objectStoreName = 'CW';
 
-    // 完全加载完毕时调用
+    // window.onload --> 完全加载完毕时调用
     window.onload = function() {
         createDatabase();
-    }
+        console.log("here");
+    };
 
     // IDB 数据库初始化，创建[CW]表，将IDB对象赋值给全局变量db
     function createDatabase() {
+        console.log("here2");
         // request 返回一个 IDBOpenDBRequest 对象
         // 而我们期望得到的DB对象在其result属性中
         var openRequest = window.indexedDB.open(dbName, version);
@@ -121,7 +90,7 @@
                 objectStore.createIndex('member', 'member');
                 // objectStore.createIndex('id', 'id');
             };
-        }
+        };
     }
 
     function importJson() {
@@ -146,109 +115,137 @@
             console.log("onsuccess：已写入表单数据(userJson) " + onsuccess.target.result);
         };
     }
+</script>
 
+<body>
+    <h1>表格数据导入/导出案例</h1>
+    <label>导入</label>
+    <input type="text" id="importJson">
+    <input type="button" value="导入一条数据" id="sc" onclick="importJson()">
+    <input type="button" value="清空" id="sc" onclick="importJsonEmpty()">
+    <br><br>
+
+    <table id="example" class="display" role="grid" aria-describedby="example_info">
+        <thead>
+            <tr>
+                <th>GUID</th>
+                <th>质保工单</th>
+                <th>列车编号</th>
+                <th>车厢编号</th>
+                <th>故障类别</th>
+                <th>故障级别</th>
+                <th>故障现象</th>
+                <th>处理经过</th>
+                <th>更换或对翻情况</th>
+                <th>部件</th>
+                <th>来源</th>
+                <th>旧件序列号</th>
+                <th>好件序列号</th>
+                <th>当班人员</th>
+                <th>json</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+<script type="text/javascript">
+    // jQuery 事件的 $(document).ready() --> DOM 就绪时被调用，此时相关资源可能并未加载完毕
     $(document).ready(function(){
-    	var xx=[
-	        {
-	            GUID: "20200231230315",
-		        ticket: "20200231CW_ML_01",
-	            train: "999",
-	            compartment: "999999",
-	            category: "辅逆",
-	            type: "无影响",
-	            description: "牵引轻级",
-	            action: "xxxxxxxx，工况正常。",
-	            replacement: "更换",
-	            // component: ["PIM1","PIM2","IM"],
-	            component: "PIM1"+",<br>"+"PIM2"+",<br>"+"IM",
-	            // source: ["电科","甲供","申南"],
-	            source: "电科"+",<br>"+"甲供"+",<br>"+"申南",
-	            // old: ["01","02","03"],
-	            old: "01"+",<br>"+"02"+",<br>"+"03",
-	            // new: ["1N","2N","3N"],
-	            new: "1N"+",<br>"+"2N"+",<br>"+"3N",
-	            member: "路人甲",
-	            json: ""
-	        },
-	        {
-	            id: 2,
-		        emptyid:"1",
-	            title: '晚班',
-	//          url: 'http://baidu.com/',
-	            start: '2018-04-28'
-	        }
-	        
-	    ];
-	    
-	    var jsonObj = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"],"member":"路人甲"};
-	    // 对象序列化
-	    xx[0].json = JSON.stringify(jsonObj);
-	    // console.log(xx[0].json);
-	    
-	    for(i=0;i<xx.length;i++){
-	    	var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+"</td><td>"+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td><td>"+xx[i].json+"</td></tr>";
-	    	$("#example tbody").append(html);
-	    }
-	    
+        var xx=[
+            {
+                GUID: "20200231230315",
+                ticket: "20200231CW_ML_01",
+                train: "999",
+                compartment: "999999",
+                category: "辅逆",
+                type: "无影响",
+                description: "牵引轻级",
+                action: "xxxxxxxx，工况正常。",
+                replacement: "更换",
+                // component: ["PIM1","PIM2","IM"],
+                component: "PIM1"+",<br>"+"PIM2"+",<br>"+"IM",
+                // source: ["电科","甲供","申南"],
+                source: "电科"+",<br>"+"甲供"+",<br>"+"申南",
+                // old: ["01","02","03"],
+                old: "01"+",<br>"+"02"+",<br>"+"03",
+                // new: ["1N","2N","3N"],
+                new: "1N"+",<br>"+"2N"+",<br>"+"3N",
+                member: "路人甲",
+                json: ""
+            },
+            {
+                id: 2,
+                emptyid:"1",
+                title: '晚班',
+                // url: 'http://baidu.com/',
+                start: '2018-04-28'
+            }
+        ];
 
+        var jsonObj = {"GUID":"20200231230315","ticket":"20200231CW_ML_01","train":"999","compartment":"999999","category":"1","type":"5","description":"牵引轻级","action":"xxxxxxxx，工况正常。","replacement":"1","component":["PIM1","PIM2","IM"],"source":["电科","甲供","申南"],"old":["01","02","03"],"new":["1N","2N","3N"],"member":"路人甲"};
+        // 对象序列化
+        xx[0].json = JSON.stringify(jsonObj);
+        // console.log(xx[0].json);
+        
+        for(i=0;i<xx.length;i++){
+            var html="<tr><td>"+xx[i].GUID+"</td><td>"+xx[i].ticket+"</td><td>"+xx[i].train+"</td><td>"+xx[i].compartment+"</td><td>"+xx[i].category+"</td><td>"+xx[i].type+"</td><td>"+xx[i].description+"</td><td>"+xx[i].action+"</td><td>"+xx[i].replacement+"</td><td>"+xx[i].component+"</td><td>"+xx[i].source+"</td><td>"+xx[i].old+"</td><td>"+xx[i].new+"</td><td>"+xx[i].member+"</td><td>"+xx[i].json+"</td></tr>";
+            $("#example tbody").append(html);
+        }
+    });
 
-	});
-
-  </script>
-
-    <script type="text/javascript">
-
-        $(document).ready( function () {
-            $('#example').DataTable({
-                dom: 'Bfrtip',
-                lengthMenu: [ [ 6, 10, 20, 30, 50, -1], [ 6 , 10, 20, 30, 50, "所有"] ],
-                language: {
-                    emptyTable: '没有数据',
-                    loadingRecords: '加载中...',
-                    processing: '查询中...',
-                    search: '请输入关键词:',
-                    lengthMenu: '每页 _MENU_ 件',
-                    zeroRecords: '没有数据',
-                    paginate: {
-                        'first':      '首页',
-                        'last':       '末页',
-                        'next':       '下页',
-                        'previous':   '上页'
-                    },
-                    info: '第 _PAGE_ 页 / 总 _PAGES_ 页,共 _TOTAL_ 项结果',
-                    infoEmpty: '没有数据',
-                    infoFiltered: '(过滤总件数 _MAX_ 条)',
+    $(document).ready( function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            lengthMenu: [ [ 6, 10, 20, 30, 50, -1], [ 6 , 10, 20, 30, 50, "所有"] ],
+            language: {
+                emptyTable: '没有数据',
+                loadingRecords: '加载中...',
+                processing: '查询中...',
+                search: '请输入关键词:',
+                lengthMenu: '每页 _MENU_ 件',
+                zeroRecords: '没有数据',
+                paginate: {
+                    'first':      '首页',
+                    'last':       '末页',
+                    'next':       '下页',
+                    'previous':   '上页'
                 },
-                buttons: [
-                    {
-                        extend: 'copyHtml5',
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        title: 'Data export'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Data export',
-                        // charset: 'utf-8'
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Data export'
-                    },
-                    {
-                        extend:'print',
-                    }
-                ]
-            } );
-
-            $(".buttons-copy").text('复制');
-            $(".buttons-excel").text('导出excel');
-            $(".buttons-pdf").text('导出pdf');
-            $(".buttons-csv").text('导出csv');
-            $(".buttons-print").text('打印');
-
+                info: '第 _PAGE_ 页 / 总 _PAGES_ 页,共 _TOTAL_ 项结果',
+                infoEmpty: '没有数据',
+                infoFiltered: '(过滤总件数 _MAX_ 条)',
+            },
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: 'Data export'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Data export',
+                    // charset: 'utf-8'
+                },
+                {
+                    extend: 'csvHtml5',
+                    title: 'Data export'
+                },
+                {
+                    extend:'print',
+                }
+            ]
         });
-    </script>
- </body>  
-</html>  
+
+        $(".buttons-copy").text('复制');
+        $(".buttons-excel").text('导出excel');
+        $(".buttons-pdf").text('导出pdf');
+        $(".buttons-csv").text('导出csv');
+        $(".buttons-print").text('打印');
+    });
+</script>
+
+</body>
+</html>
