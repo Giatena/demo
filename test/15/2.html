@@ -5,8 +5,7 @@
     <meta charset='utf-8'>
     <link rel="stylesheet" href="./css/jquery.datatables.min.css" />   <!-- dataTable主要css -->
     <link rel="stylesheet" href="./css/buttons.dataTables.min.css" />  <!-- dataTable表格按钮主要css -->
-
-    <script src="./js/jquery-3.5.1.js"></script>                       <!-- dataTable表格主要js -->
+    <!-- <script src="./js/jquery-3.5.1.js"></script>                       <!-- dataTable表格主要js --> -->
     <script src="./js/jquery.datatables.min.js"></script>              <!-- dataTable表格主要js -->
     <script src="./js/dataTables.buttons.min.js"></script>             <!-- dataTable表格按钮主要js -->
     <script src="./js/jszip.min.js"></script>
@@ -15,12 +14,12 @@
     <script src="./js/pdfmake.min.js"></script>                    <!-- 导出功能相关js --> 
     <script src="./js/vfs_fonts.js"></script>                      <!-- 导出功能相关js -->
     <script src="./js/buttons.print.min.js"></script>              <!-- 导出功能相关js -->
-    <!-- <script src="./jquery.min.js"></script>     <!-- jQuery：IDB相关 --> -->
+    <script src="./jquery.js"></script>                   <!-- jQuery：IDB相关 -->
     <style>
         tbody td{
         text-align: center;
         }
-        </style>
+    </style>
 </head>
 
 <script type="text/javascript">
@@ -91,7 +90,7 @@
                 // objectStore.createIndex('id', 'id');
             };
         };
-    }
+    };
 
     function importJson() {
         // 从数据框获取用户提交的json字符串
@@ -114,7 +113,8 @@
             // onsuccess.target.result 返回“CW”表的“Key”，一般为数字升序
             console.log("onsuccess：已写入表单数据(userJson) " + onsuccess.target.result);
         };
-    }
+    };
+
 </script>
 
 <body>
